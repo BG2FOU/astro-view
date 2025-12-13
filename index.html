@@ -108,14 +108,14 @@
     <script src="src/config.js"></script>
 
 
-    <!-- 生产环境通过环境变量注入配置
+    <!-- 生产环境通过环境变量注入配置-->
     <script>
     window.CONFIG = {
         AMAP_API_KEY: process.env.AMAP_API_KEY,
         AMAP_SECURITY_JS_CODE: process.env.AMAP_SECURITY_JS_CODE
     };
     </script>
-    -->
+    
 
     <!-- 2. 设置安全密钥（必须在加载地图SDK之前） -->
     <script type="text/javascript">
