@@ -263,6 +263,15 @@ const STANDARD_LIGHT_LEVELS = { /* ... */ };
 
 ## 📚 文档导航
 
+### 🔧 部署相关（最重要）
+| 文档 | 说明 |
+|------|------|
+| [🚀 Cloudflare Pages 部署完整指南](docs/CLOUDFLARE_PAGES_DEPLOYMENT_GUIDE.md) | **最新**：完整的部署步骤、故障排除、工作原理详解 |
+| [🎨 Cloudflare Pages 可视化指南](docs/CLOUDFLARE_PAGES_VISUAL_GUIDE.md) | 带截图的部署配置指南，一步步操作 |
+| [✅ 快速修复清单](docs/QUICK_FIX_CHECKLIST.md) | 错误解决清单和常见问题排查 |
+| [⚙️ Cloudflare Pages 部署配置](docs/CLOUDFLARE_PAGES_SETUP.md) | 技术细节和配置说明 |
+
+### 📖 常规文档
 | 文档 | 说明 |
 |------|------|
 | [🎉 完成总结](COMPLETION_SUMMARY.md) | 项目完成情况、统计数据、亮点功能 |

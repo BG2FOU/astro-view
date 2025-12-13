@@ -1,0 +1,13 @@
+{
+  "name": "astro-view",
+  "version": "1.0.0",
+  "description": "东北地区观星地汇总地图",
+  "private": true,
+  "scripts": {
+    "build": "node build-config.js",
+    "start": "node build-config.js"
+  },
+  "keywords": ["astronomy", "stargazing", "map"],
+  "author": "",
+  "license": "MIT"
+}
