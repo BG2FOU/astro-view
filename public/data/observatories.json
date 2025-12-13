@@ -54,6 +54,20 @@
       "notes": "可拍倒影，湖边有沙，车辆无法直接抵达，蚊虫较多",
       "image": "",
       "coordinates": "121.457617°E,44.352785°N"
+    },
+    {
+      "id": "xqysls",
+      "name": "西泉眼水库石龙山度假村",
+      "latitude": 45.222871,
+      "longitude": 127.265575,
+      "bortle": "4",
+      "standardLight": "1",
+      "sqm": "21.69",
+      "climate": "水边湿度较高，较冷",
+      "accommodation": "两层小楼，每间3-4人，提供早餐，但暖气欠佳；院内可观测",
+      "notes": "路况差",
+      "image": "```",
+      "coordinates": "127.265575°E,45.222871°N"
     }
   ]
 }
