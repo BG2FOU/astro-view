@@ -6,7 +6,7 @@
 .env.*.local
 
 # API 配置文件（开发时本地使用）
-#src/config.js
+src/config.js
 
 # IDE 配置
 .vscode/
