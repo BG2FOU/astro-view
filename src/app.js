@@ -6,6 +6,11 @@ let autoCheckInterval = null;
 const AUTO_CHECK_INTERVAL = 300000; // 每 300 秒检查一次是否有新数据
 let lastDataHash = null; // 用于检测数据是否改变
 
+// 图层管理变量
+let currentLayer = 'standard'; // 当前图层类型
+let satelliteLayer = null; // 卫星图层
+let roadNetLayer = null; // 路网图层
+
 // 波特尔光害等级映射表
 const BORTLE_LEVELS = {
     '1': '1级 / 极限星等 7.6~8.0',
@@ -101,6 +106,13 @@ function initMap(AMap) {
             resizeEnable: true
         });
 
+        // 初始化卫星图层和路网图层
+        satelliteLayer = new AMap.TileLayer.Satellite();
+        roadNetLayer = new AMap.TileLayer.RoadNet();
+
+        // 设置图层控件事件
+        setupLayerControl(AMap);
+
         // 等待地图加载完成
         map.on('complete', function() {
             console.log('地图加载完成');
@@ -112,6 +124,74 @@ function initMap(AMap) {
         document.getElementById('map').innerHTML = 
             `<div style="padding: 20px; color: red;">错误：创建地图失败 - ${error.message}</div>`;
     }
+}
+
+// 设置图层控件
+function setupLayerControl(AMap) {
+    const radioButtons = document.querySelectorAll('input[name="layer"]');
+    const roadnetCheckbox = document.getElementById('roadnet-toggle');
+
+    // 图层单选按钮事件
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'standard') {
+                switchToStandardLayer();
+            } else if (this.value === 'satellite') {
+                switchToSatelliteLayer();
+            }
+        });
+    });
+
+    // 路网复选框事件
+    roadnetCheckbox.addEventListener('change', function() {
+        if (currentLayer === 'satellite') {
+            if (this.checked) {
+                roadNetLayer.setMap(map);
+                console.log('已开启路网');
+            } else {
+                roadNetLayer.setMap(null);
+                console.log('已关闭路网');
+            }
+        }
+    });
+}
+
+// 切换到标准图层
+function switchToStandardLayer() {
+    if (currentLayer === 'standard') return;
+    
+    // 隐藏卫星图层和路网
+    satelliteLayer.setMap(null);
+    roadNetLayer.setMap(null);
+    
+    // 恢复默认图层（标准图层自动存在）
+    currentLayer = 'standard';
+    
+    // 重置路网复选框
+    document.getElementById('roadnet-toggle').checked = false;
+    document.getElementById('roadnet-toggle').disabled = true;
+    
+    console.log('已切换到标准图层');
+}
+
+// 切换到卫星图层
+function switchToSatelliteLayer() {
+    if (currentLayer === 'satellite') return;
+    
+    // 显示卫星图层
+    satelliteLayer.setMap(map);
+    
+    currentLayer = 'satellite';
+    
+    // 启用路网复选框
+    document.getElementById('roadnet-toggle').disabled = false;
+    
+    // 如果路网复选框被勾选，也显示路网
+    if (document.getElementById('roadnet-toggle').checked) {
+        roadNetLayer.setMap(map);
+    }
+    
+    console.log('已切换到卫星图层');
 }
 
 // 加载观星地数据
@@ -277,6 +357,9 @@ function updateLastModifiedTime() {
 
 // 事件监听
 document.addEventListener('DOMContentLoaded', function() {
+    // 初始化路网复选框为禁用状态（因为默认是标准图层）
+    document.getElementById('roadnet-toggle').disabled = true;
+    
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
     

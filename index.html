@@ -15,7 +15,13 @@
         </header>
         
         <main class="main-content">
-            <div id="map" class="map-container"></div>
+            <div id="map" class="map-container">
+                <div id="layer-control" class="layer-control">
+                    <label><input type="radio" name="layer" value="standard" checked> 标准图层</label>
+                    <label><input type="radio" name="layer" value="satellite"> 卫星图层</label>
+                    <label><input type="checkbox" id="roadnet-toggle"> 开启路网</label>
+                </div>
+            </div>
             <div id="info-panel" class="info-panel hidden">
                 <button class="close-btn" id="close-btn">×</button>
                 <div class="info-content">
