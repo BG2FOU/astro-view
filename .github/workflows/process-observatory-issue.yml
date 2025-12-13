@@ -41,25 +41,29 @@ jobs:
       - name: 如果成功，评论 Issue
         if: steps.process.outputs.success == 'true'
         uses: actions/github-script@v6
+        env:
+          MESSAGE: ${{ steps.process.outputs.message }}
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ **成功处理！**\n\n您的观星地信息已自动添加到数据库中。感谢贡献！🌟\n\n**处理详情：**\n' + `${{ steps.process.outputs.message }}`
+              body: '✅ **成功处理！**\n\n您的观星地信息已自动添加到数据库中。感谢贡献！🌟\n\n**处理详情：**\n' + process.env.MESSAGE
             })
 
       - name: 如果失败，评论 Issue
         if: steps.process.outputs.success == 'false'
         uses: actions/github-script@v6
+        env:
+          ERROR: ${{ steps.process.outputs.error }}
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '❌ **处理失败**\n\n自动处理过程中出现错误，请检查信息格式。\n\n**错误信息：**\n```\n' + `${{ steps.process.outputs.error }}` + '\n```\n\n请参考 Issue 模板确保所有必填字段都已正确填写。'
+              body: '❌ **处理失败**\n\n自动处理过程中出现错误，请检查信息格式。\n\n**错误信息：**\n```\n' + process.env.ERROR + '\n```\n\n请参考 Issue 模板确保所有必填字段都已正确填写。'
             })
 
       - name: 推送更改到主分支
