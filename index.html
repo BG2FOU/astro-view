@@ -104,12 +104,15 @@
         </defs>
     </svg>
 
-    <!-- 加载配置文件（由构建脚本生成）-->
-    <script src="src/config.js"></script>
-    
-
-    <!-- 2. 设置安全密钥（必须在加载地图SDK之前） -->
+    <!-- 配置文件（由构建脚本生成后内联） -->
     <script type="text/javascript">
+        // 从 src/config.js 生成的配置（已内联以避免 MIME type 问题）
+        window.CONFIG = {
+            AMAP_API_KEY: '${AMAP_API_KEY}',
+            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'
+        };
+        
+        // 设置安全密钥（必须在加载地图 SDK 之前）
         if (typeof CONFIG !== 'undefined' && CONFIG.AMAP_SECURITY_JS_CODE) {
             window._AMapSecurityConfig = {
                 securityJsCode: CONFIG.AMAP_SECURITY_JS_CODE
