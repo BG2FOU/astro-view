@@ -1,0 +1,45 @@
+{
+  "observatories": [
+    {
+      "id": "HIT",
+      "name": "哈尔滨工业大学天文台",
+      "latitude": 45.747751,
+      "longitude": 126.635464,
+      "coordinates": "126.635464°E,45.747751°N",
+      "bortle": "8",
+      "standardLight": "5+",
+      "sqm": "17.53",
+      "climate": "略",
+      "accommodation": "略",
+      "notes": "城市光害严重",
+      "image": "https://testingcf.jsdelivr.net/gh/BG2FOU/BG2FOU-img-host@master/map-bg2fou-top/NGC6888.jpg"
+    },
+    {
+      "id": "maoershan1",
+      "name": "帽儿山富民村小木楼山庄",
+      "latitude": 45.31119,
+      "longitude": 127.588019,
+      "coordinates": "127.588019°E,45.311199°N",
+      "bortle": "3",
+      "standardLight": "1",
+      "sqm": "21.70",
+      "climate": "晴朗率较高，能见度优秀",
+      "accommodation": "周边民宿众多",
+      "notes": "绝佳的观星地",
+      "image": ""
+    },
+    {
+      "id": "maoershan2",
+      "name": "帽儿山吕家围子山河园山庄",
+      "latitude": 45.31461,
+      "longitude": 127.550241,
+      "coordinates": "127.550241°E,45.31461°N",
+      "bortle": "4",
+      "standardLight": "1",
+      "sqm": "21.65",
+      "climate": "河边湿度较大，体感较冷",
+      "accommodation": "周边民宿众多",
+      "notes": ""
+    }
+  ]
+}

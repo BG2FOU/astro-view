@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东北地区观星地汇总地图</title>
+    <link rel="icon" href="deathstar.ico">
+    <link rel="stylesheet" href="src/app.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔭 观星地导览</h1>
+            <p class="subtitle">点击地图标记查看详细信息</p>
+        </header>
+        
+        <main class="main-content">
+            <div id="map" class="map-container"></div>
+            <div id="info-panel" class="info-panel hidden">
+                <button class="close-btn" id="close-btn">×</button>
+                <div class="info-content">
+                    <h2 id="info-name"></h2>
+                    <div class="info-section">
+                        <!-- 第一行：坐标和 SQM -->
+                        <div class="info-row">
+                            <div class="info-item">
+                                <label>坐标</label>
+                                <p id="info-coordinates"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>SQM值</label>
+                                <p id="info-sqm"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第二行：光害等级 -->
+                        <div class="info-row">
+                            <div class="info-item">
+                                <label>波特尔光害等级</label>
+                                <p id="info-bortle"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>中国暗夜环境等级</label>
+                                <p id="info-standard"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第三行：气候 -->
+                        <div class="info-row">
+                            <div class="info-item full-width">
+                                <label>气候情况</label>
+                                <p id="info-climate"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第四行：住宿 -->
+                        <div class="info-row">
+                            <div class="info-item full-width">
+                                <label>住宿情况</label>
+                                <p id="info-accommodation"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第五行：备注 -->
+                        <div class="info-row">
+                            <div class="info-item full-width">
+                                <label>备注</label>
+                                <p id="info-notes"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第六行：附图 -->
+                        <div class="info-row">
+                            <div class="info-item full-width">
+                                <label>附图</label>
+                                <div id="info-image-container">
+                                    <img id="info-image" alt="观星地图片" style="max-width: 100%; max-height: 200px; border-radius: 4px; display: none;">
+                                    <p id="info-image-placeholder">暂无图片</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">闽ICP备2025114531号</a> | 
+                最后更新: <span id="update-time">-</span> | 
+                <button id="refresh-btn" class="footer-btn">🔄 刷新数据</button>
+
+            </p>
+        </footer>
+    </div>
+
+    <svg style="display:none;" width="0" height="0">
+        <defs>
+            <symbol id="marker-icon" viewBox="0 0 32 40">
+                <path d="M 16 0 C 8.268 0 2 6.268 2 14 C 2 24 16 40 16 40 C 16 40 30 24 30 14 C 30 6.268 23.732 0 16 0 Z" 
+                      fill="#FF6B6B" stroke="#fff" stroke-width="2"/>
+                <circle cx="16" cy="14" r="6" fill="#fff"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- 1. 加载配置文件 -->
+    <script src="src/config.js"></script>
+
+
+    <!-- 生产环境通过环境变量注入配置
+    <script>
+    window.CONFIG = {
+        AMAP_API_KEY: process.env.AMAP_API_KEY,
+        AMAP_SECURITY_JS_CODE: process.env.AMAP_SECURITY_JS_CODE
+    };
+    </script>
+    -->
+
+    <!-- 2. 设置安全密钥（必须在加载地图SDK之前） -->
+    <script type="text/javascript">
+        if (typeof CONFIG !== 'undefined' && CONFIG.AMAP_SECURITY_JS_CODE) {
+            window._AMapSecurityConfig = {
+                securityJsCode: CONFIG.AMAP_SECURITY_JS_CODE
+            };
+        }
+    </script>
+    
+    <!-- 使用 AMapLoader 加载 SDK（官方推荐方式） -->
+    <script src="https://webapi.amap.com/loader.js"></script>
+
+    <!--<script>
+    window._AMapSecurityConfig = {
+        serviceHost: "http://key-amap.bg2fou.top:51620/_AMapService"
+    };
+    </script>
+
+    <script
+    type="text/javascript"
+    src="https://webapi.amap.com/maps?v=2.0&key=e5b759a2a9a743ac99a07e48b1dbe23b"
+    ></script>-->
+    
+    <!-- 应用主脚本 -->
+    <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+name: 自动处理观星地提交
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  process-observatory:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 设置 Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyYAML
+
+      - name: 解析并处理 Issue
+        id: process
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: python .github/scripts/process_issue.py
+
+      - name: 如果成功，评论 Issue
+        if: steps.process.outputs.success == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **成功处理！**\n\n您的观星地信息已自动添加到数据库中。感谢贡献！🌟\n\n**处理详情：**\n' + `${{ steps.process.outputs.message }}`
+            })
+
+      - name: 如果失败，评论 Issue
+        if: steps.process.outputs.success == 'false'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ **处理失败**\n\n自动处理过程中出现错误，请检查信息格式。\n\n**错误信息：**\n```\n' + `${{ steps.process.outputs.error }}` + '\n```\n\n请参考 Issue 模板确保所有必填字段都已正确填写。'
+            })
+
+      - name: 推送更改到主分支
+        if: steps.process.outputs.success == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/data/observatories.json
+          git commit -m "🤖 Issue #${{ github.event.issue.number }}: 自动添加观星地数据" || true
+          git push
+
+      - name: 关闭 Issue
+        if: steps.process.outputs.success == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
+            })
