@@ -128,6 +128,12 @@ def process_observatory(data, is_update, is_add):
     json_data = load_json()
     observatories = json_data.get('observatories', [])
     
+    # 转换纬度和经度为数字类型
+    if 'latitude' in data and data['latitude']:
+        data['latitude'] = float(data['latitude'])
+    if 'longitude' in data and data['longitude']:
+        data['longitude'] = float(data['longitude'])
+    
     # 生成坐标字符串
     if 'latitude' in data and 'longitude' in data:
         data['coordinates'] = f"{data['longitude']}°E,{data['latitude']}°N"
