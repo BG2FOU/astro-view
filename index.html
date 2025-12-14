@@ -10,17 +10,21 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>🔭 观星地导览</h1>
-            <p class="subtitle">点击地图标记查看详细信息</p>
-        </header>
-        
-        <main class="main-content">
-            <div id="map" class="map-container">
+            <div class="header-top">
+                <h1>🔭 观星地导览</h1>
+                <p class="subtitle">点击地图标记查看详细信息</p>
+            </div>
+            <div class="header-controls">
                 <div id="layer-control" class="layer-control">
                     <label><input type="radio" name="layer" value="standard" checked> 标准图层</label>
                     <label><input type="radio" name="layer" value="satellite"> 卫星图层</label>
                     <label><input type="checkbox" id="roadnet-toggle"> 开启路网</label>
                 </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div id="map" class="map-container">
             </div>
             <div id="info-panel" class="info-panel hidden">
                 <button class="close-btn" id="close-btn">×</button>

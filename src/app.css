@@ -36,20 +36,35 @@ html, body {
 .header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 20px;
+    padding: 12px 20px;
     box-shadow: var(--box-shadow);
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header-top {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .header h1 {
     font-size: 28px;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
 
 .header .subtitle {
     font-size: 14px;
     opacity: 0.9;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* 主内容区域 */
@@ -84,10 +99,11 @@ html, body {
     border-radius: var(--border-radius);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    max-height: 85vh;
+    max-height: 80vh;
     animation: slideUp 0.3s ease-out;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .info-panel.hidden {
@@ -235,12 +251,31 @@ html, body {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    .header {
+        padding: 10px 15px;
+        gap: 6px;
+    }
+    
+    .header-top {
+        gap: 2px;
+    }
+
     .header h1 {
-        font-size: 22px;
+        font-size: 18px;
+        margin-bottom: 0;
     }
 
     .header .subtitle {
-        font-size: 12px;
+        font-size: 11px;
+    }
+
+    .header-controls {
+        gap: 8px;
+    }
+
+    .layer-control label {
+        font-size: 11px;
+        gap: 4px;
     }
 
     .info-panel {
@@ -252,6 +287,8 @@ html, body {
         border-radius: 0;
         max-height: 100vh;
         z-index: 2000;
+        left: auto;
+        transform: translate(0, 0);
     }
 
     .info-row {
@@ -261,11 +298,25 @@ html, body {
 
 @media (max-width: 480px) {
     .header {
-        padding: 15px;
+        padding: 8px 12px;
+        gap: 5px;
     }
 
     .header h1 {
-        font-size: 20px;
+        font-size: 16px;
+    }
+
+    .header .subtitle {
+        font-size: 10px;
+    }
+
+    .header-controls {
+        gap: 6px;
+    }
+
+    .layer-control label {
+        font-size: 10px;
+        gap: 3px;
     }
 
     .info-content {
@@ -292,22 +343,25 @@ html, body {
 
 /* 图层切换控件 */
 .layer-control {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: white;
-    padding: 10px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
     z-index: 100;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .layer-control label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--dark-color);
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0;
+    font-size: 13px;
+    color: white;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .layer-control label:last-child {
@@ -316,25 +370,8 @@ html, body {
 
 .layer-control input[type="radio"],
 .layer-control input[type="checkbox"] {
-    margin-right: 8px;
+    margin-right: 6px;
     cursor: pointer;
-}
-
-.layer-control input[type="checkbox"] {
-    margin-left: 20px;
-}
-
-@media (max-width: 768px) {
-    .layer-control {
-        top: 10px;
-        right: 10px;
-        padding: 8px;
-    }
-    
-    .layer-control label {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
 }
 
 /* 自定义滚动条 */
