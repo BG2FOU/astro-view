@@ -367,17 +367,16 @@ function navigateToObservatory(observatory) {
     const isAndroid = /android/.test(ua);
     
     if (isIos) {
-        // iOS: 使用 URL Scheme
-        // amap://navi?sourceApplication=appname&backScheme=skyBrowser&lat=纬度&lon=经度&name=名称&dev=1&style=2
-        const iosUrl = `amap://navi?lat=${lat}&lon=${lng}&name=${encodeURIComponent(name)}&dev=1&style=2`;
+        // iOS: 使用坐标导航 URL Scheme
+        const iosUrl = `amap://navi?lat=${lat}&lon=${lng}&dev=1&style=2`;
         window.location.href = iosUrl;
     } else if (isAndroid) {
-        // Android: 使用 URL Scheme
-        const androidUrl = `amapuri://navigation?sourceApplication=amap&lat=${lat}&lon=${lng}&name=${encodeURIComponent(name)}&dev=1&style=2&t=0`;
+        // Android: 使用坐标导航 URL Scheme
+        const androidUrl = `amapuri://navigation?lat=${lat}&lon=${lng}&dev=1&style=2&t=0`;
         window.location.href = androidUrl;
     } else {
-        // 桌面版本：打开高德地图网页版
-        const webUrl = `https://amap.com/search?query=${encodeURIComponent(name)}&city=auto&geoobj=${lng}|${lat}|${lng}|${lat}&zoom=13`;
+        // 桌面版本：使用坐标直接打开高德地图
+        const webUrl = `https://amap.com/?lng=${lng}&lat=${lat}&zoom=13`;
         window.open(webUrl, '_blank');
     }
 }
