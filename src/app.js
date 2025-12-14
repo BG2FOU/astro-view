@@ -376,7 +376,7 @@ function navigateToObservatory(observatory) {
         window.location.href = androidUrl;
     } else {
         // 桌面版本：使用坐标直接打开高德地图
-        const webUrl = `https://amap.com/?lng=${lng}&lat=${lat}&zoom=13`;
+        const webUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}`;
         window.open(webUrl, '_blank');
     }
 }
