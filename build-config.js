@@ -11,6 +11,7 @@ const path = require('path');
 // 获取环境变量
 const AMAP_API_KEY = process.env.AMAP_API_KEY || '';
 const AMAP_SECURITY_JS_CODE = process.env.AMAP_SECURITY_JS_CODE || '';
+const CLOUDFLARE_WORKER_URL = process.env.CLOUDFLARE_WORKER_URL || 'https://astro-view-worker.bg2fou.workers.dev/api/submit';
 
 // 验证必要的环境变量
 if (!AMAP_API_KEY || !AMAP_SECURITY_JS_CODE) {
@@ -29,13 +30,15 @@ let htmlContent = fs.readFileSync(indexPath, 'utf-8');
 const configScript = `        // 自动生成的配置（由 build-config.js 脚本生成）
         window.CONFIG = {
             AMAP_API_KEY: '${AMAP_API_KEY}',
-            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'
+            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}',
+            CLOUDFLARE_WORKER_URL: '${CLOUDFLARE_WORKER_URL}'
         };`;
 
 // 替换占位符
 const updatedContent = htmlContent
     .replace(/AMAP_API_KEY: '\$\{AMAP_API_KEY\}'/g, `AMAP_API_KEY: '${AMAP_API_KEY}'`)
-    .replace(/AMAP_SECURITY_JS_CODE: '\$\{AMAP_SECURITY_JS_CODE\}'/g, `AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'`);
+    .replace(/AMAP_SECURITY_JS_CODE: '\$\{AMAP_SECURITY_JS_CODE\}'/g, `AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'`)
+    .replace(/CLOUDFLARE_WORKER_URL: '\$\{CLOUDFLARE_WORKER_URL\}'/g, `CLOUDFLARE_WORKER_URL: '${CLOUDFLARE_WORKER_URL}'`);
 
 // 写回文件
 try {
@@ -43,6 +46,7 @@ try {
     console.log(`✅ 配置已内联到 index.html`);
     console.log(`   - AMAP_API_KEY: ${AMAP_API_KEY.substring(0, 8)}...`);
     console.log(`   - AMAP_SECURITY_JS_CODE: ${AMAP_SECURITY_JS_CODE.substring(0, 8)}...`);
+    console.log(`   - CLOUDFLARE_WORKER_URL: ${CLOUDFLARE_WORKER_URL}`);
 } catch (error) {
     console.error(`❌ 更新 index.html 失败：${error.message}`);
     process.exit(1);
