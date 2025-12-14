@@ -68,6 +68,20 @@
       "notes": "路况差",
       "image": "```",
       "coordinates": "127.265575°E,45.222871°N"
+    },
+    {
+      "id": "JY331",
+      "name": "嘉荫331国道观景平台",
+      "latitude": 49.0924,
+      "longitude": 129.841117,
+      "bortle": "2",
+      "standardLight": "1",
+      "sqm": "21.93",
+      "climate": "略",
+      "accommodation": "无",
+      "notes": "极光",
+      "image": "```",
+      "coordinates": "129.841117°E,49.0924°N"
     }
   ]
 }
