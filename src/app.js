@@ -467,13 +467,7 @@ function updateLastModifiedTime() {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-       图片放大预览关闭
-    const imageOverlay = document.getElementById('image-overlay');
-    if (imageOverlay) {
-        imageOverlay.addEventListener('click', hideImageOverlay);
-    }
-
-    //  second: '2-digit'
+        second: '2-digit'
     });
     document.getElementById('update-time').textContent = timeStr;
 }
@@ -485,6 +479,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
+
+    // 图片放大预览关闭
+    const imageOverlay = document.getElementById('image-overlay');
+    if (imageOverlay) {
+        imageOverlay.addEventListener('click', hideImageOverlay);
+    }
 
     // 提交按钮
     const submitBtn = document.getElementById('submit-btn');
