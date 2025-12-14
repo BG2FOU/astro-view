@@ -26,6 +26,71 @@
         <main class="main-content">
             <div id="map" class="map-container">
             </div>
+            <div id="submit-panel" class="submit-panel hidden">
+                <button class="close-btn" id="submit-close-btn">×</button>
+                <div class="submit-content">
+                    <h2>✨ 提交新观星地</h2>
+                    <form id="observatory-form" class="observatory-form">
+                        <div class="form-group">
+                            <label>地点名称 *</label>
+                            <input type="text" id="form-name" name="name" required placeholder="观星地名称">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>纬度*</label>
+                                <input type="number" id="form-latitude" name="latitude" step="0.0001" required placeholder="00.0000">
+                            </div>
+                            <div class="form-group">
+                                <label>经度*</label>
+                                <input type="number" id="form-longitude" name="longitude" step="0.0001" required placeholder="000.0000">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>波特尔等级(1-9)</label>
+                                <input type="number" id="form-bortle" name="bortle" min="1" max="9" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>SQM值</label>
+                                <input type="number" id="form-sqm" name="sqm" step="0.01" placeholder="00.00">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>中国暗夜等级</label>
+                            <select id="form-standard" name="standard">
+                                <option value="">-- 选择 --</option>
+                                <option value="1">1级 (优秀)</option>
+                                <option value="2">2级 (良好)</option>
+                                <option value="3">3级 (一般)</option>
+                                <option value="4">4级 (较差)</option>
+                                <option value="5">5级 (严重)</option>
+                                <option value="5+">5级+ (极度严重)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>气候情况</label>
+                            <textarea id="form-climate" name="climate" placeholder=""></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>住宿情况</label>
+                            <textarea id="form-accommodation" name="accommodation" placeholder=""></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>备注</label>
+                            <textarea id="form-notes" name="notes" placeholder="其他信息"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>图片URL</label>
+                            <input type="url" id="form-image" name="image" placeholder="">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">📤 提交</button>
+                            <button type="reset" class="btn-reset">🔄 清空</button>
+                        </div>
+                        <div id="submit-status" class="submit-status"></div>
+                    </form>
+                </div>
+            </div>
             <div id="info-panel" class="info-panel hidden">
                 <button class="close-btn" id="close-btn">×</button>
                 <div class="info-content">
@@ -98,7 +163,7 @@
             <p>
                 COPYRIGHT © <a href="https://github.com/BG2FOU" target="_blank" rel="noopener noreferrer">BG2FOU</a> |
                 <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">闽ICP备2025114531号</a> | 
-                在<a href="https://github.com/BG2FOU/astro-view/issues" target="_blank" rel="noopener noreferrer">GitHub Issue</a>提交观星地 |
+                <button id="submit-btn" class="footer-btn">✨ 提交观星地</button> |
                 最后更新: <span id="update-time">-</span> | 
                 <button id="refresh-btn" class="footer-btn">🔄 刷新数据</button>
             </p>
@@ -120,7 +185,8 @@
         // 从 src/config.js 生成的配置（已内联以避免 MIME type 问题）
         window.CONFIG = {
             AMAP_API_KEY: '${AMAP_API_KEY}',
-            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'
+            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}',
+            CLOUDFLARE_WORKER_URL: '${CLOUDFLARE_WORKER_URL}'
         };
         
         // 设置安全密钥（必须在加载地图 SDK 之前）

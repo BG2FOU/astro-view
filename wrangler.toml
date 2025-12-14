@@ -1,0 +1,9 @@
+name = "astro-view-worker"
+main = "cloudflare-worker.js"
+compatibility_date = "2025-12-14"
+
+[vars]
+GITHUB_REPO = "BG2FOU/astro-view"
+
+[env.production.vars]
+GITHUB_REPO = "BG2FOU/astro-view"

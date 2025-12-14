@@ -363,6 +363,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
 
+    // 提交按钮
+    const submitBtn = document.getElementById('submit-btn');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', showSubmitPanel);
+    }
+
+    // 提交面板关闭按钮
+    const submitCloseBtn = document.getElementById('submit-close-btn');
+    if (submitCloseBtn) {
+        submitCloseBtn.addEventListener('click', hideSubmitPanel);
+    }
+
+    // 表单提交
+    const observatoryForm = document.getElementById('observatory-form');
+    if (observatoryForm) {
+        observatoryForm.addEventListener('submit', submitObservatory);
+    }
+
     // 手动刷新按钮
     const refreshBtn = document.getElementById('refresh-btn');
     if (refreshBtn) {
@@ -378,6 +396,102 @@ document.addEventListener('DOMContentLoaded', function() {
             '<div style="padding: 20px; color: red;">错误：AMapLoader 加载失败</div>';
     }
 });
+
+// 显示提交面板
+function showSubmitPanel() {
+    document.getElementById('submit-panel').classList.remove('hidden');
+    // 清空表单状态
+    document.getElementById('submit-status').classList.remove('show', 'success', 'error', 'loading');
+}
+
+// 隐藏提交面板
+function hideSubmitPanel() {
+    document.getElementById('submit-panel').classList.add('hidden');
+}
+
+// 提交观星地表单
+async function submitObservatory(e) {
+    e.preventDefault();
+    
+    const statusEl = document.getElementById('submit-status');
+    const submitBtn = document.querySelector('.btn-submit');
+    
+    try {
+        // 收集表单数据
+        const formData = new FormData(document.getElementById('observatory-form'));
+        const data = {
+            name: formData.get('name'),
+            latitude: parseFloat(formData.get('latitude')),
+            longitude: parseFloat(formData.get('longitude')),
+            coordinates: `${formData.get('longitude')}°E,${formData.get('latitude')}°N`,
+            bortle: formData.get('bortle') || '-',
+            standardLight: formData.get('standard') || '-',
+            sqm: formData.get('sqm') || '-',
+            climate: formData.get('climate') || '',
+            accommodation: formData.get('accommodation') || '',
+            notes: formData.get('notes') || '',
+            image: formData.get('image') || ''
+        };
+
+        // 基本验证
+        if (!data.name || !data.latitude || !data.longitude) {
+            throw new Error('请填写地点名称和坐标信息');
+        }
+
+        if (isNaN(data.latitude) || isNaN(data.longitude)) {
+            throw new Error('坐标必须为有效的数字');
+        }
+
+        if (data.latitude < -90 || data.latitude > 90 || data.longitude < -180 || data.longitude > 180) {
+            throw new Error('坐标范围不正确：纬度 [-90, 90]，经度 [-180, 180]');
+        }
+
+        // 显示加载状态
+        statusEl.textContent = '📤 正在提交...';
+        statusEl.classList.add('show', 'loading');
+        statusEl.classList.remove('success', 'error');
+        submitBtn.disabled = true;
+
+        // 调用 Cloudflare Worker API
+        const workerUrl = CONFIG.CLOUDFLARE_WORKER_URL || 'https://astro-view-worker.pages.dev/api/submit';
+        
+        const response = await fetch(workerUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || '提交失败，请稍后重试');
+        }
+
+        // 成功
+        statusEl.textContent = '✅ 提交成功！已创建 GitHub Issue，管理员将尽快审核';
+        statusEl.classList.remove('loading');
+        statusEl.classList.add('success');
+        
+        // 清空表单
+        document.getElementById('observatory-form').reset();
+
+        // 3秒后自动关闭面板
+        setTimeout(() => {
+            hideSubmitPanel();
+        }, 3000);
+
+    } catch (error) {
+        console.error('提交失败:', error);
+        statusEl.textContent = `❌ 错误：${error.message}`;
+        statusEl.classList.remove('loading');
+        statusEl.classList.add('error');
+    } finally {
+        submitBtn.disabled = false;
+    }
+}
+
 
 // 使用 AMapLoader 加载地图 SDK（官方推荐方式）
 function loadAMapWithLoader() {
