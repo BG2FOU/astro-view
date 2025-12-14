@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="141px" height="24px" viewBox="0 0 141 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 11</title>
+    <defs>
+        <path d="M18.4277784,0 C21.131,0 23.3901386,1.89591303 23.940766,4.42694543 L23.940766,19.5730546 C23.3901386,22.104087 21.131,24 18.4277784,24 L5.64102538,24 C2.54105088,24 0.0250821875,21.5067183 0,18.4215546 L0,5.57847222 L0.000566580217,5.53198047 C0.0502826007,2.4744643 2.54653127,0.00995668982 5.62237401,0 L18.4464083,0 L18.4277784,0 Z" id="path-1"></path>
+        <path d="M18.4121277,0 C21.1236411,0 23.3894822,1.90207572 23.9409477,4.44104564 L23.9409477,19.5588409 C23.3894822,22.0979243 21.1236411,24 18.4121277,24 L5.6569585,24 C2.54045073,24 0.0126897165,21.4872995 0,18.3827036 L0.000300234817,5.59409722 L0.000709864022,5.54732976 C0.0505635252,2.4813102 2.55373336,0.00996568532 5.6382892,0 L18.4307054,0 L18.4121277,0 Z" id="path-3"></path>
+        <path d="M6.58594389,0 C9.28916552,0 11.5483041,1.89591303 12.0989315,4.42694543 L12.0989315,14.7840278 L0,14.7840278 L0,0.000173611111 L6.60457383,0.000173611111 L6.58594389,0 Z" id="path-5"></path>
+        <path d="M9.04983141,0 L9.04983141,14.7839977 L0,14.7839977 L0.000174111561,5.57844213 L0.000581651357,5.53195038 C0.0502976718,2.4744342 2.54654635,0.009926597 5.62238908,0 L9.04983141,0 Z" id="path-7"></path>
+        <path d="M9.04983141,0 L9.04983141,7.00800347 L5.64104045,7.00800347 C2.54106595,7.00800347 0.0250972587,4.51472176 0,1.42955807 L0,0 L9.04983141,0 Z" id="path-9"></path>
+        <path d="M12.0989141,0 L12.0989141,2.58105804 C11.5482866,5.11209044 9.28914811,7.00800347 6.58592648,7.00800347 L0,7.00800347 L0,0 L12.0989141,0 Z" id="path-11"></path>
+        <rect id="path-13" x="0" y="0" width="23.7450299" height="23.6590038"></rect>
+        <polygon id="path-15" points="19.0627957 0 5.96915369 12.8639931 0 9.58892361"></polygon>
+        <polygon id="path-17" points="13.0936421 0 1.34786724 17.0879861 0 12.8661111"></polygon>
+        <polygon id="path-19" points="8.37608932 0 0 10.7519965 0.577667336 7.68"></polygon>
+        <polygon id="path-21" points="11.1681075 0 7.38375789 18.4319965 0 14.0159896"></polygon>
+        <path d="M13.0936421,0 C10.9278335,2.16036458 8.74137537,4.3003125 6.56595589,6.45118056 C4.37683382,8.58848958 2.19892454,10.7367014 0,12.8639931 C2.16580853,10.7036285 4.35207516,8.56385417 6.52766876,6.41298611 C8.71680823,4.27585069 10.8948916,2.1278125 13.0936421,0 Z" id="path-23"></path>
+        <path d="M11.1666101,0 C9.35551908,2.31822917 7.4254402,4.71458333 5.60378058,7.02449653 C3.76697326,9.32258681 1.84756742,11.726059 0,14.0159896 C1.81091693,11.6979167 3.73967257,9.30138889 5.56131477,6.99166667 C7.39812209,4.69357639 9.31904271,2.29010417 11.1666101,0 Z" id="path-25"></path>
+        <polygon id="path-27" points="0.575939517 0 0.296510426 1.53758681 0 3.07199653 0.279429092 1.53442708"></polygon>
+        <polygon id="path-29" points="38.3393525 4.07272569 38.3393525 4.63597222 46 4.63597222 46 6.17272569 28.8389378 6.17272569 28.8389378 4.63597222 36.4995679 4.63597222 36.4995679 4.07272569"></polygon>
+        <path d="M43.5975042,7.08022569 C44.4347197,7.08022569 45.1125708,7.75972222 45.1125708,8.59822917 L45.1125708,9.64072917 C45.1125708,10.4792187 44.4347197,11.1587326 43.5975042,11.1587326 L31.2412769,11.1587326 C30.4048101,11.1587326 29.7262103,10.4792187 29.7262103,9.64072917 L29.7262103,8.59822917 C29.7262103,7.75972222 30.4048101,7.08022569 31.2412769,7.08022569 L43.5975042,7.08022569 Z M42.8942154,8.57947917 L31.9453144,8.57947917 C31.7358233,8.57947917 31.5659775,8.74897569 31.5659775,8.95897569 L31.5659775,9.31822917 C31.5659775,9.52748264 31.7358233,9.69772569 31.9453144,9.69772569 L42.8942154,9.69772569 C43.1029577,9.69772569 43.2727862,9.52748264 43.2727862,9.31822917 L43.2727862,8.95897569 C43.2727862,8.74897569 43.1029577,8.57947917 42.8942154,8.57947917 Z" id="path-31"></path>
+        <path d="M41.8944146,14.3011458 C42.7308813,14.3011458 43.4087325,14.9814062 43.4087325,15.8191493 L43.4087325,16.7859028 C43.4087325,17.6243924 42.7308813,18.3039062 41.8944146,18.3039062 L32.9446625,18.3039062 C32.1081957,18.3039062 31.4303446,17.6243924 31.4303446,16.7859028 L31.4303446,15.8191493 C31.4303446,14.9814062 32.1081957,14.3011458 32.9446625,14.3011458 L41.8944146,14.3011458 Z M41.1903771,15.8003993 L33.6487,15.8003993 C33.4399576,15.8003993 33.2701118,15.9698958 33.2701118,16.1798958 L33.2701118,16.4634028 C33.2701118,16.6726563 33.4399576,16.8428993 33.6487,16.8428993 L41.1903771,16.8428993 C41.3991194,16.8428993 41.5689652,16.6726563 41.5689652,16.4634028 L41.5689652,16.1798958 C41.5689652,15.9698958 41.3991194,15.8003993 41.1903771,15.8003993 Z" id="path-33"></path>
+        <path d="M44.4855254,11.9905556 C45.3219922,11.9905556 45.9998433,12.6700521 45.9998433,13.5085417 L45.9998433,18.4097917 C45.9998433,19.2475521 45.3219922,19.9277951 44.4855254,19.9277951 L42.6539763,19.9277951 L42.6539763,18.3902951 L43.4028997,18.3902951 C43.8211331,18.3902951 44.1608074,18.0505556 44.1608074,17.6313021 L44.1608074,14.2863021 C44.1608074,13.8677951 43.8211331,13.5272917 43.4028997,13.5272917 L31.4364733,13.5272917 C31.0174913,13.5272917 30.6785657,13.8677951 30.6785657,14.2863021 L30.6785657,19.9277951 L28.8387811,19.9277951 L28.8387811,13.5085417 C28.8387811,12.6700521 29.5166322,11.9905556 30.353099,11.9905556 L44.4855254,11.9905556 Z" id="path-35"></path>
+        <polygon id="path-37" points="52.9039238 12.7560069 65.4045419 12.7560069 65.4045419 14.2927431 52.9039238 14.2927431"></polygon>
+        <polygon id="path-39" points="60.0746388 4.07272569 60.0746388 4.63597222 65.4046986 4.63597222 65.4046986 6.17272569 60.0746388 6.17272569 60.0746388 7.30447917 58.2348716 7.30447917 58.2348716 6.17272569 52.9040631 6.17272569 52.9040631 4.63597222 58.2348716 4.63597222 58.2348716 4.07272569"></polygon>
+        <path d="M63.636143,7.07984375 C64.4726098,7.07984375 65.1504609,7.75935764 65.1504609,8.59859375 L65.1504609,10.3078472 C65.1504609,11.1463542 64.4726098,11.8258507 63.636143,11.8258507 L54.6736634,11.8258507 C53.8371966,11.8258507 53.1593455,11.1463542 53.1593455,10.3078472 L53.1593455,8.59859375 C53.1593455,7.75935764 53.8371966,7.07984375 54.6736634,7.07984375 L63.636143,7.07984375 Z M62.9313568,8.57909722 L61.511303,8.57909722 L61.511303,10.3265972 L62.9313568,10.3265972 C63.1400992,10.3265972 63.309945,10.1571007 63.309945,9.94710069 L63.309945,8.95859375 C63.309945,8.74935764 63.1400992,8.57909722 62.9313568,8.57909722 Z M56.7985035,8.57909722 L55.3769522,8.57909722 C55.1682099,8.57909722 54.9991301,8.74935764 54.9991301,8.95859375 L54.9991301,9.94710069 C54.9991301,10.1571007 55.1682099,10.3265972 55.3769522,10.3265972 L56.7985035,10.3265972 L56.7985035,8.57909722 Z M60.0531012,8.57909722 L58.2559739,8.57909722 L58.2559739,10.3265972 L60.0531012,10.3265972 L60.0531012,8.57909722 Z" id="path-41"></path>
+        <path d="M55.2472217,15.2227431 L55.1709086,17.1742535 C55.1424762,18.0839931 55.0564477,18.9907465 54.9120395,19.8892535 L54.9060501,19.9260069 L53.0662829,19.9260069 C53.2136683,19.0169965 53.3019603,18.0989931 53.3318726,17.17875 L53.4067058,15.2227431 L55.2472217,15.2227431 Z" id="path-43"></path>
+        <path d="M64.9777074,15.2227431 L65.0225934,16.3207465 C65.0577639,17.5305035 65.1819577,18.735 65.3944434,19.9260069 L63.5546588,19.9260069 L63.5441947,19.8675 C63.3376984,18.6930035 63.2164819,17.505 63.1820775,16.3125 L63.1379228,15.2227431 L64.9777074,15.2227431 Z" id="path-45"></path>
+        <polygon id="path-47" points="59.2754319 15.2235069 61.1152166 15.2235069 61.1152166 17.76375 59.2754319 17.76375"></polygon>
+        <path d="M57.8204513,15.2232812 L57.8204513,17.6300174 C57.8204513,18.0492708 58.1593768,18.3890278 58.5776102,18.3890278 L62.6581932,18.3890278 C62.6971071,18.9027778 62.7502286,19.4157812 62.8205522,19.9257812 L57.4949845,19.9257812 C56.6577691,19.9257812 55.9806666,19.2462674 55.9806666,18.4077778 L55.9806666,15.2232812 L57.8204513,15.2232812 Z" id="path-49"></path>
+        <path d="M52.3676951,7.06649306 L52.3676951,8.60399306 L52.3310272,8.61149306 C51.9808888,8.68725694 51.6299844,8.75100694 51.2761026,8.80274306 L51.2761026,19.9260069 L49.3846939,19.9260069 L49.3846939,8.97 C49.226827,8.97449653 49.0682113,8.97675347 48.9095957,8.97675347 L47.6975355,8.97675347 L47.6975355,7.44 L48.9103444,7.44 C50.0730266,7.44 51.2319479,7.31475694 52.3676951,7.06649306 Z" id="path-51"></path>
+        <path d="M52.3676951,4.33822917 L52.3676951,5.87498264 L52.3310272,5.88322917 C51.2065102,6.12623264 50.0595503,6.24847222 48.9095957,6.24847222 L47.6975355,6.24847222 L47.6975355,4.71171875 L48.9103444,4.71171875 C50.0730266,4.71171875 51.2319479,4.58647569 52.3676951,4.33822917 Z" id="path-53"></path>
+        <polygon id="path-55" points="105.175679 13.9319965 122.71082 13.9319965 122.71082 15.7230035 105.175679 15.7230035"></polygon>
+        <polygon id="path-57" points="105.707625 4.63574653 122.179606 4.63574653 122.179606 6.225 105.707625 6.225"></polygon>
+        <polygon id="path-59" points="85.4580847 4.63574653 93.9297438 4.63574653 93.9297438 6.225 85.4580847 6.225"></polygon>
+        <polygon id="path-61" points="90.5131004 4.07265625 90.5131004 5.40390625 88.8745714 5.40390625 88.8745714 4.07340278"></polygon>
+        <polygon id="path-63" points="96.0545839 4.63574653 103.190738 4.63574653 103.190738 6.225 96.0545839 6.225"></polygon>
+        <polygon id="path-65" points="113.008384 5.46975694 114.878847 5.46975694 114.878847 19.9260069 113.008384 19.9260069"></polygon>
+        <path d="M138.998434,12.2894271 C139.82825,12.2894271 140.501539,12.9644271 140.501539,13.7961806 L140.501539,18.4244271 C140.501539,19.2561806 139.82825,19.9304167 138.998434,19.9304167 L126.602562,19.9304167 C125.77205,19.9304167 125.099474,19.2561806 125.099474,18.4244271 L125.099474,13.7961806 C125.099474,12.9644271 125.77205,12.2894271 126.602562,12.2894271 L138.998434,12.2894271 Z M138.45155,13.9326736 L127.148053,13.9326736 C126.92136,13.9326736 126.73802,14.1164236 126.73802,14.3436806 L126.73802,17.8769271 C126.73802,18.1041667 126.92136,18.2879167 127.148053,18.2879167 L138.45155,18.2879167 C138.67894,18.2879167 138.862279,18.1041667 138.862279,17.8769271 L138.862279,14.3436806 C138.862279,14.1164236 138.67894,13.9326736 138.45155,13.9326736 Z" id="path-67"></path>
+        <path d="M91.7992974,9.99097222 C92.6230366,9.99097222 93.2911723,10.6599826 93.2911723,11.4864757 L93.2911723,18.4359722 C93.2911723,19.2617187 92.6230366,19.9314757 91.7992974,19.9314757 L89.6939055,19.9314757 L89.6939055,18.2889757 L91.2793132,18.2889757 C91.4850608,18.2889757 91.6526432,18.1209722 91.6526432,17.9147222 L91.6526432,12.0069792 C91.6526432,11.8007292 91.4850608,11.6334722 91.2793132,11.6334722 L87.4807909,11.6334722 L87.4807909,9.99097222 L91.7992974,9.99097222 Z" id="path-69"></path>
+        <path d="M102.201575,5.40397569 C102.201575,9.74123264 101.527467,12.8649826 100.014629,15.5319792 C98.8137994,17.6507292 96.5071521,19.9314757 94.2805612,19.9314757 L94.2805612,18.2889757 C95.5629451,18.2889757 97.4558512,16.7214757 98.5901009,14.7204687 C99.9540386,12.3137326 100.562297,9.44046875 100.562297,5.40397569 L102.201575,5.40397569 Z" id="path-71"></path>
+        <path d="M96.9090886,5.40397569 C96.9090886,9.44046875 97.5165987,12.3137326 98.8812851,14.7204687 C100.015535,16.7214757 101.908441,18.2889757 103.190825,18.2889757 L103.190825,19.9314757 C100.964234,19.9314757 98.6575866,17.6507292 97.4567565,15.5319792 C95.9439186,12.8649826 95.2698109,9.74123264 95.2698109,5.40397569 L96.9090886,5.40397569 Z" id="path-73"></path>
+        <path d="M97.0240719,4.07272569 C96.9081136,5.38597222 95.948933,8.35972222 94.032104,10.2924826 L92.8694218,9.13447917 C94.3523126,7.63972222 95.2546283,5.17972222 95.3750787,4.07272569 L97.0240719,4.07272569 Z" id="path-75"></path>
+        <path d="M88.4661405,5.38125 C88.4672485,5.42176372 88.4772664,5.80418518 88.478087,6.44273407 L88.478087,6.6030625 C88.4767933,7.70498542 88.4474339,9.46214583 88.3127656,11.50875 C88.0950391,14.8042535 87.6895333,17.6205035 87.1051974,19.9260069 L85.4105696,19.9260069 C87.0371198,13.9042535 86.8306235,5.52 86.8283775,5.42625 L88.4661405,5.38125 Z" id="path-77"></path>
+        <polygon id="path-79" points="67.1021819 11.9910069 83.712564 11.9910069 83.712564 13.6335069 67.1021819 13.6335069"></polygon>
+        <polygon id="path-81" points="67.48225 4.63574653 83.3324959 4.63574653 83.3324959 6.225 67.48225 6.225"></polygon>
+        <polygon id="path-83" points="77.8931985 5.46975694 79.7105402 5.46975694 79.7105402 19.9260069 77.8931985 19.9260069"></polygon>
+        <path d="M72.2698652,5.38125 C72.2710032,5.42285868 72.2816473,5.82510636 72.2820515,6.49506788 L72.2820515,6.6030625 C72.2808774,7.70498542 72.2516079,9.46214583 72.1164903,11.50875 C71.8987638,14.8042535 71.4940067,17.6205035 70.9089222,19.9260069 L69.2150431,19.9260069 C70.4831683,15.2290392 70.6365234,9.09472653 70.6415566,6.57847292 L70.6416675,6.39213639 C70.6411707,5.79537014 70.6325514,5.445 70.6321022,5.42625 L72.2698652,5.38125 Z" id="path-85"></path>
+        <path d="M128.568978,4.0725 L126.629027,8.97975694 C126.522819,9.24899306 126.720261,9.54149306 127.009809,9.54149306 L138.510051,9.53850694 C138.806389,9.53850694 139.004702,9.2325 138.884217,8.96100694 L136.968816,4.63574653 L138.761468,4.63574653 L140.73067,9.08175347 C141.16769,10.06875 140.447217,11.1810069 139.369814,11.1810069 L126.18835,11.1839935 C125.135602,11.1847569 124.414362,10.12125 124.802666,9.14100694 L126.806969,4.0725 L128.568978,4.0725 Z" id="path-87"></path>
+        <path d="M120.803184,7.62892361 C120.803184,10.7909201 119.089091,12.6794271 116.217573,12.6794271 L116.217573,11.0294271 C118.647666,11.0294271 119.157934,9.17993056 119.157934,7.62892361 L120.803184,7.62892361 Z" id="path-89"></path>
+        <path d="M108.72893,7.62892361 C108.72893,9.17993056 109.239199,11.0294271 111.669292,11.0294271 L111.669292,12.6794271 C108.797774,12.6794271 107.083681,10.7909201 107.083681,7.62892361 L108.72893,7.62892361 Z" id="path-91"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="导航栏-黑-hover" transform="translate(-20.000000, -20.000000)">
+            <g id="编组-11" transform="translate(20.000000, 20.000000)">
+                <g id="编组">
+                    <g transform="translate(0.000141, 0.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-18"></g>
+                        <polygon id="Fill-17" fill-opacity="0.6" fill="#D8D8D8" mask="url(#mask-2)" points="-0.870746986 -0.868055556 24.9395508 -0.868055556 24.9395508 24.8680556 -0.870746986 24.8680556"></polygon>
+                    </g>
+                    <g>
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Clip-20"></g>
+                        <polygon id="Fill-19" fill="#FFFFFF" mask="url(#mask-4)" points="-0.870605792 -0.868055556 24.939692 -0.868055556 24.939692 24.8680556 -0.870605792 24.8680556"></polygon>
+                    </g>
+                    <g transform="translate(11.841976, 0.000000)">
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <g id="Clip-22"></g>
+                        <polygon id="Fill-21" fill="#EBF2F2" mask="url(#mask-6)" points="-0.870540392 -0.868055556 13.0977163 -0.868055556 13.0977163 15.6520486 -0.870540392 15.6520486"></polygon>
+                    </g>
+                    <g transform="translate(0.000126, 0.000030)">
+                        <mask id="mask-8" fill="white">
+                            <use xlink:href="#path-7"></use>
+                        </mask>
+                        <g id="Clip-24"></g>
+                        <polygon id="Fill-23" fill="#C3F99D" mask="url(#mask-8)" points="-0.870731915 -0.868085648 9.92038922 -0.868085648 9.92038922 15.6520185 -0.870731915 15.6520185"></polygon>
+                    </g>
+                    <g transform="translate(0.000126, 16.991997)">
+                        <mask id="mask-10" fill="white">
+                            <use xlink:href="#path-9"></use>
+                        </mask>
+                        <g id="Clip-26"></g>
+                        <polygon id="Fill-25" fill="#EBF2F2" mask="url(#mask-10)" points="-0.870731915 -0.868055556 9.92038922 -0.868055556 9.92038922 7.87605903 -0.870731915 7.87605903"></polygon>
+                    </g>
+                    <g transform="translate(11.841993, 16.991997)">
+                        <mask id="mask-12" fill="white">
+                            <use xlink:href="#path-11"></use>
+                        </mask>
+                        <g id="Clip-28"></g>
+                        <polygon id="Fill-27" fill="#82E6FF" mask="url(#mask-12)" points="-0.870557803 -0.868055556 13.0976989 -0.868055556 13.0976989 7.87605903 -0.870557803 7.87605903"></polygon>
+                    </g>
+                    <g transform="translate(0.216776, 0.000000)">
+                        <g id="Image-29">
+                            <mask id="mask-14" fill="white">
+                                <use xlink:href="#path-13"></use>
+                            </mask>
+                            <g id="蒙版"></g>
+                            <image mask="url(#mask-14)" x="-0.913270382" y="5.03472222" width="21.7639451" height="21.3541667" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABfCAYAAAAXtMJAAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAYKADAAQAAAABAAAAXwAAAACKQnAZAAAhq0lEQVR4Ae2dW3Icx5WG69INECQtytIoPGTIEXKE/CLpzVvwFrQem9sZb0Fb0JukFztCigkHaYdHskiRBIHurprvOyezuwACYAMgQdFCUYm6V2f+/7nlyaxS01wv1whcI3CNwDUC1whcI/BGEGjfyK++8R8dt2h3O15FNbeoyFVU43X/xjHAt4H2BWReDyEv/MzrhuLqnj8BvQJ+vzm5vV//pW0+/bxedbSKf2rGo3e9WiJOrtDRKrxlewX4CucU9K+B8nOa881RSF9o4CeA/heOfsq6LkeIeHUkzOrz3/71KcBPQf81wP87WroRvO8LGe9PwP432wl+20jGNxSJHPnn0vpbr4aETUXiyT+nPxMTsk21qqxWif8EwJT0B5R739DOT5rmPbZ/oLxDcXlc1m6/U8B9zPo9yg+Uu5SHFJevWUuKmuAST7g8CT8jAk4AvIIaLT7jTwXdSyrwd4HoIaWC3jRdc4v9p5Q9yj5luuwB7Pf/1zQ3R371gyEIkYymGdZETElY3305EtaPmdblarcnwFfAp4BuU5mpmZkCvwT0B//smtu/sZ1d0/zYNbvvts0B4O8cI+AQsHcpBwV0ga/le459xr7a8AIJbzUBBXyBn4IuoC46zJOW405UM/MHLlTiBVoTs2I9UMZJ8Zz7rhdcs1cevv8Myb85cMyIJ4E/5AkScIt1z3pG2aVMSfgz11/SF7xBJwz4xyW+SnKxsM0XwCGw0yVB3hz5/m9t89nHCX4FfgHA+z/2TfNuh6T3AfqM9YJSSdgtUPuk/ubYPHs+NrMbK64dmiWg7/AMSXjK+VtexPJXygHnP+eqb9i2/pd0yG+IgAJ+lfop8P8GmErAZ2wfsKfjnC7Vicaxj9OkeM/jIt3vsF69C/DPZs3hzR7pVYb7pjugvbupAcMh6x3AB8YoNwbgXnGtZcnTljw+f7eSkJFSOvevOXs/KlDFKHbO++cNEHAMfJ2mDVXa71G0z+4LssDrOJXAp6zrovlwqY70abHtmpdD4NwX0n1gB/xd4ES2IUDwhbdv5lw37GBsFmjhXAClB6N1qAYsm+XOgqs7StKgbxgoyrwRktqT4WnRAitzseUNEDCp6DRi+Z4GC/wPrAVdM+L+ivKccoc91y4C/w5rzx16DFNz8LRr9m4JWlrsZg/gD+fNuCOUc662rbNmtoSMWde0y67p43EDTxBepH5nydpf1le0PKnhzpHfGfnNJMArDFHTFBbp15ddzBlfMQET6Z+Cf0CDf0epjtO10qwdFnQjFo2CUCn982eEkTeFs42iXV/2fXN40Df9bt8sAX4H4Jc7AL/cacbZnGfPhb8ZW+/it1pI6OlarTBBfZqcYenTD4MgyRWdcMzPxmYHJ80ZzNwQoe1XnNdc3uea1IPYOO+fKyaA6mn3M8ppia81OYBHeRzyRpjI+oByi2OSgOXmLiSca5vnnoeMLkQXwJH4XZ05193wSsBfYGDaOTDNkXIoBHzg4648lprAlYj/QKDT9SvWbPTo0ky323OtFAHrIeTsEEvdXIVZu8PZR5z5gacbHPyaojO+xHKFBKylP8NLpWcK/g0a/pxygNzNWWuVjVp6pFrH6b/+hvIpzALENlKsVgiaR7X1M8BfhcQT/8yQfsBPAiBhhUagARI2DMCM2RhhoesXkMCT++dxTtNj2mFsiYjwCzNMkzqkb9Ff6J80QdUMaYhSJM5NxRUSQN2m0m+VlaZ7FMEffgL4X6XDFMjDMADsa1I4rzlaLoho5jYVZ7uAEhypYGr3R2y70i34zYqr+wq8OpPbTY8WDPiEAfoQ8XHQ0mvVD9EAAswV1KIZgo9ecE5jaDSkUzY4ta559D3O/8CZ1GYouJgfuCICTpD+hzRG8J+GVBGZAP4iZF/5n9Nc7DjNDqmO5iPlc6W8mKZ5mqZhybEW4GZqjfENBAB+u6Lb1AJ+B/jDLlARc3ZJkh00LuYcpmeAgAECuG/sIcZD/gqmaWwFXb9g3VIQdqPOmdLQhBoNXWK5IgKo4VT6jXjepwhE2nwauA/we5RDgr4dJHix0wzztNsZySODK2QdkIzc1QJLB/DV/GjnxwGgAbuVBJ5u0IiqxLFhwC94Lz5kjA6v8Q1RT/c8njVwbOyVfJzyaoFCqYcpBBjDoFctMJfkkzRB+gHbptG6wHIFBEyk/9OoqOCnGdGmKuUzwB8FH7C6nV2az3oueIKo+ShOtReMCjgSr8lA+sdOzeCcAHeSkPe6loSUfs8RAQ1ci/0XsLZL85OE4hM6QNQzjxzHKXtfOHOfPenEqYU1k5ppkQuBL1+vmYA1+Kpqdrbs3f7vP/vmv3YA8NcJ3BLHKRUCP8PKamnHsLZmX1R6SMCu9xBgnUfsuKCpDdp0+7MeF3x6WEGa625ifsYRAiCLgwAM2BoagG5H4iuOhUZwrO1wyBFz+RxNWvaNB+41MND9GxrbV5Fe/YCLFEjrOZfXRAANdLFSU9Oz+zdc2sdd88FvyNXQGCNz/w43aCimZ9XeoOxhVlDyFQniHpe3ggxsedcijUh4pxSHLQcQwNekZJdJUiBAEiDMogZpfsbRfdo6Sjh23k4TiGt+sFU8h/p2GkSjfmDVZ3DPgNNul/ymZm7Hs8ZeafrsmVseUDJ94jN5zvk6ZK+BgCL1tHgNfjU9vwN84/3dR/zuHa3rnPhDKUvT04bkm5m/GSUy95DQcLwpjlQzk9Ke2qP0pwlRMwBMEtAoCWjtDwBkHkP6IUA5Hc35417bliT0mISMOuMOs1N+pwX8poSt/p6h7oyQuKPf4T9p99fu8iT9wAWXV0jAMam3QpqdByExhpw23gJQBfwBkLT76SyR/iWS395k/xZYJQmNSeNBUoopCjOjnbfuPA/7T9cVXNGGUtLccE1AVAiL39aBq52GQNp/wWdvtN+LNlTwuS8ctj4Hxx/mjvvHkshrnqDBt4PWyzriV0DAMeDv07yaZlA1P6OR9nQr+Lch4AkN7J9jGm4onTpMwDe2wPSQmccEQACl6yBhkAjOdVwnQEY5JZxsR+qPVLeQMLjNs8k7xFoSdMzacMPUsUg/J1kMd7D/oK82WMNR5029CL1iramL+0lxrOhjrCLayhD4EPAd3HnM4I5jypdwxFb2gssJwNsp0dx8QTGz+TCAN2xL6U/wd4AcBwn4S01LBT+uutmsAN5hkLaDBNbkAQBFIvAHhpOYFMENM6RTBXDBTT/g7xQiOCdBgp+mRyFQ+tP88GA22SbwD+A1VfFcCBB8TV0hOvve5pjwWPgC73VkTQ/0HnuXcMQXJOAEO+/oVTU3RjpKvTGzHS2jh+bJvHmOXe1xpgH+QnODaZnd5CwArwC+N7YQdDXgdpDQQEjDdeEfxgwpNzZdKS3gR9eW3ymkJOgb8NP0SEElwC2iHkNOJT80hTWkhda4j2mLEBfpb+nwNQV8bb+5KYuO2A6ZQhfkKpjbO+JzEnBM6vnFMDc2q5qbb6m+iTRjiozzJWDW7N02lkfqiXYMN9s54C81Lwl+B/hKvJI/AH7T3AYA9vEJHQSEIy4E2GsNyRf8Cjy/l2aurgEsjqXECk8udrQEvxJRNIY6rrWHbc2az9MHdJohthEd7sqi8ZR6yXBRAC+wnIOAY+CfZm7uUEEra2JNF2uUM3ueoeYC8Hs6Wtp8nevQAjCS3wq+oHeCjuRDRJDBeQmil8b1mCC0J0wQzlYCwuyEbQdkopkAvK7X4CuRlKi/oBN+esgwFG3Rd2TimTX7I/s6de1/mDnA93dmjCHYrghD9/mtPQWMtPhDRuLuXrhHvCUBp4Cv6plWqEk1pV7QH5XKZwoBmxrOFvCI89sl4M/saCHZSrxgF4lvlXqKJqgdKUh/M1Igi5Qo4PAMfkHwQzr5LbOkVSqV7CAhAJeQsi/usbghGcp/5B3Y8/4EWfAFW42VgN4eNhowQILXjCQDWwif7+UgkY7YOPQSjnhLAqi2Vb9P9arkC34dSHn8L4LJD8yTz5AKzA3FxJrd+OjhLjA7pBbaOQQo/StBpRBqam40O2vwIaQZOQb4YwE/+wclpcAzw14HaAm+oCf4FXDX08JuLIAeS2qL5ksHniQmCWF6SFdIsB29IKeYoZYEoL5Nwv3NV+CItyAA6T8N/DqQcuODntDSblUm1Q7J6zQHO81iV6tJeiHyOqYY9lDjDDW7AD81wHkHaYJ0uGrBVPKzDxCSr/TzG4IT5qcAcRTsDfBuTZ1vAsfBel8xV4JcNSq0AMnP5+fxlpxTpiHcT/CPO+IH3HGBHvHLCLAJm0VHo7f/npRC7dVGLh9QVFkp6PYyBdDtprMN243UDwA/IvltT6qhgB9xvhJPibBzanZ0vGH7lXyLkp/SL1gVCMHPeH4DPCdZsu61BRKRY7/1ugRy8xy1KAGPjl0QLT60DROUGdccJq0mb+qIL9gjfgkBiP5U+m2U8X3zcQ5KWHltvmZH8CPKASyl3hi/r8ADfqvZ0awY0xvbR3yfzrZD4uPYxOzgOGh8gp9Z0ZPAF0Q0NHzUBvAq9dY9icitPF4JkA5BTyKqFkiC2532n7XZ06pxnnvFjvglBEQD8o/Sr4oZ+zpzwcqby38c4OOoMDlLk2YlyjGPEz1YwbUg9QIdcX1ZD6xDC7T11dniqBN8CUhtyk6/dS0SWkBLcCugWc8KvntJiULkliTkteqCx/xXNSD8QPEJAp32Px2xv6sJCkL4bUmbvRpHfDYBx6W/NkDLbSfLwXPdrKNQy12iHQZRTC0MSL72Xkcr+BnpYGqQ+jA1xPcZBXEe4CtZmqsRyfcZp4MvCQlcBDvHpJ+TsQhwyr1XG/Uk7J5MQpKM+qzQgNKjfsEREx31JRKSnHWPmKkwl3TEqt8pSwk9PZu93Jxp7IC00q8dnD9VKiCRwQodcMcIlsCpG4I5mFIuJCjp4WyrzWdtP6CSZKjZGqaeAb6St5HajekRyoQ5JTsBjoPxp+67noJfo5mqBUq6REReSUdci+Abjnpu2iO+tekNO4lMR2yUmEtdb+pxwtbZGjC9wWkYThNU+jVDTwCjYSKUlV8ycB4E8Fd7PTAeK5Btn52ukWxm29Hxwv4LuNoxRnoBLSkmx+vH2tMljRyJNho8NTsbwGrjko4KMBefunhH1YiUeu/Nf5vnnuyIJUJiwhHTITupR/wPnlWnqkQlqsU7tUZx4gwNmNxYZyPLskNxzygam+i2OBmKJNXhwhyKgKmunCHvIxlWNwbGQ7KTGAdYYqyWc+R4kXyujRy+wR1CUTpaCb51FL4sFXr3E9TNkUmVz9is17tOba4aIMhhispacxN1oD/QogXu20YdcZBmj5gj9oh/y9bDqFEdI+bAy5ftCPA59eEmnxySc0rgPhVYMkDh9BArEipK5aLiqOzxcC5jeLXOQRjXNKx2/7kPpgoA2bAK+mbNLZdaNuDrP3xu0pi/pyPWzEmCbYhEnNKvKWLf9q3BtwU4YnHQcCqYztSuwrplNbcnYPpA52n6w3tYkNmBDpk4BfPv2iasVvxlfk3rDDbm4FQJi3WAvJG8ITpDXKfPmfid6e+dta1V32apZkrcLZvQtR6p5CfY6YiLEKEBK3vDEFCLjji0AEfsWtP8+483NdmuViGFm5vOs2WA6LLcTQvqtlVicAnwjTo4b7qFmQb+s5rsxb9whcw6G3NuCMdNEQCRx9jOIUMh8x7PBWSsvWqztwHV53rNy5e8roLuL6TUb4TEVmx8TxBR9tWC6Aec4Ij1i1oHHfG6R/zy6mgGzrcYQD7iFpMCDmHbB14wh3I0B07pZwxwrAqQMctJvYAVpoBAFyAz9EcOPor7lOpoHZ8VCCER6KOLR/L88XOCWu84i4gNjT45SUgjlETU54cJNTGn+dH+s7aOoQVGRFs7Yn7j7LGB7Qj4BDh8dfOh9WYxl+ksSuVxLG+WCPJiCdiUgfHWlvmWWkin/bXMPIv5NR1xFA3S9o9MBWkBfC2R1DUGqHwm/6LiHog9zUJuu59AJYAJZB51exsi6j25frFHXMcY7IxpcnL8eeOIQxPMjJKcM2xYlTHi6ojPMVlrOwJocSz19U2b+w6QOlV7zms9C8B3MmE3c06Nk/gA3BkFVq/1pR5+hy59zL9RihVkzZMYVmAxR5ogPQktzuJFFCOjdIzeqDRKgje7f1EiJMsnpQ5U6Y8eMR2yI444fjPt/7pHDPjpsJmnyhhxdcQ88jxjxNsT8DAaLfBjAK/c7ACWsydXB4C2uwQmqVDqASl6jsWcMO/G+VBO/YvZZwLLPBy1ZsRpOBU2TJGmyWN1HwIzAcfzJTGAkBRJEPyTtCFYjTOSUzWCi8uyObbWPq6qhEbdeb5SXk1QRGuaI46FRpTz1kEfohaMj3DEd6L3c54x4jMIwHb5AtqfqZpvilvB+uJy+gEI+Inp20xwnd1S6nPikgGmDVM+litoAistiTORO0B36t/APQLuWynOTuvwC06ScmpIrjMVkZ5GUrJ/oCaoTWGj+cUNEZKR2pDwplRba0sSUbfjAMcr6FKU0pzP8DkJdj4/iaijZBGa4oR7/ICztm2v9x0A/gUc8RkEZD3jzfD7VFY/YCp6929owcdKIRb+V0pmNtbckFvKtVWKhvPH3sHAhNcwLVRZZxxzcAR7SNCH0XmYFHrF4TOYMGUHjXeGOG5nzbUdO4nQrMlqmqUKUgVPMK1TLdZpSkSpGefzComo//LeBLQrfZLqgGP+kcQYjjqUyfZ2PWLqcrojfjkBUVP+/IXyKU25C/imJKy+wyvDIxoI+wteG2KCAxVL+TEOsulpTjQrgL+i4Jx5Ow68fNUCcxWO2VkPPNV5mlhT3byEmJpQqTPeokdtbzmmpVhvzVNqQ2qFwFXTlKahkuC6EsFF6yW1QEoEiXJsgEZN0xHn79R1MU+cW00csUefUH7L1XZat3TELyGgmCFhvM+DP6HkKznK1EAXnBQavTJB500ersqw9PkBiehdzNNMGgDd6GiWkVEA6xRAAI8XIwZAh4QYdiRnFMdjwizgOybgHP/IEUGE4KM5akWGr2qFJPB8pdLQcUKCWnFcIyTDeuZfHsUW0Bfw3UoNcFrL2twV+689dYbESY7Y3NgFHPFLCLBik0VfkCQIeS5BApv7t1PRteKCH2+aH5A3xTnzaiKNxEHzEpyRUoSnvBIU/WleCxpi6qEjzJJCM7rUghEiYmzAWXElTW0WStPkej3vU/MU4E+d9UYbjhMhzNa2/pUE/6saEJEQRGqGJGIdhk4dMX7AAfqGaEiSL+iItyDgiBaY60gSvvhybO79IYmQBBujBQeWiJLUixu7hqi6qnS4LeCH1EOPdr+dacyQcM0Qd+c4QoIvKZl/5Ryz4jqukYSYvYxGOG09fYlkpH+oZkmTkUUSKhGuq4QXvHnamgQCDvUi9SG1IKYzhr9Js3PEEfPcPgbpL+WItyCAKupEjIjSFCUJfwT8mniyfyDEWnq/MHIHeB5RfPNc8+DL/5JgnHSgCVnwztXccFWpZ/gSbWh5R4t4FoEz1acyJymhEVILCRISPiKmq9f0tZnVdNab2dC2Cx9RnHWSoLAUYGPNbiwbEjyrL6g98nVfgNo7RBkhnWv2w+SxXjtiEpM7JOek6h+Uo6lpNSx1Ln5y82dLArzhBBK+5vCnRRZ9eTmlyVSFTXHYRulY4Zyyv+BIsba7nzvTXgK06ZgiXxF1DMEX5SAkidmYo0pC9sGLeZIQxxLiOWpDHb5MH2HaI7Wg+okEbqMRaoNL1tu/YYWid5iaUk2RsEb/oJigtgzOoAMbR1zAP6cjPgcB1rWQYKWt8H2PseWXqB5S7rL9FeV9YFTahNPAtHlMn+Ed01hqwZIjC/45mIlJKtqwwiQZX6kRSr/2v0UbKuiSoFnyqdU0xTX4h3DW3odpynEGTR2mKSbbSnpGTOmwKxEKSSUh62mt8wh/iyakE7eXkyREZMS265V+YNIjvoAjPicBVFASzCFY0aQhiVAb7Cv4QYu7nFV+faEZF8vnqOwl9AzkqLL5MQyJOHyOlN7QKePC8A8NY8ojpolBV4TX10YxRdU0kdLIp2qekHwcdaw1VzprzRRkhE+BjOhHrLVCArIPoVZIREp3JcGWJAk1OjJd7XQXHXNcSwRkJ8x2WMLYxHRFn7FxxIqPZ11vMWv6AgTwc0FCrFJekoj8rlolInvPXXzc4luap0liUJKt1ZqIzs/D8FGN1R5m6YCkBj1i80gjbydGqIlpCmdbSFAj0tVv3iNzuFOTFT4jprDrG3TWmLWAAU0oc0pNnsRLHPHuQNGEkHQ7j1m32hYqUARNHaaTafKwkOD7Yp3vlRUy1JLsfuY0TfVoy9T0BQmI2vGnOJb4Zo715d/9+/QV/uQLzA7mr8JR3+G4nw6TiJ4vWH3wm2zsc87vAL4SORCuGtWoDcZOQQQg9mjDiDZU/xD9BJx1g0akU05fITHxct8xZy0JdugieirPDyKMlNYRjnLvohEylFUb8kiNjEZf7uYXRkjoAT9f6k7pVwOsvfGY/9SAf/wdR/zh5PUlfUvBy18qS0pw3bv0OhyYRGzGRZ0l8CnlwZdM6vpDzqzQE2iU6uyKOpNaImrJ4M53yIhwME2zOcZrybwjO2ZKdhnwrz6irpMEQtgwR5gqCXE7OnU8Kzp1OmyyOMyyjtnQ1IWHslBzZ00HURJMgN0+Yf0Tz2HQsfuRcz+yn+txxYtX/SOO/URbntImA3L91iFJywUR4QqzrBCOzZ8pJxBwSQ3gp44sRzQilRmFYGE8AfDv0Uq/MnKPfV/1r0RomvZ/5BsM766i0qa2PXuIWdrZJWKKkJU5eGGaDmhSzr4Ln4A2VGctCTrqao5CW3TaYZpYSwLgRI5JrQhTVHrPkYawrkq/EZQyTQhNJrEKbr5fXKS+pC2U/lp8UupJjhH7tAzVU5vcP7a8YgLq088igkqeRET3rrGRjQGAn4iPSPTNMUuZDuAjSpDRSYZmiTJgmjpM02joOnHWmqa1OZo46jjm2AQkGC3ZG8+URkZIiDcE+fuChRkqI3eSYJ0Up7W94LIMQzBUfHfIfkPPNywEX/Oj/XeMeAtH/JoIoMqxXIQIGjtEljUjDUcYls8AgSyq4w1+Q8IOXTtyBtPUoB2tIWzpRzhnIzSh+ISqFWpDvoCNxmCSgoiSbTVczZf8hNBFU6Rvsk+RXUxdsSR0McbNaVLtXm1X0w+IqC/qjvtOWlCHtlheMwG1BhclIqSP0JXv9WiWnkLBjQAEIkpnTik2atLspMyZpsDcYJpWrLsSvlYfMRatMHSt2dY6J8ncj7M06ovcZmEl13Wk0RnLcFzDxYkH00Vx8Z+1sC/veotI6IoIqDU9g4g/UmHtZaotjfuOcYePdNNoBFD6sp99CDtzmiUJUUKXlPGQqGnHnjVEYJrMMdX+Q8uHOGroWvsNkXOSCHyDYa5Z1sgnmdBzHIBgonOGhoBrqsjeGqGNaGEeQ9b50tZYSFjx7bl4QZ92OvdPo1UXUxJf1J0XI6ErJqBW5Awi1r3qjzbfZXP8WSKeUsyySkQ66iRiwQeVWj5TtuJjewOmyc+UzdAKe9emOLpj/QiJCFJCG6Cc948jnxTvBtM/IORU0NP+Y0xImUtCjGNAeQ8RAzM/ukJCx4f/1Iflc3wAfl7p33J5QwTU2m1DBE17GA3KiQCGrxLhYNA+xY6dbxyPgK8Um2cifqIkCcJh1KRGqF/uR9JP0+RnatCCOk0yv7aSKQfHsDU3Pj8iJ0nguV2MZUAC35lTM7X81sKMU3vjqFmqzfycjfulDfVYWb9hAmptLkCEIaz9ZL/j5uuwAtXuEzbSsdNcmGeqCT+jplUxTeEfggzAJ3rilX3uNazFl/gWfoyA+byUYgHm40Uc1xSZWFGr0DQI8Dcdnqkk6KalSX1yvcXyMyGg1vScRCCj68xruN69NE3me+xHZI86fcQMH2FHTofdSQYduqFoxYiZiq9sQYJvx7eSEFMq/QUTDYDtZ2wkwSShmgDBq2XRAkb+uIFflbaTtaA28dj6Z0ZArd3WRNhwY/fMvOr+TJRpdPQRlYiekNJPWXaYqRo11cyrtr+PXrW9ZIowxqcKSlwTH3EiEOAZPbmpzDuZRKE/4jyoBUTzYb85Y7LLfcZF9iRgaxJ+pgTQhFheERGrkmdy4NCoSdMURLCWAMPV6JT5fSCuMd/vuIETjF3sDZs8sasY/iC+sJg+QZ/jcNQBw697aKA6oVfRiD39rmm+/MhXuxw3OXH5mRNQ67wlEV8xZeb9mDLzokY0T3Gmt5BWUuAzUuBTIiTGyEm96WdoQPk02sgsb42KZqXlI36pYRlpqQnphSSFVxIheR/wzTLVaZvvfTQyWffMZetw6cynXPlJ4umq5EYX/k94PifUsB9xl/IV0NTv0mme3qPYj3AIyPeZG1Lgu3zaWHOTPWtCWD74OpvnMY/rXr239o218c0Sh8sEg5x+adR1iE6oTfYTjLwWOOAFEr9s/ptiMs77/H8O/A/rQLsIEydc3hINyMpu/tKIaQq84f+AFERwxXRQqI7O+VanQBit8GE0PjWwTCKi/ZniaAHfTKyY1AEXCVD+h6V3QjmZUk2RiQedvETkdEx8DMfVIa/8gOLYeF2cT3XK8pYSYGuOmCXdno08m4gYnQtQkWaHSZkieXhb6JR2Xq3inyTgbtGWdO5+INZPUNPZZp3fj1Y//Kfp0eq3z5bN7ZuS6ncA7DDWr6w7XJv/rwEuPml5iwmozbkoEWWY1B6ApukAIJV8exCr53xm5EYS0JJoG3gLyHhrwYSzljlPumOHjRJ+JJ+UhUlDtexflNuUOknBNIQO+BRj/x9AAI2LZUsi0ieMzbd/R2M+zDBWeDUtBrFKfwP4uljz+y3TTZyiVJGy+6WUe49GKMzObYPaFSnoVUzb/5ZrPqM8pGJHzE+pY6mxq1N4mVzx1m5ORudsQ/qI6f/ITefMMOnfu+bOh+KQEu/ahKCBpym6J7x84Rd0fKP5KcUoJ4NX46MkIgl0wqKdMf3M0f/XzJ+45wQHzNPWvLr9H7acoBH3aaJzWx2vdj6TsxbufJjj1c7gEHwHUkwjux0RkB/oY1kyCfnOnXw9yzjfUNPpAPk/dvBe/78CJjUSfIOB2iHLJ/iUF5YzTr1w7Vt+YKIRaoNLHa922/DVpJ9a4fvQfhGAUeAJIV6Vi+9H6GhdHBG+8x3bH23+f2OCn7NCmpjeH7/2ovnx9mrZ3P4PX45oRMZM96PJ/r/B8v0HCYgxa/7Pe4+ZhRxkfAd8Hx3FRlOktP+VdcyD+mhsvoxLnDd7AvhHb5/uBTfTA7+c7RM0wsZLBn266NS5/4B9B1VcHkLM3U9S8t0X9HsA7iLw9R0K99d2352TpT/O+OeXvUyIEIhqntyWDBcJOW2Zgu41Au+yFu3TwT9yWdz0i/5TiBCDjYwfJeQsfF4A3ovPBj+uOOuZv+BzyO+UBZA4trvGZi3p9cjLQa9Xun7h9unJ6+3jCEy0ZH3qfICvb7veuEbgGoFrBK4RuEbgGoE3i8D/AyIiT/7QM7K3AAAAAElFTkSuQmCC"></image>
+                        </g>
+                        <g transform="translate(1.516160, 2.976007)">
+                            <mask id="mask-16" fill="white">
+                                <use xlink:href="#path-15"></use>
+                            </mask>
+                            <g id="Clip-31"></g>
+                            <polygon id="Fill-30" fill="#0085FE" mask="url(#mask-16)" points="-0.870557803 -0.868055556 19.9333535 -0.868055556 19.9333535 13.7320486 -0.870557803 13.7320486"></polygon>
+                        </g>
+                        <g transform="translate(7.485314, 2.976007)">
+                            <mask id="mask-18" fill="white">
+                                <use xlink:href="#path-17"></use>
+                            </mask>
+                            <g id="Clip-33"></g>
+                            <polygon id="Fill-32" fill="#0055F0" mask="url(#mask-18)" points="-0.870557803 -0.868055556 13.9641999 -0.868055556 13.9641999 17.9560417 -0.870557803 17.9560417"></polygon>
+                        </g>
+                        <g transform="translate(8.833181, 9.311997)">
+                            <mask id="mask-20" fill="white">
+                                <use xlink:href="#path-19"></use>
+                            </mask>
+                            <g id="Clip-35"></g>
+                            <polygon id="Fill-34" fill="#0A24BD" mask="url(#mask-20)" points="-0.870557803 -0.868055556 9.24664712 -0.868055556 9.24664712 11.6200521 -0.870557803 11.6200521"></polygon>
+                        </g>
+                        <g transform="translate(9.410849, 2.976007)">
+                            <mask id="mask-22" fill="white">
+                                <use xlink:href="#path-21"></use>
+                            </mask>
+                            <g id="Clip-37"></g>
+                            <polygon id="Fill-36" fill="#0085FE" mask="url(#mask-22)" points="-0.870557803 -0.868055556 12.0386653 -0.868055556 12.0386653 19.3000521 -0.870557803 19.3000521"></polygon>
+                        </g>
+                        <g transform="translate(7.485314, 2.976007)">
+                            <mask id="mask-24" fill="white">
+                                <use xlink:href="#path-23"></use>
+                            </mask>
+                            <g id="Clip-39"></g>
+                            <polygon id="Fill-38" fill-opacity="0.7" fill="#88FCF9" mask="url(#mask-24)" points="-0.870557803 -0.868055556 13.9641999 -0.868055556 13.9641999 13.7320486 -0.870557803 13.7320486"></polygon>
+                        </g>
+                        <g transform="translate(9.412346, 2.976007)">
+                            <mask id="mask-26" fill="white">
+                                <use xlink:href="#path-25"></use>
+                            </mask>
+                            <g id="Clip-41"></g>
+                            <polygon id="Fill-40" fill-opacity="0.7" fill="#88FCF9" mask="url(#mask-26)" points="-0.870557803 -0.868055556 12.0371679 -0.868055556 12.0371679 14.8840451 -0.870557803 14.8840451"></polygon>
+                        </g>
+                        <g transform="translate(8.833181, 16.991997)">
+                            <mask id="mask-28" fill="white">
+                                <use xlink:href="#path-27"></use>
+                            </mask>
+                            <g id="Clip-43"></g>
+                            <polygon id="Fill-42" fill="#0096FC" mask="url(#mask-28)" points="-0.867953942 -0.868055556 1.44389346 -0.868055556 1.44389346 3.94005208 -0.867953942 3.94005208"></polygon>
+                        </g>
+                    </g>
+                </g>
+                <mask id="mask-30" fill="white">
+                    <use xlink:href="#path-29"></use>
+                </mask>
+                <g id="Clip-45"></g>
+                <polygon id="Fill-44" fill="#FFFFFF" mask="url(#mask-30)" points="27.96838 3.20467014 46.8705578 3.20467014 46.8705578 7.04078125 27.96838 7.04078125"></polygon>
+                <mask id="mask-32" fill="white">
+                    <use xlink:href="#path-31"></use>
+                </mask>
+                <g id="Clip-47"></g>
+                <polygon id="Fill-46" fill="#FFFFFF" mask="url(#mask-32)" points="28.8556525 6.21217014 45.9831286 6.21217014 45.9831286 12.0267882 28.8556525 12.0267882"></polygon>
+                <mask id="mask-34" fill="white">
+                    <use xlink:href="#path-33"></use>
+                </mask>
+                <g id="Clip-49"></g>
+                <polygon id="Fill-48" fill="#FFFFFF" mask="url(#mask-34)" points="30.5597868 13.4330903 44.2792903 13.4330903 44.2792903 19.1719618 30.5597868 19.1719618"></polygon>
+                <mask id="mask-36" fill="white">
+                    <use xlink:href="#path-35"></use>
+                </mask>
+                <g id="Clip-51"></g>
+                <polygon id="Fill-50" fill="#FFFFFF" mask="url(#mask-36)" points="27.9682233 11.1225 46.8704011 11.1225 46.8704011 20.7958507 27.9682233 20.7958507"></polygon>
+                <mask id="mask-38" fill="white">
+                    <use xlink:href="#path-37"></use>
+                </mask>
+                <g id="Clip-53"></g>
+                <polygon id="Fill-52" fill="#FFFFFF" mask="url(#mask-38)" points="52.033366 11.8879514 66.2750997 11.8879514 66.2750997 15.1607986 52.033366 15.1607986"></polygon>
+                <mask id="mask-40" fill="white">
+                    <use xlink:href="#path-39"></use>
+                </mask>
+                <g id="Clip-55"></g>
+                <polygon id="Fill-54" fill="#FFFFFF" mask="url(#mask-40)" points="52.0335053 3.20467014 66.2752564 3.20467014 66.2752564 8.17253472 52.0335053 8.17253472"></polygon>
+                <mask id="mask-42" fill="white">
+                    <use xlink:href="#path-41"></use>
+                </mask>
+                <g id="Clip-57"></g>
+                <polygon id="Fill-56" fill="#FFFFFF" mask="url(#mask-42)" points="52.2887877 6.21178819 66.0210187 6.21178819 66.0210187 12.6939062 52.2887877 12.6939062"></polygon>
+                <mask id="mask-44" fill="white">
+                    <use xlink:href="#path-43"></use>
+                </mask>
+                <g id="Clip-59"></g>
+                <polygon id="Fill-58" fill="#FFFFFF" mask="url(#mask-44)" points="52.1957251 14.3546875 56.1177795 14.3546875 56.1177795 20.7940625 52.1957251 20.7940625"></polygon>
+                <mask id="mask-46" fill="white">
+                    <use xlink:href="#path-45"></use>
+                </mask>
+                <g id="Clip-61"></g>
+                <polygon id="Fill-60" fill="#FFFFFF" mask="url(#mask-46)" points="62.267365 14.3546875 66.2650012 14.3546875 66.2650012 20.7940625 62.267365 20.7940625"></polygon>
+                <mask id="mask-48" fill="white">
+                    <use xlink:href="#path-47"></use>
+                </mask>
+                <g id="Clip-63"></g>
+                <polygon id="Fill-62" fill="#FFFFFF" mask="url(#mask-48)" points="58.4048741 14.3554514 61.9857744 14.3554514 61.9857744 18.6318056 58.4048741 18.6318056"></polygon>
+                <mask id="mask-50" fill="white">
+                    <use xlink:href="#path-49"></use>
+                </mask>
+                <g id="Clip-65"></g>
+                <polygon id="Fill-64" fill="#FFFFFF" mask="url(#mask-50)" points="55.1101088 14.3552257 63.69111 14.3552257 63.69111 20.7938368 55.1101088 20.7938368"></polygon>
+                <mask id="mask-52" fill="white">
+                    <use xlink:href="#path-51"></use>
+                </mask>
+                <g id="Clip-67"></g>
+                <polygon id="Fill-66" fill="#FFFFFF" mask="url(#mask-52)" points="46.8269777 6.1984375 53.2382529 6.1984375 53.2382529 20.7940625 46.8269777 20.7940625"></polygon>
+                <mask id="mask-54" fill="white">
+                    <use xlink:href="#path-53"></use>
+                </mask>
+                <g id="Clip-69"></g>
+                <polygon id="Fill-68" fill="#FFFFFF" mask="url(#mask-54)" points="46.8269777 3.47017361 53.2382529 3.47017361 53.2382529 7.11652778 46.8269777 7.11652778"></polygon>
+                <mask id="mask-56" fill="white">
+                    <use xlink:href="#path-55"></use>
+                </mask>
+                <g id="Clip-71"></g>
+                <polygon id="Fill-70" fill="#FFFFFF" mask="url(#mask-56)" points="104.305121 13.063941 123.581378 13.063941 123.581378 16.591059 104.305121 16.591059"></polygon>
+                <mask id="mask-58" fill="white">
+                    <use xlink:href="#path-57"></use>
+                </mask>
+                <g id="Clip-73"></g>
+                <polygon id="Fill-72" fill="#FFFFFF" mask="url(#mask-58)" points="104.837067 3.76769097 123.050164 3.76769097 123.050164 7.09305556 104.837067 7.09305556"></polygon>
+                <mask id="mask-60" fill="white">
+                    <use xlink:href="#path-59"></use>
+                </mask>
+                <g id="Clip-75"></g>
+                <polygon id="Fill-74" fill="#FFFFFF" mask="url(#mask-60)" points="84.5875269 3.76769097 94.8003016 3.76769097 94.8003016 7.09305556 84.5875269 7.09305556"></polygon>
+                <mask id="mask-62" fill="white">
+                    <use xlink:href="#path-61"></use>
+                </mask>
+                <g id="Clip-77"></g>
+                <polygon id="Fill-76" fill="#FFFFFF" mask="url(#mask-62)" points="88.0040136 3.20460069 91.3836582 3.20460069 91.3836582 6.27196181 88.0040136 6.27196181"></polygon>
+                <mask id="mask-64" fill="white">
+                    <use xlink:href="#path-63"></use>
+                </mask>
+                <g id="Clip-79"></g>
+                <polygon id="Fill-78" fill="#FFFFFF" mask="url(#mask-64)" points="95.1840261 3.76769097 104.061296 3.76769097 104.061296 7.09305556 95.1840261 7.09305556"></polygon>
+                <mask id="mask-66" fill="white">
+                    <use xlink:href="#path-65"></use>
+                </mask>
+                <g id="Clip-81"></g>
+                <polygon id="Fill-80" fill="#FFFFFF" mask="url(#mask-66)" points="112.137826 4.60170139 115.749405 4.60170139 115.749405 20.7940625 112.137826 20.7940625"></polygon>
+                <mask id="mask-68" fill="white">
+                    <use xlink:href="#path-67"></use>
+                </mask>
+                <g id="Clip-83"></g>
+                <polygon id="Fill-82" fill="#FFFFFF" mask="url(#mask-68)" points="124.228916 11.4213715 141.372097 11.4213715 141.372097 20.7984722 124.228916 20.7984722"></polygon>
+                <mask id="mask-70" fill="white">
+                    <use xlink:href="#path-69"></use>
+                </mask>
+                <g id="Clip-85"></g>
+                <polygon id="Fill-84" fill="#FFFFFF" mask="url(#mask-70)" points="86.6102331 9.12291667 94.1617301 9.12291667 94.1617301 20.7995312 86.6102331 20.7995312"></polygon>
+                <mask id="mask-72" fill="white">
+                    <use xlink:href="#path-71"></use>
+                </mask>
+                <g id="Clip-87"></g>
+                <polygon id="Fill-86" fill="#FFFFFF" mask="url(#mask-72)" points="93.4100034 4.53592014 103.072133 4.53592014 103.072133 20.7995312 93.4100034 20.7995312"></polygon>
+                <mask id="mask-74" fill="white">
+                    <use xlink:href="#path-73"></use>
+                </mask>
+                <g id="Clip-89"></g>
+                <polygon id="Fill-88" fill="#FFFFFF" mask="url(#mask-74)" points="94.3992531 4.53592014 104.061383 4.53592014 104.061383 20.7995312 94.3992531 20.7995312"></polygon>
+                <mask id="mask-76" fill="white">
+                    <use xlink:href="#path-75"></use>
+                </mask>
+                <g id="Clip-91"></g>
+                <polygon id="Fill-90" fill="#FFFFFF" mask="url(#mask-76)" points="91.998864 3.20467014 97.8946297 3.20467014 97.8946297 11.1605382 91.998864 11.1605382"></polygon>
+                <mask id="mask-78" fill="white">
+                    <use xlink:href="#path-77"></use>
+                </mask>
+                <g id="Clip-93"></g>
+                <polygon id="Fill-92" fill="#FFFFFF" mask="url(#mask-78)" points="84.5400118 4.51319444 89.3486946 4.51319444 89.3486946 20.7940625 84.5400118 20.7940625"></polygon>
+                <mask id="mask-80" fill="white">
+                    <use xlink:href="#path-79"></use>
+                </mask>
+                <g id="Clip-95"></g>
+                <polygon id="Fill-94" fill="#FFFFFF" mask="url(#mask-80)" points="66.2316241 11.1229514 84.5831218 11.1229514 84.5831218 14.5015625 66.2316241 14.5015625"></polygon>
+                <mask id="mask-82" fill="white">
+                    <use xlink:href="#path-81"></use>
+                </mask>
+                <g id="Clip-97"></g>
+                <polygon id="Fill-96" fill="#FFFFFF" mask="url(#mask-82)" points="66.6116922 3.76769097 84.2030537 3.76769097 84.2030537 7.09305556 66.6116922 7.09305556"></polygon>
+                <mask id="mask-84" fill="white">
+                    <use xlink:href="#path-83"></use>
+                </mask>
+                <g id="Clip-99"></g>
+                <polygon id="Fill-98" fill="#FFFFFF" mask="url(#mask-84)" points="77.0226407 4.60170139 80.581098 4.60170139 80.581098 20.7940625 77.0226407 20.7940625"></polygon>
+                <mask id="mask-86" fill="white">
+                    <use xlink:href="#path-85"></use>
+                </mask>
+                <g id="Clip-101"></g>
+                <polygon id="Fill-100" fill="#FFFFFF" mask="url(#mask-86)" points="68.3444853 4.51319444 73.1526282 4.51319444 73.1526282 20.7940625 68.3444853 20.7940625"></polygon>
+                <mask id="mask-88" fill="white">
+                    <use xlink:href="#path-87"></use>
+                </mask>
+                <g id="Clip-103"></g>
+                <polygon id="Fill-102" fill="#FFFFFF" mask="url(#mask-88)" points="123.825569 3.20444444 141.730941 3.20444444 141.730941 12.0520486 123.825569 12.0520486"></polygon>
+                <mask id="mask-90" fill="white">
+                    <use xlink:href="#path-89"></use>
+                </mask>
+                <g id="Clip-105"></g>
+                <polygon id="Fill-104" fill="#FFFFFF" mask="url(#mask-90)" points="115.347015 6.76086806 121.673742 6.76086806 121.673742 13.5474826 115.347015 13.5474826"></polygon>
+                <mask id="mask-92" fill="white">
+                    <use xlink:href="#path-91"></use>
+                </mask>
+                <g id="Clip-107"></g>
+                <polygon id="Fill-106" fill="#FFFFFF" mask="url(#mask-92)" points="106.213123 6.76086806 112.53985 6.76086806 112.53985 13.5474826 106.213123 13.5474826"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -363,21 +363,24 @@ function navigateToObservatory(observatory) {
     
     // 获取当前设备类型
     const ua = navigator.userAgent.toLowerCase();
-    const isIos = /iphone|ipad|ipod/.test(ua);
-    const isAndroid = /android/.test(ua);
+    const isMobile = /iphone|ipad|ipod|android/.test(ua);
     
-    if (isIos) {
-        // iOS: 使用坐标导航 URL Scheme
-        const iosUrl = `amap://navi?lat=${lat}&lon=${lng}&dev=1&style=2`;
-        window.location.href = iosUrl;
-    } else if (isAndroid) {
-        // Android: 使用坐标导航 URL Scheme
-        const androidUrl = `amapuri://navigation?lat=${lat}&lon=${lng}&dev=1&style=2&t=0`;
-        window.location.href = androidUrl;
+    // 使用高德地图官方 URI API
+    // 参数说明：
+    // - position: 经纬度坐标，格式为 lon,lat
+    // - name: 自定义显示名称
+    // - src: 来源信息，建议填写
+    // - coordinate: 坐标系，gaode表示高德坐标（gcj02）
+    // - callnative: 是否调起高德地图APP，移动端设为1，PC端设为0
+    
+    const position = `${lng},${lat}`;
+    const callnative = isMobile ? 1 : 0;
+    const url = `https://uri.amap.com/marker?position=${position}&name=${encodeURIComponent(name)}&src=BG2FOU&coordinate=gaode&callnative=1`;
+    
+    if (isMobile) {
+        window.location.href = url;
     } else {
-        // 桌面版本：使用坐标直接打开高德地图
-        const webUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}`;
-        window.open(webUrl, '_blank');
+        window.open(url, '_blank');
     }
 }
 

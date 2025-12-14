@@ -149,6 +149,11 @@ html, body {
     color: white;
     flex: 1;
     word-break: break-word;
+    min-width: 0;  /* 允许文本在flex容器中正常换行 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 80px);  /* 为按钮留出足够的空间 */
 }
 
 .info-panel.hidden {
@@ -167,8 +172,10 @@ html, body {
 }
 
 .close-btn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
     border: none;
     background: rgba(255, 255, 255, 0.2);
     color: white;
@@ -180,6 +187,7 @@ html, body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    padding: 0;
 }
 
 /* 头部操作按钮容器 */
@@ -192,8 +200,10 @@ html, body {
 
 /* 导航按钮 */
 .nav-btn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
     border: none;
     background: rgba(255, 255, 255, 0.2);
     color: white;
@@ -205,6 +215,7 @@ html, body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .nav-btn:hover {
@@ -327,7 +338,6 @@ html, body {
     to {
         opacity: 1;
     }
-    word-break: break-word;
 }
 
 #info-image-container {
@@ -497,16 +507,28 @@ html, body {
     }
 
     .close-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        margin: 2px 2px 0 0;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        min-height: 34px;
+        font-size: 18px;
     }
 
     .nav-btn {
-        width: 30px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        min-height: 34px;
         font-size: 14px;
+    }
+    
+    .info-panel .panel-header h2 {
+        font-size: 14px;
+        max-width: calc(100% - 76px);
+    }
+    
+    .info-panel .header-actions {
+        gap: 6px;
     }
 
     .info-item {
