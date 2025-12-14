@@ -341,15 +341,6 @@ function hideObservatoryInfo() {
     document.getElementById('info-panel').classList.add('hidden');
 }
 
-// 处理点击面板外部关闭
-function handleInfoPanelClickOutside(e) {
-    const infoPanel = document.getElementById('info-panel');
-    // 检查点击是否在面板外部，并且面板不是隐藏的
-    if (e.target === infoPanel && !infoPanel.classList.contains('hidden')) {
-        hideObservatoryInfo();
-    }
-}
-
 // 更新最后更新时间
 function updateLastModifiedTime() {
     const now = new Date();
@@ -372,30 +363,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
     
-    // 点击面板外部关闭（任意区域）
-    document.getElementById('info-panel').addEventListener('click', handleInfoPanelClickOutside);
-    
-    // 也可以在整个 document 上监听，实现点击地图关闭
+    // 点击面板外部关闭（仅在面板显示时）
     document.addEventListener('click', function(e) {
         const infoPanel = document.getElementById('info-panel');
-        const closeBtn = document.getElementById('close-btn');
-        const infoContent = document.querySelector('.info-content');
+        const mapContainer = document.getElementById('map');
         
-        // 如果点击的不是面板内部和关闭按钮，则关闭面板
+        // 面板显示且点击在地图容器上时才关闭面板
         if (!infoPanel.classList.contains('hidden') && 
-            e.target !== infoPanel && 
-            !infoContent?.contains(e.target) && 
-            !closeBtn?.contains(e.target)) {
-            // 检查是否点击在地图上（不是面板上）
-            if (!infoPanel.contains(e.target)) {
-                // 为了避免频繁切换，只在点击地图容器时关闭
-                const mapContainer = document.getElementById('map');
-                if (mapContainer && mapContainer.contains(e.target)) {
-                    hideObservatoryInfo();
-                }
-            }
+            mapContainer && 
+            mapContainer.contains(e.target)) {
+            hideObservatoryInfo();
         }
-    });
+    }, true); // 使用捕获阶段处理，但标记不会冒泡到这里
 
     // 手动刷新按钮
     const refreshBtn = document.getElementById('refresh-btn');
