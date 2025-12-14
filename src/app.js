@@ -366,7 +366,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 提交按钮
     const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) {
-        submitBtn.addEventListener('click', showSubmitPanel);
+        //submitBtn.addEventListener('click', showSubmitPanel);
+        submitBtn.addEventListener('click', () => {
+        const a = document.createElement('a');
+        a.href = 'https://github.com/BG2FOU/astro-view/issues';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.click();
+    });
     }
 
     // 提交面板关闭按钮
