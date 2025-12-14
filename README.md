@@ -131,15 +131,6 @@ git push origin main
 - [快速参考卡片](.github/ISSUE_TEMPLATE/quick_reference.md)
 - [GitHub Actions 部署设置](GITHUB_ACTIONS_SETUP.md)
 
-### 两种方式的对比
-
-| 特性 | Git Push | GitHub Issue |
-|------|----------|--------------|
-| 难度 | 需要 git 基础 | ⭐ 简单易用 |
-| 验证 | 手动检查 | ⭐ 自动验证 |
-| 速度 | 立即生效 | 取决于 Actions |
-| 适合 | 开发者 | ⭐ 所有人 |
-
 ---
 
 ### 光害等级说明
