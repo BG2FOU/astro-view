@@ -82,6 +82,20 @@
       "notes": "极光",
       "image": "```",
       "coordinates": "129.841117°E,49.0924°N"
+    },
+    {
+      "id": "LSLC",
+      "name": "东北林业大学凉水林场",
+      "latitude": 47.1876,
+      "longitude": 128.89244,
+      "bortle": "2",
+      "standardLight": "1",
+      "sqm": "```",
+      "climate": "不明",
+      "accommodation": "有市电",
+      "notes": "林大地盘，可能有大型野生动物出没",
+      "image": "```",
+      "coordinates": "128.89244°E,47.1876°N"
     }
   ]
 }
