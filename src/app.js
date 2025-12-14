@@ -362,19 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
-    
-    // 点击面板外部关闭（仅在面板显示时）
-    document.addEventListener('click', function(e) {
-        const infoPanel = document.getElementById('info-panel');
-        const mapContainer = document.getElementById('map');
-        
-        // 面板显示且点击在地图容器上时才关闭面板
-        if (!infoPanel.classList.contains('hidden') && 
-            mapContainer && 
-            mapContainer.contains(e.target)) {
-            hideObservatoryInfo();
-        }
-    }, true); // 使用捕获阶段处理，但标记不会冒泡到这里
 
     // 手动刷新按钮
     const refreshBtn = document.getElementById('refresh-btn');
