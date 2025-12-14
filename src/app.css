@@ -93,13 +93,12 @@ html, body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 500px;
+    width: 360px;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    max-height: 85vh;
+    max-height: 80vh;
     min-height: 200px;
     min-width: 280px;
     animation: slideUp 0.3s ease-out;
@@ -109,6 +108,24 @@ html, body {
     /* 限制在地图范围内 */
     max-width: calc(100vw - 40px);
     max-height: calc(100vh - 120px);
+}
+
+/* 平板和手机端优化 */
+@media (max-width: 768px) {
+    .info-panel {
+        width: calc(100vw - 30px);
+        max-width: calc(100vw - 30px);
+        max-height: calc(100vh - 100px);
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 480px) {
+    .info-panel {
+        width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+        max-height: calc(100vh - 80px);
+    }
 }
 
 /* 面板头部（用于拖动） */
