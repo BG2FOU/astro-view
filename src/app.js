@@ -88,9 +88,10 @@ function startAutoCheckForUpdates() {
 
 // 初始化安全配置
 function setupAMapSecurity() {
-    if (typeof CONFIG !== 'undefined' && CONFIG.AMAP_SECURITY_JS_CODE) {
+    // 使用代理服务器方式，配置已在HTML中设置
+    if (typeof CONFIG !== 'undefined' && CONFIG.AMAP_PROXY_URL) {
         window._AMapSecurityConfig = {
-            securityJsCode: CONFIG.AMAP_SECURITY_JS_CODE
+            serviceHost: CONFIG.AMAP_PROXY_URL
         };
     }
 }

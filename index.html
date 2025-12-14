@@ -185,16 +185,14 @@
         // 从 src/config.js 生成的配置（已内联以避免 MIME type 问题）
         window.CONFIG = {
             AMAP_API_KEY: '${AMAP_API_KEY}',
-            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}',
-            CLOUDFLARE_WORKER_URL: 'https://astro-view-worker.bg2fou.workers.dev/api/submit'
+            //CLOUDFLARE_WORKER_URL: 'https://astro-view-worker.bg2fou.workers.dev/api/submit',
+            AMAP_PROXY_URL: 'https://amap-proxy-worker.bg2fou.workers.dev/_AMapService'
         };
         
-        // 设置安全密钥（必须在加载地图 SDK 之前）
-        if (typeof CONFIG !== 'undefined' && CONFIG.AMAP_SECURITY_JS_CODE) {
-            window._AMapSecurityConfig = {
-                securityJsCode: CONFIG.AMAP_SECURITY_JS_CODE
-            };
-        }
+        // 使用代理服务器方式，安全密钥在服务端添加（必须在加载地图 SDK 之前）
+        window._AMapSecurityConfig = {
+            serviceHost: CONFIG.AMAP_PROXY_URL
+        };
     </script>
 
     <!-- 使用 AMapLoader 加载 SDK（官方推荐方式） -->

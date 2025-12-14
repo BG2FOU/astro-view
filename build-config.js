@@ -10,15 +10,16 @@ const path = require('path');
 
 // 获取环境变量
 const AMAP_API_KEY = process.env.AMAP_API_KEY || '';
-const AMAP_SECURITY_JS_CODE = process.env.AMAP_SECURITY_JS_CODE || '';
-const CLOUDFLARE_WORKER_URL = process.env.CLOUDFLARE_WORKER_URL || 'https://astro-view-worker.bg2fou.workers.dev/api/submit';
+// 注意：AMAP_SECURITY_JS_CODE 不应在前端暴露，只在 Cloudflare Worker 中设置
 
 // 验证必要的环境变量
-if (!AMAP_API_KEY || !AMAP_SECURITY_JS_CODE) {
+if (!AMAP_API_KEY) {
     console.error('❌ 错误：缺少必要的环境变量');
     console.error('   请设置以下环境变量：');
     console.error('   - AMAP_API_KEY');
-    console.error('   - AMAP_SECURITY_JS_CODE');
+    console.error('');
+    console.error('   注意：AMAP_SECURITY_JS_CODE 不应在前端暴露，');
+    console.error('   应在 Cloudflare Worker 环境变量中配置');
     process.exit(1);
 }
 
@@ -26,27 +27,16 @@ if (!AMAP_API_KEY || !AMAP_SECURITY_JS_CODE) {
 const indexPath = path.join(__dirname, 'index.html');
 let htmlContent = fs.readFileSync(indexPath, 'utf-8');
 
-// 生成配置脚本
-const configScript = `        // 自动生成的配置（由 build-config.js 脚本生成）
-        window.CONFIG = {
-            AMAP_API_KEY: '${AMAP_API_KEY}',
-            AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}',
-            CLOUDFLARE_WORKER_URL: '${CLOUDFLARE_WORKER_URL}'
-        };`;
-
-// 替换占位符
+// 替换占位符（只注入 API Key，安全密钥在 Worker 端处理）
 const updatedContent = htmlContent
-    .replace(/AMAP_API_KEY: '\$\{AMAP_API_KEY\}'/g, `AMAP_API_KEY: '${AMAP_API_KEY}'`)
-    .replace(/AMAP_SECURITY_JS_CODE: '\$\{AMAP_SECURITY_JS_CODE\}'/g, `AMAP_SECURITY_JS_CODE: '${AMAP_SECURITY_JS_CODE}'`)
-    .replace(/CLOUDFLARE_WORKER_URL: '\$\{CLOUDFLARE_WORKER_URL\}'/g, `CLOUDFLARE_WORKER_URL: '${CLOUDFLARE_WORKER_URL}'`);
+    .replace(/AMAP_API_KEY: '\$\{AMAP_API_KEY\}'/g, `AMAP_API_KEY: '${AMAP_API_KEY}'`);
 
 // 写回文件
 try {
     fs.writeFileSync(indexPath, updatedContent, 'utf-8');
     console.log(`✅ 配置已内联到 index.html`);
     console.log(`   - AMAP_API_KEY: ${AMAP_API_KEY.substring(0, 8)}...`);
-    console.log(`   - AMAP_SECURITY_JS_CODE: ${AMAP_SECURITY_JS_CODE.substring(0, 8)}...`);
-    console.log(`   - CLOUDFLARE_WORKER_URL: ${CLOUDFLARE_WORKER_URL}`);
+    console.log(`   ✓ 安全密钥已排除（在 Cloudflare Worker 端处理）`);
 } catch (error) {
     console.error(`❌ 更新 index.html 失败：${error.message}`);
     process.exit(1);
