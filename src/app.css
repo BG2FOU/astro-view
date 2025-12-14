@@ -101,10 +101,37 @@ html, body {
     z-index: 1000;
     max-height: 85vh;
     min-height: 200px;
+    min-width: 280px;
     animation: slideUp 0.3s ease-out;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* 限制在地图范围内 */
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 120px);
+}
+
+/* 面板头部（用于拖动） */
+.info-panel .panel-header {
+    cursor: move;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    flex-shrink: 0;
+    user-select: none;
+    position: relative;
+}
+
+.info-panel .panel-header h2 {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+    flex: 1;
+    word-break: break-word;
 }
 
 .info-panel.hidden {
@@ -123,14 +150,14 @@ html, body {
 }
 
 .close-btn {
-    position: sticky;
-    top: 0;
-    align-self: flex-end;
-    width: 36px;
-    height: 36px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
     border: none;
-    background: #f0f0f0;
-    color: var(--dark-color);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
     font-size: 20px;
     cursor: pointer;
     border-radius: 50%;
@@ -139,13 +166,11 @@ html, body {
     align-items: center;
     justify-content: center;
     z-index: 10;
-    margin: 4px 4px 0 0;
     flex-shrink: 0;
 }
 
 .close-btn:hover {
-    background: var(--primary-color);
-    color: white;
+    background: rgba(255, 255, 255, 0.3);
     transform: rotate(90deg);
 }
 

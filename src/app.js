@@ -334,12 +334,110 @@ function showObservatoryInfo(observatory) {
     }
     
     // 显示信息面板
-    document.getElementById('info-panel').classList.remove('hidden');
+    const infoPanel = document.getElementById('info-panel');
+    infoPanel.classList.remove('hidden');
+    
+    // 初始化面板拖动和调整大小
+    initPanelControls(infoPanel);
 }
 
 // 隐藏信息面板
 function hideObservatoryInfo() {
     document.getElementById('info-panel').classList.add('hidden');
+}
+
+// 初始化面板拖动和调整大小功能
+function initPanelControls(panel) {
+    const header = panel.querySelector('.panel-header');
+    let isMoving = false;
+    let isResizing = false;
+    let startX, startY;
+    let startLeft, startTop;
+    let startWidth, startHeight;
+    
+    // 拖动功能
+    header.addEventListener('mousedown', (e) => {
+        if (e.target.id === 'close-btn') return;
+        isMoving = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = panel.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+    });
+    
+    // 调整大小功能
+    panel.addEventListener('mousedown', (e) => {
+        // 检查是否点击在右下角调整大小区域
+        const rect = panel.getBoundingClientRect();
+        const isNearRight = e.clientX > rect.right - 20;
+        const isNearBottom = e.clientY > rect.bottom - 20;
+        
+        if (isNearRight && isNearBottom) {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = rect.width;
+            startHeight = rect.height;
+            e.preventDefault();
+        }
+    });
+    
+    // 鼠标移动
+    document.addEventListener('mousemove', (e) => {
+        if (isMoving) {
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            // 计算新位置，限制在视口内
+            let newLeft = startLeft + deltaX;
+            let newTop = startTop + deltaY;
+            
+            const rect = panel.getBoundingClientRect();
+            const minLeft = 10;
+            const minTop = 10;
+            const maxLeft = window.innerWidth - rect.width - 10;
+            const maxTop = window.innerHeight - rect.height - 10;
+            
+            newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+            newTop = Math.max(minTop, Math.min(maxTop, newTop));
+            
+            // 转换为固定定位的坐标
+            panel.style.position = 'fixed';
+            panel.style.left = newLeft + 'px';
+            panel.style.top = newTop + 'px';
+            panel.style.transform = 'none';
+        }
+        
+        if (isResizing) {
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            let newWidth = startWidth + deltaX;
+            let newHeight = startHeight + deltaY;
+            
+            // 限制最小尺寸
+            newWidth = Math.max(280, newWidth);
+            newHeight = Math.max(200, newHeight);
+            
+            // 限制最大尺寸
+            const rect = panel.getBoundingClientRect();
+            const maxWidth = window.innerWidth - rect.left - 10;
+            const maxHeight = window.innerHeight - rect.top - 10;
+            
+            newWidth = Math.min(maxWidth, newWidth);
+            newHeight = Math.min(maxHeight, newHeight);
+            
+            panel.style.width = newWidth + 'px';
+            panel.style.height = newHeight + 'px';
+        }
+    });
+    
+    // 鼠标抬起
+    document.addEventListener('mouseup', () => {
+        isMoving = false;
+        isResizing = false;
+    });
 }
 
 // 更新最后更新时间
