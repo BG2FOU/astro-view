@@ -5,6 +5,7 @@ let observatories = [];
 let autoCheckInterval = null;
 const AUTO_CHECK_INTERVAL = 300000; // 每 300 秒检查一次是否有新数据
 let lastDataHash = null; // 用于检测数据是否改变
+let currentObservatory = null; // 存储当前显示的观星地信息
 
 // 图层管理变量
 let currentLayer = 'standard'; // 当前图层类型
@@ -281,6 +282,9 @@ function addMarkers(AMap) {
 
 // 显示观星地详细信息
 function showObservatoryInfo(observatory) {
+    // 保存当前观星地信息
+    currentObservatory = observatory;
+    
     document.getElementById('info-name').textContent = observatory.name;
     document.getElementById('info-coordinates').textContent = 
         `${observatory.latitude.toFixed(4)}°N, ${observatory.longitude.toFixed(4)}°E`;
@@ -349,6 +353,33 @@ function showObservatoryInfo(observatory) {
 // 隐藏信息面板
 function hideObservatoryInfo() {
     document.getElementById('info-panel').classList.add('hidden');
+}
+
+// 在高德地图中导航到观星地
+function navigateToObservatory(observatory) {
+    const lat = observatory.latitude;
+    const lng = observatory.longitude;
+    const name = observatory.name;
+    
+    // 获取当前设备类型
+    const ua = navigator.userAgent.toLowerCase();
+    const isIos = /iphone|ipad|ipod/.test(ua);
+    const isAndroid = /android/.test(ua);
+    
+    if (isIos) {
+        // iOS: 使用 URL Scheme
+        // amap://navi?sourceApplication=appname&backScheme=skyBrowser&lat=纬度&lon=经度&name=名称&dev=1&style=2
+        const iosUrl = `amap://navi?lat=${lat}&lon=${lng}&name=${encodeURIComponent(name)}&dev=1&style=2`;
+        window.location.href = iosUrl;
+    } else if (isAndroid) {
+        // Android: 使用 URL Scheme
+        const androidUrl = `amapuri://navigation?sourceApplication=amap&lat=${lat}&lon=${lng}&name=${encodeURIComponent(name)}&dev=1&style=2&t=0`;
+        window.location.href = androidUrl;
+    } else {
+        // 桌面版本：打开高德地图网页版
+        const webUrl = `https://amap.com/search?query=${encodeURIComponent(name)}&city=auto&geoobj=${lng}|${lat}|${lng}|${lat}&zoom=13`;
+        window.open(webUrl, '_blank');
+    }
 }
 
 // 显示图片放大预览
@@ -479,6 +510,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
+    
+    // 高德地图导航按钮
+    const amapNavBtn = document.getElementById('amap-nav-btn');
+    if (amapNavBtn) {
+        amapNavBtn.addEventListener('click', () => {
+            if (currentObservatory) {
+                navigateToObservatory(currentObservatory);
+            }
+        });
+    }
 
     // 图片放大预览关闭
     const imageOverlay = document.getElementById('image-overlay');

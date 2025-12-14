@@ -180,7 +180,36 @@ html, body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+}
+
+/* 头部操作按钮容器 */
+.info-panel .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-left: auto;
+}
+
+/* 导航按钮 */
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.1);
 }
 
 .close-btn:hover {
@@ -472,6 +501,12 @@ html, body {
         height: 30px;
         font-size: 16px;
         margin: 2px 2px 0 0;
+    }
+
+    .nav-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
     }
 
     .info-item {
