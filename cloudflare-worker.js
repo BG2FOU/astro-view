@@ -12,7 +12,7 @@
  * - GITHUB_REPO: 仓库名称（格式：owner/repo）
  */
 
-async function handleSubmit(request) {
+async function handleSubmit(request, env) {
     // 验证请求方法
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({ 
@@ -58,7 +58,7 @@ async function handleSubmit(request) {
         const issueBody = buildIssueBody(data);
 
         // 调用 GitHub API 创建 Issue
-        const githubResponse = await createGitHubIssue(issueTitle, issueBody);
+        const githubResponse = await createGitHubIssue(issueTitle, issueBody, env);
 
         if (!githubResponse.ok) {
             const errorData = await githubResponse.json();
@@ -146,10 +146,14 @@ function buildIssueBody(data) {
 /**
  * 调用 GitHub API 创建 Issue
  */
-async function createGitHubIssue(title, body) {
-    const gitHubToken = GITHUB_TOKEN || '';
-    const repoPath = GITHUB_REPO || 'BG2FOU/astro-view';
+async function createGitHubIssue(title, body, env) {
+    const gitHubToken = env.GITHUB_TOKEN || '';
+    const repoPath = env.GITHUB_REPO || 'BG2FOU/astro-view';
     const apiUrl = `https://api.github.com/repos/${repoPath}/issues`;
+
+    if (!gitHubToken) {
+        throw new Error('GITHUB_TOKEN 未配置');
+    }
 
     return fetch(apiUrl, {
         method: 'POST',
@@ -192,10 +196,6 @@ function escapeMarkdown(text) {
  */
 export default {
     async fetch(request, env, ctx) {
-        // 设置全局环境变量
-        GITHUB_TOKEN = env.GITHUB_TOKEN;
-        GITHUB_REPO = env.GITHUB_REPO || 'BG2FOU/astro-view';
-
         // 处理 CORS 预检请求
         if (request.method === 'OPTIONS') {
             return new Response(null, {
@@ -210,7 +210,7 @@ export default {
         // 路由处理
         const url = new URL(request.url);
         if (url.pathname === '/api/submit') {
-            const response = await handleSubmit(request);
+            const response = await handleSubmit(request, env);
             
             // 添加 CORS 头
             response.headers.set('Access-Control-Allow-Origin', '*');
