@@ -323,13 +323,18 @@ function showObservatoryInfo(observatory) {
         // 处理图片加载错误
         imageImg.onerror = function() {
             imageImg.style.display = 'none';
-            imagePlaceholder.style.display = 'block';
+            imagePlaceholder.style.display = 'flex';
             imagePlaceholder.textContent = '图片加载失败';
+        };
+        
+        // 添加点击放大功能
+        imageImg.onclick = function() {
+            showImageOverlay(observatory.image);
         };
     } else {
         // 无图片
         imageImg.style.display = 'none';
-        imagePlaceholder.style.display = 'block';
+        imagePlaceholder.style.display = 'flex';
         imagePlaceholder.textContent = '暂无图片';
     }
     
@@ -344,6 +349,19 @@ function showObservatoryInfo(observatory) {
 // 隐藏信息面板
 function hideObservatoryInfo() {
     document.getElementById('info-panel').classList.add('hidden');
+}
+
+// 显示图片放大预览
+function showImageOverlay(imageSrc) {
+    const overlay = document.getElementById('image-overlay');
+    const overlayImage = document.getElementById('overlay-image');
+    overlayImage.src = imageSrc;
+    overlay.classList.remove('hidden');
+}
+
+// 隐藏图片放大预览
+function hideImageOverlay() {
+    document.getElementById('image-overlay').classList.add('hidden');
 }
 
 // 初始化面板拖动和调整大小功能
@@ -449,7 +467,13 @@ function updateLastModifiedTime() {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit'
+       图片放大预览关闭
+    const imageOverlay = document.getElementById('image-overlay');
+    if (imageOverlay) {
+        imageOverlay.addEventListener('click', hideImageOverlay);
+    }
+
+    //  second: '2-digit'
     });
     document.getElementById('update-time').textContent = timeStr;
 }
