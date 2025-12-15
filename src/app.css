@@ -372,6 +372,36 @@ html, body {
     border-top: 1px solid #bdc3c7;
 }
 
+/* 备案与版权信息样式（低对比度，悬停再显示下划线） */
+.footer .beian {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    padding: 8px 0;
+}
+
+.footer .beian a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.footer .beian a:hover {
+    text-decoration: underline;
+}
+
+/* 品牌链接与备案风格一致，文字加粗 */
+.footer .brand-link {
+    color: #666;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.footer .brand-link:hover {
+    text-decoration: underline;
+}
+
 .footer-btn {
     padding: 4px 12px;
     margin: 0 5px;
