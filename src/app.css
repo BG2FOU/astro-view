@@ -36,12 +36,12 @@ html, body {
 .header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 12px 20px;
+    padding: 8px 16px; /* 缩减高度 */
     box-shadow: var(--box-shadow);
     z-index: 10;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .header-top {
@@ -51,9 +51,12 @@ html, body {
 }
 
 .header h1 {
-    font-size: 28px;
+    font-size: 24px; /* 略微缩小标题 */
     font-weight: 600;
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 与信息按钮留出空格 */
 }
 
 .header .subtitle {
@@ -365,19 +368,19 @@ html, body {
 /* 底部样式 */
 .footer {
     background: var(--light-color);
-    padding: 15px 20px;
+    padding: 6px 16px; /* 进一步缩减高度 */
     text-align: center;
-    font-size: 12px;
+    font-size: 12px; /* 稍微缩小字号 */
     color: #7f8c8d;
     border-top: 1px solid #bdc3c7;
 }
 
-/* 备案与版权信息样式（低对比度，悬停再显示下划线） */
+/* 备案与版权信息样式 */
 .footer .beian {
     text-align: center;
     font-size: 12px;
     color: #666;
-    padding: 8px 0;
+    padding: 4px 0; /* 缩小内边距 */
 }
 
 .footer .beian a {
@@ -397,6 +400,67 @@ html, body {
     font-weight: 700;
     transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
+
+/* 顶部信息按钮 */
+.info-btn {
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 16px;
+    padding: 6px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+.info-btn:hover {
+    background: rgba(255,255,255,0.35);
+    transform: translateY(-1px);
+}
+.info-btn svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+/* 关于弹窗样式 */
+.about-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.45);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about-dialog.hidden { display: none; }
+
+.about-content {
+    width: 520px;
+    max-width: calc(100vw - 40px);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+.about-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: #fff;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.about-header h3 { font-size: 16px; font-weight: 600; }
+.about-body { padding: 14px 16px; font-size: 13px; color: #333; line-height: 1.6; }
+.about-body p { margin-bottom: 8px; }
 
 .footer .brand-link:hover {
     text-decoration: underline;

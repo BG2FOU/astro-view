@@ -11,8 +11,9 @@
     <div class="container">
         <header class="header">
             <div class="header-top">
-                <h1>🔭 观星地导览</h1>
-                <p class="subtitle">点击地图标记查看详细信息</p>
+                <h1>🔭 观星地导览 <button id="info-btn" class="info-btn" title="关于本项目">
+                    <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#3dbfeb" d="M0 4a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4z"></path><path fill="#FFFFFF" d="M20.512 8.071c0 1.395-1.115 2.573-2.511 2.573c-1.333 0-2.511-1.209-2.511-2.573c0-1.271 1.178-2.45 2.511-2.45c1.333.001 2.511 1.148 2.511 2.45zm-4.744 6.728c0-1.488.931-2.481 2.232-2.481c1.302 0 2.232.992 2.232 2.481v11.906c0 1.488-.93 2.48-2.232 2.48s-2.232-.992-2.232-2.48V14.799z"></path></g></svg>
+                </button></h1>
             </div>
             <div class="header-controls">
                 <div id="layer-control" class="layer-control">
@@ -176,6 +177,22 @@
                 <button id="refresh-btn" class="footer-btn">🔄 刷新数据</button>
             </p>
         </footer>
+    </div>
+
+    <!-- 顶部信息弹窗 -->
+    <div id="about-dialog" class="about-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="about-title">
+        <div class="about-content">
+            <div class="about-header">
+                <h3 id="about-title">关于项目</h3>
+                <button id="about-close" class="close-btn" aria-label="关闭">×</button>
+            </div>
+            <div class="about-body">
+                <p>版权所有©BG2FOU, 地图组件由高德地图提供技术支持。</p>
+                <p>点击地图标记可查看观星地详细信息。</p>
+                <p>点击下方提交观星地可在GitHub仓库的Issues页面提交或更新观星地信息。在Issues页面点击New issue并选择“添加或更新观星地”模板, 根据模板提示填写即可。</p>
+                <p>注: 观星地附图需要使用图床存储, 在提交时请填写图片链接</p>
+            </div>
+        </div>
     </div>
 
     <!-- 图片放大预览遮罩层 -->

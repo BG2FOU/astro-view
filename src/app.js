@@ -560,6 +560,29 @@ document.addEventListener('DOMContentLoaded', function() {
         refreshBtn.addEventListener('click', refreshObservatories);
     }
 
+    // 顶部信息按钮与弹窗
+    const infoBtn = document.getElementById('info-btn');
+    const aboutDialog = document.getElementById('about-dialog');
+    const aboutClose = document.getElementById('about-close');
+    if (infoBtn && aboutDialog) {
+        infoBtn.addEventListener('click', () => {
+            aboutDialog.classList.remove('hidden');
+        });
+    }
+    if (aboutClose && aboutDialog) {
+        aboutClose.addEventListener('click', () => {
+            aboutDialog.classList.add('hidden');
+        });
+    }
+    // 点击遮罩层空白处关闭
+    if (aboutDialog) {
+        aboutDialog.addEventListener('click', (e) => {
+            if (e.target === aboutDialog) {
+                aboutDialog.classList.add('hidden');
+            }
+        });
+    }
+
     // 检查 AMapLoader 是否已加载
     if (typeof AMapLoader !== 'undefined') {
         loadAMapWithLoader();
