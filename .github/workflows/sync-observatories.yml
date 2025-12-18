@@ -1,0 +1,64 @@
+name: 同步观星地数据
+
+on:
+  # 每天北京时间早上8点运行（UTC时间0点）
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 安装依赖
+        run: npm install
+      
+      - name: 同步观星地数据
+        run: node scripts/sync-observatories.js
+        env:
+          NODE_ENV: production
+      
+      - name: 检查是否有更改
+        id: git-check
+        run: |
+          git diff --exit-code public/data/observatories.json || echo "changed=true" >> $GITHUB_OUTPUT
+      
+      - name: 提交更改
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/data/observatories.json
+          git commit -m "🤖 自动同步观星地数据 $(date +'%Y-%m-%d %H:%M:%S')"
+      
+      - name: 推送更改
+        if: steps.git-check.outputs.changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+      
+      - name: 同步完成通知
+        if: success()
+        run: |
+          echo "✅ 观星地数据同步成功！"
+          echo "📊 更新时间: $(date +'%Y-%m-%d %H:%M:%S')"
+      
+      - name: 同步失败通知
+        if: failure()
+        run: |
+          echo "❌ 观星地数据同步失败！"
+          echo "请检查错误日志。"
