@@ -7,7 +7,7 @@ import os
 import json
 import re
 import sys
-import time
+#import time
 from pathlib import Path
 
 # 从环境变量读取
@@ -173,10 +173,11 @@ def save_json(data):
 
 
 def generate_id(issue_number):
-    """根据 Issue 编号生成唯一 ID，格式：HIT3A_<issue#>_<timestamp>"""
-    timestamp = int(time.time())
+    """根据 Issue 编号生成唯一 ID，格式：HIT3A_<issue#>"""
+    #timestamp = int(time.time())
     issue_part = str(issue_number).strip() if issue_number else 'unknown'
-    return f"HIT3A_{issue_part}_{timestamp}"
+    #return f"HIT3A_{issue_part}_{timestamp}"
+    return f"HIT3A_{issue_part}"
 
 
 def process_observatory(data, is_update, is_add):
