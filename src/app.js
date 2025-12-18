@@ -532,7 +532,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 提交按钮
     const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) {
-        //submitBtn.addEventListener('click', showSubmitPanel);
+        submitBtn.addEventListener('click', showSubmitPanel);
+        /*
         submitBtn.addEventListener('click', () => {
         const a = document.createElement('a');
         a.href = 'https://github.com/BG2FOU/astro-view/issues';
@@ -540,6 +541,7 @@ document.addEventListener('DOMContentLoaded', function() {
         a.rel = 'noopener noreferrer';
         a.click();
     });
+    */    
     }
 
     // 提交面板关闭按钮
@@ -605,6 +607,49 @@ function hideSubmitPanel() {
     document.getElementById('submit-panel').classList.add('hidden');
 }
 
+// 构建 GitHub Issue 内容
+function buildIssueBody(data) {
+    let body = `## 观星地信息\n\n`;
+    
+    body += `**地点名称**: ${data.name}\n`;
+    body += `**坐标**: ${data.latitude}°N, ${data.longitude}°E\n`;
+    
+    if (data.bortle && data.bortle !== '-') {
+        body += `**波特尔光害等级**: ${data.bortle}\n`;
+    }
+    
+    if (data.standardLight && data.standardLight !== '-') {
+        body += `**中国暗夜环境等级**: ${data.standardLight}\n`;
+    }
+    
+    if (data.sqm && data.sqm !== '-') {
+        body += `**SQM值**: ${data.sqm} mag/arcsec²\n`;
+    }
+    
+    body += `\n`;
+    
+    if (data.climate) {
+        body += `### 气候情况\n${data.climate}\n\n`;
+    }
+    
+    if (data.accommodation) {
+        body += `### 住宿情况\n${data.accommodation}\n\n`;
+    }
+    
+    if (data.notes) {
+        body += `### 备注\n${data.notes}\n\n`;
+    }
+    
+    if (data.image) {
+        body += `### 附图\n![观星地图片](${data.image})\n\n`;
+    }
+    
+    body += `---\n`;
+    body += `*此 Issue 由前端自动提交系统生成*\n`;
+    
+    return body;
+}
+
 // 提交观星地表单
 async function submitObservatory(e) {
     e.preventDefault();
@@ -615,11 +660,17 @@ async function submitObservatory(e) {
     try {
         // 收集表单数据
         const formData = new FormData(document.getElementById('observatory-form'));
+        const lat = parseFloat(formData.get('latitude'));
+        const lon = parseFloat(formData.get('longitude'));
+        // 保留6位小数精度
+        const latitude = Math.round(lat * 1000000) / 1000000;
+        const longitude = Math.round(lon * 1000000) / 1000000;
+        
         const data = {
             name: formData.get('name'),
-            latitude: parseFloat(formData.get('latitude')),
-            longitude: parseFloat(formData.get('longitude')),
-            coordinates: `${formData.get('longitude')}°E,${formData.get('latitude')}°N`,
+            latitude: latitude,
+            longitude: longitude,
+            coordinates: `${longitude}°E,${latitude}°N`,
             bortle: formData.get('bortle') || '-',
             standardLight: formData.get('standard') || '-',
             sqm: formData.get('sqm') || '-',
@@ -645,13 +696,27 @@ async function submitObservatory(e) {
         // 显示加载状态
         statusEl.textContent = '📤 正在提交...';
         statusEl.classList.add('show', 'loading');
-        statusEl.classList.remove('success', 'error');
+        statusEl.classList.remove('success', 'error', 'warning');
         submitBtn.disabled = true;
 
-        // 调用 Cloudflare Worker API
-        const workerUrl = CONFIG.CLOUDFLARE_WORKER_URL || 'https://astro-view-worker.pages.dev/api/submit';
+        // 检测是否在本地文件环境（file:// 协议）
+        const isLocalFile = window.location.protocol === 'file:';
         
-        const response = await fetch(workerUrl, {
+        if (isLocalFile) {
+            // 本地环境：生成 GitHub Issue URL 供用户手动提交
+            const issueTitle = `📍 提交新观星地：${data.name}`;
+            const issueBody = buildIssueBody(data);
+            const issueUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=新地点提交`;
+            
+            statusEl.innerHTML = `🔗 本地环境无法直接提交<br>请点击 <a href="${issueUrl}" target="_blank" style="color: #3498db; text-decoration: underline; font-weight: bold;">此链接</a> 前往 GitHub 提交（需登录）`;
+            statusEl.classList.remove('loading');
+            statusEl.classList.add('warning');
+            submitBtn.disabled = false;
+            return;
+        }
+
+        // 在线环境：调用 Cloudflare Pages Function API
+        const response = await fetch('/api/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -661,22 +726,22 @@ async function submitObservatory(e) {
 
         const result = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok || result.error) {
             throw new Error(result.message || '提交失败，请稍后重试');
         }
 
         // 成功
-        statusEl.textContent = '✅ 提交成功！已创建 GitHub Issue，管理员将尽快审核';
+        statusEl.innerHTML = `✅ 提交成功！已创建 <a href="${result.issueUrl}" target="_blank" style="color: #27ae60; text-decoration: underline;">GitHub Issue #${result.issueNumber}</a>，系统将自动审核并更新`;
         statusEl.classList.remove('loading');
         statusEl.classList.add('success');
         
         // 清空表单
         document.getElementById('observatory-form').reset();
 
-        // 3秒后自动关闭面板
+        // 5秒后自动关闭面板
         setTimeout(() => {
             hideSubmitPanel();
-        }, 3000);
+        }, 5000);
 
     } catch (error) {
         console.error('提交失败:', error);

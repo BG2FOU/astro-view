@@ -22,30 +22,88 @@ def parse_issue_body(body):
     
     data = {}
     
-    # 使用正则表达式提取字段
-    patterns = {
-        'id': r'(?:id|ID):\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'name': r'name:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'latitude': r'latitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'longitude': r'longitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'bortle': r'bortle:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'standardLight': r'standardLight:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'sqm': r'sqm:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'climate': r'climate:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'accommodation': r'accommodation:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'notes': r'notes:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        'image': r'image:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-    }
+    # 检测是前端自动提交还是模板提交
+    is_frontend_submit = '此 Issue 由前端自动提交系统生成' in body or '此 Issue 由自动提交系统生成' in body
     
-    for field, pattern in patterns.items():
-        match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
-        if match:
-            value = match.group(1).strip()
-            data[field] = value
-    
-    # 检查是否是更新模式
-    is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
-    is_add = '添加新的观星地' in body or '- [x] 添加新的观星地' in body
+    if is_frontend_submit:
+        # 前端提交格式：Markdown 表格式
+        # **地点名称**: 宾县新甸镇
+        # **坐标**: 45.924283°N, 127.83026°E
+        
+        # 提取名称
+        name_match = re.search(r'\*\*地点名称\*\*:\s*(.*?)(?:\n|$)', body)
+        if name_match:
+            data['name'] = name_match.group(1).strip()
+        
+        # 提取坐标 (格式: 45.924283°N, 127.83026°E)
+        coord_match = re.search(r'\*\*坐标\*\*:\s*([\d.]+)°[NS],\s*([\d.]+)°[EW]', body)
+        if coord_match:
+            data['latitude'] = coord_match.group(1)
+            data['longitude'] = coord_match.group(2)
+        
+        # 提取波特尔等级
+        bortle_match = re.search(r'\*\*波特尔光害等级\*\*:\s*([\d]+)', body)
+        if bortle_match:
+            data['bortle'] = bortle_match.group(1)
+        
+        # 提取中国暗夜等级
+        standard_match = re.search(r'\*\*中国暗夜环境等级\*\*:\s*([\d+]+)', body)
+        if standard_match:
+            data['standardLight'] = standard_match.group(1)
+        
+        # 提取 SQM 值
+        sqm_match = re.search(r'\*\*SQM值\*\*:\s*([\d.]+)', body)
+        if sqm_match:
+            data['sqm'] = sqm_match.group(1)
+        
+        # 提取气候情况
+        climate_match = re.search(r'### 气候情况\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
+        if climate_match:
+            data['climate'] = climate_match.group(1).strip()
+        
+        # 提取住宿情况
+        accommodation_match = re.search(r'### 住宿情况\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
+        if accommodation_match:
+            data['accommodation'] = accommodation_match.group(1).strip()
+        
+        # 提取备注
+        notes_match = re.search(r'### 备注\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
+        if notes_match:
+            data['notes'] = notes_match.group(1).strip()
+        
+        # 提取图片
+        image_match = re.search(r'### 附图\n!\[.*?\]\((.*?)\)', body)
+        if image_match:
+            data['image'] = image_match.group(1)
+        
+        # 前端提交默认是添加新观星地
+        is_update = False
+        is_add = True
+    else:
+        # 原模板格式：YAML 式
+        patterns = {
+            'id': r'(?:id|ID):\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'name': r'name:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'latitude': r'latitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'longitude': r'longitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'bortle': r'bortle:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'standardLight': r'standardLight:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'sqm': r'sqm:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'climate': r'climate:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'accommodation': r'accommodation:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'notes': r'notes:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+            'image': r'image:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        }
+        
+        for field, pattern in patterns.items():
+            match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
+            if match:
+                value = match.group(1).strip()
+                data[field] = value
+        
+        # 检查是否是更新模式
+        is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
+        is_add = '添加新的观星地' in body or '- [x] 添加新的观星地' in body
     
     return data, is_update, is_add
 
@@ -55,8 +113,8 @@ def validate_data(data, is_update):
     
     errors = []
     
-    # 检查必填字段
-    required_fields = ['name', 'latitude', 'longitude', 'bortle', 'standardLight', 'sqm', 'climate', 'accommodation', 'notes']
+    # 检查必填字段（前端提交可能缺少某些字段）
+    required_fields = ['name', 'latitude', 'longitude']
     
     for field in required_fields:
         if field not in data or not data[field]:
@@ -84,13 +142,13 @@ def validate_data(data, is_update):
     except ValueError:
         errors.append(f"经度必须是有效的数字，当前值: {data.get('longitude')}")
     
-    # 验证波特尔等级
-    if 'bortle' in data and data['bortle']:
+    # 验证波特尔等级（可选）
+    if 'bortle' in data and data['bortle'] and data['bortle'] != '-':
         if data['bortle'] not in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
             errors.append(f"波特尔光害等级必须是 1-9，当前值: {data['bortle']}")
     
-    # 验证中国暗夜等级
-    if 'standardLight' in data and data['standardLight']:
+    # 验证中国暗夜等级（可选）
+    if 'standardLight' in data and data['standardLight'] and data['standardLight'] != '-':
         valid_levels = ['1', '2', '3', '4', '5', '5+']
         if data['standardLight'] not in valid_levels:
             errors.append(f"中国暗夜环境等级必须是 1-5 或 5+，当前值: {data['standardLight']}")
@@ -142,7 +200,19 @@ def process_observatory(data, is_update, is_add):
     if not data.get('id'):
         data['id'] = generate_id(data.get('name', f'observatory_{ISSUE_NUMBER}'))
     
-    # 如果 image 字段为空，确保它是空字符串
+    # 设置默认值
+    if 'bortle' not in data or not data['bortle']:
+        data['bortle'] = '-'
+    if 'standardLight' not in data or not data['standardLight']:
+        data['standardLight'] = '-'
+    if 'sqm' not in data or not data['sqm']:
+        data['sqm'] = '-'
+    if 'climate' not in data:
+        data['climate'] = ''
+    if 'accommodation' not in data:
+        data['accommodation'] = ''
+    if 'notes' not in data:
+        data['notes'] = ''
     if 'image' not in data:
         data['image'] = ''
     
@@ -183,7 +253,16 @@ def main():
     
     try:
         # 检查是否是观星地相关的 Issue
-        if '[观星地]' not in ISSUE_TITLE and 'data-update' not in ISSUE_TITLE.lower():
+        # 支持前端提交格式：📍 提交新观星地：xxx
+        # 也支持模板格式：[观星地] 或 data-update
+        is_observatory_issue = (
+            '[观星地]' in ISSUE_TITLE or 
+            'data-update' in ISSUE_TITLE.lower() or
+            '提交新观星地' in ISSUE_TITLE or
+            '📍' in ISSUE_TITLE
+        )
+        
+        if not is_observatory_issue:
             print("::set-output name=success::false")
             print("::set-output name=error::这不是观星地更新 Issue")
             return
@@ -192,7 +271,9 @@ def main():
         data, is_update, is_add = parse_issue_body(ISSUE_BODY)
         
         if not is_update and not is_add:
-            raise ValueError("请明确选择是添加新的观星地还是更新现有观星地")
+            # 如果解析不出来，可能是格式问题
+            if not data:
+                raise ValueError("无法解析 Issue 内容，请确保格式正确")
         
         # 验证数据
         is_valid, errors = validate_data(data, is_update)

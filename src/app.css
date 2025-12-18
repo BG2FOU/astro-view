@@ -894,10 +894,26 @@ html, body {
     border: 1px solid #c3e6cb;
 }
 
+.submit-status.success a {
+    color: #155724;
+    font-weight: bold;
+}
+
 .submit-status.error {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.submit-status.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.submit-status.warning a {
+    color: #0066cc;
+    font-weight: bold;
 }
 
 .submit-status.loading {
