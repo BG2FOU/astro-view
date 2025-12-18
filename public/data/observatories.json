@@ -112,6 +112,7 @@
       "coordinates": "128.57169°E,46.2898°N"
     },
     {
+      "id": "HLHKSD",
       "name": "呼兰河口湿地",
       "latitude": 45.914997,
       "longitude": 126.696602,
@@ -120,10 +121,9 @@
       "sqm": "19.55",
       "climate": "水边易起雾",
       "accommodation": "无",
-      "notes": "叶佬有张大片这里拍的",
+      "notes": "叶佬有张日图这里拍的",
       "coordinates": "126.696602°E,45.914997°N",
-      "id": "",
-      "image": ""
+      "image": "https://cos-cdn.pisky.cn/2021/06/03/2021060312461382664_m.jpg"
     }
   ]
 }
