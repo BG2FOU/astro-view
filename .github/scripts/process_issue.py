@@ -7,6 +7,7 @@ import os
 import json
 import re
 import sys
+import time
 from pathlib import Path
 
 # 从环境变量读取
@@ -171,13 +172,11 @@ def save_json(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def generate_id(name):
-    """根据名称生成唯一 ID"""
-    # 将中文名称转换为拼音或英文表示
-    base_id = name.lower().replace(' ', '-')
-    # 移除特殊字符
-    base_id = re.sub(r'[^a-z0-9\-]', '', base_id)
-    return base_id
+def generate_id(issue_number):
+    """根据 Issue 编号生成唯一 ID，格式：HIT3A_<issue#>_<timestamp>"""
+    timestamp = int(time.time())
+    issue_part = str(issue_number).strip() if issue_number else 'unknown'
+    return f"HIT3A_{issue_part}_{timestamp}"
 
 
 def process_observatory(data, is_update, is_add):
@@ -198,7 +197,7 @@ def process_observatory(data, is_update, is_add):
     
     # 确保有 ID
     if not data.get('id'):
-        data['id'] = generate_id(data.get('name', f'observatory_{ISSUE_NUMBER}'))
+        data['id'] = generate_id(ISSUE_NUMBER)
     
     # 设置默认值
     if 'bortle' not in data or not data['bortle']:
