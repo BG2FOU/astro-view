@@ -727,7 +727,16 @@ async function submitObservatory(e) {
         const result = await response.json();
 
         if (!response.ok || result.error) {
-            throw new Error(result.message || '提交失败，请稍后重试');
+            // 如果服务端失败，提供手动提交链接
+            const issueTitle = `📍 提交新观星地：${data.name}`;
+            const issueBody = buildIssueBody(data);
+            const issueUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=新地点提交`;
+            
+            statusEl.innerHTML = `⚠️ 自动提交失败（${result.message}）<br>请点击 <a href="${issueUrl}" target="_blank" style="color: #3498db; text-decoration: underline; font-weight: bold;">此链接</a> 前往 GitHub 手动提交`;
+            statusEl.classList.remove('loading');
+            statusEl.classList.add('warning');
+            submitBtn.disabled = false;
+            return;
         }
 
         // 成功
