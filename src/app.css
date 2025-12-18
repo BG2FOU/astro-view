@@ -726,13 +726,13 @@ html, body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 600px;
+    width: 86%;
+    max-width: 520px;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    max-height: 90vh;
+    max-height: 88vh;
     animation: slideUp 0.3s ease-out;
     display: flex;
     flex-direction: column;
@@ -924,8 +924,10 @@ html, body {
 
 @media (max-width: 768px) {
     .submit-panel {
-        width: 95%;
-        max-height: 95vh;
+        width: 92%;
+        max-width: 460px;
+        max-height: 90vh;
+        top: 52%;
     }
 
     .form-row {
@@ -934,5 +936,29 @@ html, body {
 
     .form-actions {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .submit-panel {
+        width: 94%;
+        max-width: 420px;
+        max-height: 86vh;
+        top: 50%;
+    }
+
+    #submit-close-btn {
+        width: 32px;
+        height: 32px;
+        margin: 6px 6px 0 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .submit-panel {
+        width: 96%;
+        max-width: 360px;
+        max-height: 84vh;
+        top: 48%;
     }
 }
