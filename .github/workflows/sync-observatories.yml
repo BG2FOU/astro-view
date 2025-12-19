@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
       
       - name: 设置 Node.js
         uses: actions/setup-node@v4
@@ -36,6 +37,12 @@ jobs:
         run: |
           git diff --exit-code public/data/observatories.json || echo "changed=true" >> $GITHUB_OUTPUT
       
+      - name: 创建或切换到 update-place 分支
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git fetch origin
+          git checkout -B update-place
+      
       - name: 提交更改
         if: steps.git-check.outputs.changed == 'true'
         run: |
@@ -44,18 +51,21 @@ jobs:
           git add public/data/observatories.json
           git commit -m "🤖 自动同步观星地数据 $(date +'%Y-%m-%d %H:%M:%S')"
       
-      - name: 推送更改
+      - name: 推送到 update-place 分支
         if: steps.git-check.outputs.changed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: update-place
+          force: true
       
       - name: 同步完成通知
         if: success()
         run: |
           echo "✅ 观星地数据同步成功！"
           echo "📊 更新时间: $(date +'%Y-%m-%d %H:%M:%S')"
+          echo "📝 更改已推送到 update-place 分支"
+          echo "🔄 请手动创建 Pull Request 将更改合并到 main 分支"
       
       - name: 同步失败通知
         if: failure()
