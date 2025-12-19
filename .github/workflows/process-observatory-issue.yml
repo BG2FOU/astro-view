@@ -19,6 +19,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
 
       - name: 设置 Python
         uses: actions/setup-python@v4
@@ -49,7 +50,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ **成功处理！**\n\n您的观星地信息已自动添加到数据库中。感谢贡献！🌟\n\n**处理详情：**\n' + process.env.MESSAGE
+              body: '✅ **成功处理！**\n\n您的观星地信息已自动添加到 update-place 分支，等待审核。感谢贡献！🌟\n\n**处理详情：**\n' + process.env.MESSAGE + '\n\n📝 更改已推送到 `update-place` 分支\n🔄 维护者将审核后通过 Pull Request 合并到主分支'
             })
 
       - name: 如果失败，评论 Issue
@@ -66,23 +67,33 @@ jobs:
               body: '❌ **处理失败**\n\n自动处理过程中出现错误，请检查信息格式。\n\n**错误信息：**\n```\n' + process.env.ERROR + '\n```\n\n请参考 Issue 模板确保所有必填字段都已正确填写。'
             })
 
-      - name: 推送更改到主分支
+      - name: 创建或切换到 update-place 分支
+        if: steps.process.outputs.success == 'true'
+        run: |
+          git fetch origin
+          git checkout -B update-place
+      
+      - name: 提交更改
         if: steps.process.outputs.success == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add public/data/observatories.json
           git commit -m "🤖 Issue #${{ github.event.issue.number }}: 自动添加观星地数据" || true
-          git push
+      
+      - name: 推送到 update-place 分支
+        if: steps.process.outputs.success == 'true'
+        run: |
+          git push origin update-place --force
 
-      - name: 关闭 Issue
+      - name: 标记 Issue 为待审核
         if: steps.process.outputs.success == 'true'
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.update({
+            github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: 'closed'
+              labels: ['pending-review', 'auto-processed']
             })
