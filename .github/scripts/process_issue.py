@@ -290,9 +290,15 @@ def main():
         
         # 处理数据
         message = process_observatory(data, is_update, is_add)
-        
+
+        # 输出给工作流使用
+        action_label = "修改" if is_update else "添加"
+        obs_name = data.get('name', '')
+
         print("::set-output name=success::true")
         print(f"::set-output name=message::{message}")
+        print(f"::set-output name=action::{action_label}")
+        print(f"::set-output name=name::{obs_name}")
         
     except Exception as e:
         print("::set-output name=success::false")

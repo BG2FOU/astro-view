@@ -79,7 +79,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add public/data/observatories.json
-          git commit -m "🤖 Issue #${{ github.event.issue.number }}: 自动添加观星地数据" || true
+          git commit -m "🤖 Issue #${{ github.event.issue.number }}: 自动${{ steps.process.outputs.action }}（${{ steps.process.outputs.name }}）信息" || true
       
       - name: 推送到 update-place 分支
         if: steps.process.outputs.success == 'true'
