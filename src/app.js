@@ -352,6 +352,8 @@ function showObservatoryInfo(observatory) {
 
 // 隐藏信息面板
 function hideObservatoryInfo() {
+    // 关闭详情时顺便退出编辑模式，避免残留的编辑状态影响下一个地点
+    toggleEditMode(false);
     document.getElementById('info-panel').classList.add('hidden');
 }
 
@@ -628,6 +630,8 @@ function toggleEditMode(show) {
             statusEl.classList.remove('show', 'success', 'error', 'loading', 'warning');
             statusEl.textContent = '';
         }
+        const editForm = document.getElementById('edit-form');
+        if (editForm) editForm.reset();
     }
 }
 
