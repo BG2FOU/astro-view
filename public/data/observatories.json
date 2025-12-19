@@ -139,6 +139,20 @@
       "coordinates": "127.83026°E,45.924283°N",
       "id": "HIT3A_10",
       "image": ""
+    },
+    {
+      "name": "兴凯湖第一泄洪闸",
+      "latitude": 45.316021,
+      "longitude": 132.584374,
+      "bortle": "2",
+      "standardLight": "1",
+      "sqm": "21.96",
+      "climate": "湖边易起雾，风极大，需做好保暖或自带炉子",
+      "accommodation": "湖西边有农家乐",
+      "notes": "湖堤路况极差",
+      "coordinates": "132.584374°E,45.316021°N",
+      "id": "HIT3A_16",
+      "image": ""
     }
   ]
 }
