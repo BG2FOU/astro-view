@@ -282,6 +282,9 @@ function addMarkers(AMap) {
 
 // 显示观星地详细信息
 function showObservatoryInfo(observatory) {
+    // 进入新地点前先退出编辑模式
+    toggleEditMode(false);
+    
     // 保存当前观星地信息
     currentObservatory = observatory;
     
