@@ -99,6 +99,55 @@ async function handleSubmit(request, env) {
 }
 
 /**
+ * 处理观星地修改（Worker 端）
+ */
+async function handleUpdate(request, env) {
+    if (request.method !== 'POST') {
+        return new Response(JSON.stringify({ error: true, message: '只支持 POST 请求' }), { status: 405, headers: { 'Content-Type': 'application/json' } });
+    }
+    try {
+        const payload = await request.json();
+        const { original, updated, changes = [], id = '' } = payload || {};
+        if (!original || !updated) {
+            return new Response(JSON.stringify({ error: true, message: '缺少必填字段：original, updated' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+        }
+
+        if (updated.latitude === undefined || updated.longitude === undefined || !updated.name) {
+            return new Response(JSON.stringify({ error: true, message: '缺少必填字段：updated.name, updated.latitude, updated.longitude' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+        }
+
+        const titleName = original?.name || updated?.name || '未知观星地';
+        const titleId = id || original?.id || updated?.id || '';
+        const issueTitle = `✏️ 修改观星地：${titleName}${titleId ? ` (${titleId})` : ''}`;
+
+        const issueBody = buildUpdateIssueBody(changes, original, updated);
+
+        const repoPath = env.GITHUB_REPO || 'BG2FOU/astro-view';
+        const apiUrl = `https://api.github.com/repos/${repoPath}/issues`;
+        const resp = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `token ${env.GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json',
+                'User-Agent': 'astro-view-worker'
+            },
+            body: JSON.stringify({ title: issueTitle, body: issueBody, labels: ['信息修改'] })
+        });
+
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({ message: '创建 Issue 失败' }));
+            throw new Error(err.message || '创建 Issue 失败');
+        }
+
+        const result = await resp.json();
+        return new Response(JSON.stringify({ error: false, message: '修改提交成功', issueUrl: result.html_url, issueNumber: result.number }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    } catch (e) {
+        return new Response(JSON.stringify({ error: true, message: e.message }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
+}
+
+/**
  * 构建 GitHub Issue 内容
  */
 function buildIssueBody(data) {
@@ -140,6 +189,35 @@ function buildIssueBody(data) {
     body += `---\n`;
     body += `*此 Issue 由自动提交系统生成于 ${new Date().toISOString()}*\n`;
     
+    return body;
+}
+
+/**
+ * 构建“修改观星地”Issue 内容
+ */
+function buildUpdateIssueBody(changes, original, updated) {
+    let body = '';
+    body += `### 目标观星地\n`;
+    body += `- 名称: ${escapeMarkdown(original?.name || updated?.name || '')}\n`;
+    if (original?.id || updated?.id) body += `- ID: ${escapeMarkdown(original?.id || updated?.id)}\n`;
+    if (original?.latitude !== undefined && original?.longitude !== undefined) {
+        body += `- 坐标: ${original.latitude}°N, ${original.longitude}°E\n`;
+    }
+    body += `\n`;
+
+    body += `### 修改项\n`;
+    if (Array.isArray(changes) && changes.length) {
+        for (const c of changes) {
+            body += `- ${c.field}: \`${String(c.before ?? '-') }\` → \`${String(c.after ?? '-') }\`\n`;
+        }
+    } else {
+        body += `无具体变更项（请审核下方“更新后的完整条目”）\n`;
+    }
+    body += `\n`;
+
+    body += `### 更新后的完整条目（JSON）\n`;
+    body += '```json\n' + JSON.stringify(updated || {}, null, 2) + '\n```\n\n';
+    body += `---\n*此 Issue 由前端自动提交系统生成*\n`;
     return body;
 }
 
@@ -217,6 +295,14 @@ export default {
             response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
             response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
             
+            return response;
+        }
+
+        if (url.pathname === '/api/update') {
+            const response = await handleUpdate(request, env);
+            response.headers.set('Access-Control-Allow-Origin', '*');
+            response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+            response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
             return response;
         }
 

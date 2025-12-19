@@ -529,6 +529,26 @@ document.addEventListener('DOMContentLoaded', function() {
         imageOverlay.addEventListener('click', hideImageOverlay);
     }
 
+    // 详情编辑按钮与编辑表单
+    const editBtn = document.getElementById('edit-btn');
+    const editCancel = document.getElementById('edit-cancel');
+    const editForm = document.getElementById('edit-form');
+    if (editBtn) {
+        editBtn.addEventListener('click', () => {
+            if (!currentObservatory) return;
+            prefillEditForm(currentObservatory);
+            toggleEditMode(true);
+        });
+    }
+    if (editCancel) {
+        editCancel.addEventListener('click', () => {
+            toggleEditMode(false);
+        });
+    }
+    if (editForm) {
+        editForm.addEventListener('submit', submitObservatoryUpdate);
+    }
+
     // 提交按钮
     const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) {
@@ -594,6 +614,182 @@ document.addEventListener('DOMContentLoaded', function() {
             '<div style="padding: 20px; color: red;">错误：AMapLoader 加载失败</div>';
     }
 });
+
+// 打开/关闭编辑模式
+function toggleEditMode(show) {
+    const editContainer = document.getElementById('edit-container');
+    if (!editContainer) return;
+    if (show) {
+        editContainer.classList.remove('hidden');
+    } else {
+        editContainer.classList.add('hidden');
+        const statusEl = document.getElementById('edit-status');
+        if (statusEl) {
+            statusEl.classList.remove('show', 'success', 'error', 'loading', 'warning');
+            statusEl.textContent = '';
+        }
+    }
+}
+
+// 预填充编辑表单
+function prefillEditForm(obs) {
+    const get = (id) => document.getElementById(id);
+    get('edit-name').value = obs.name || '';
+    get('edit-latitude').value = (obs.latitude ?? '').toString();
+    get('edit-longitude').value = (obs.longitude ?? '').toString();
+    get('edit-bortle').value = obs.bortle || '';
+    get('edit-sqm').value = obs.sqm || '';
+    get('edit-standard').value = obs.standardLight || '';
+    get('edit-climate').value = obs.climate || '';
+    get('edit-accommodation').value = obs.accommodation || '';
+    get('edit-notes').value = obs.notes || '';
+    const imgEl = get('edit-image'); if (imgEl) imgEl.value = obs.image || '';
+}
+
+// 构建修改Issue内容（本地或失败时备用）
+function buildUpdateIssueBody(changes, original, updated) {
+    let body = `### 目标观星地\n`;
+    body += `- 名称: ${original.name}\n`;
+    if (original.id) body += `- ID: ${original.id}\n`;
+    body += `- 坐标: ${original.latitude}°N, ${original.longitude}°E\n\n`;
+
+    body += `### 修改项\n`;
+    if (!changes.length) {
+        body += `无变更\n\n`;
+    } else {
+        changes.forEach(c => {
+            body += `- ${c.field}: \`${c.before ?? '-'}\` → \`${c.after ?? '-'}\`\n`;
+        });
+        body += `\n`;
+    }
+
+    body += `### 更新后的完整条目（JSON）\n`;
+    body += '```json\n' + JSON.stringify(updated, null, 2) + '\n```\n\n';
+    body += `---\n*此 Issue 由前端自动提交系统生成*`;
+    return body;
+}
+
+// 提交详情修改
+async function submitObservatoryUpdate(e) {
+    e.preventDefault();
+    if (!currentObservatory) return;
+
+    const statusEl = document.getElementById('edit-status');
+    const submitBtn = document.querySelector('#edit-form .btn-submit');
+
+    try {
+        // 收集表单
+        const form = document.getElementById('edit-form');
+        const formData = new FormData(form);
+        const lat = parseFloat(formData.get('latitude'));
+        const lon = parseFloat(formData.get('longitude'));
+        const latitude = Math.round(lat * 1000000) / 1000000;
+        const longitude = Math.round(lon * 1000000) / 1000000;
+
+        const updated = {
+            id: currentObservatory.id || '',
+            name: formData.get('name'),
+            latitude: latitude,
+            longitude: longitude,
+            coordinates: `${longitude}°E,${latitude}°N`,
+            bortle: formData.get('bortle') || '-',
+            standardLight: formData.get('standard') || '-',
+            sqm: formData.get('sqm') || '-',
+            climate: formData.get('climate') || '',
+            accommodation: formData.get('accommodation') || '',
+            notes: formData.get('notes') || '',
+            image: formData.get('image') || ''
+        };
+
+        // 基本验证
+        if (!updated.name || isNaN(updated.latitude) || isNaN(updated.longitude)) {
+            throw new Error('请正确填写名称与坐标');
+        }
+        if (updated.latitude < -90 || updated.latitude > 90 || updated.longitude < -180 || updated.longitude > 180) {
+            throw new Error('坐标范围不正确：纬度 [-90, 90]，经度 [-180, 180]');
+        }
+
+        // 计算变更
+        const fields = ['name','latitude','longitude','bortle','standardLight','sqm','climate','accommodation','notes','image'];
+        const changes = [];
+        const original = { ...currentObservatory };
+        fields.forEach(f => {
+            const before = original[f] ?? '';
+            const after = updated[f] ?? '';
+            // 数值比较处理
+            const isChanged = (typeof before === 'number' || typeof after === 'number')
+                ? Number(before) !== Number(after)
+                : String(before) !== String(after);
+            if (isChanged) {
+                changes.push({ field: f, before, after });
+            }
+        });
+
+        if (changes.length === 0) {
+            statusEl.textContent = 'ℹ️ 未检测到任何修改';
+            statusEl.classList.add('show', 'warning');
+            statusEl.classList.remove('success','error','loading');
+            return;
+        }
+
+        // 显示加载状态
+        statusEl.textContent = '📤 正在提交修改...';
+        statusEl.classList.add('show', 'loading');
+        statusEl.classList.remove('success','error','warning');
+        if (submitBtn) submitBtn.disabled = true;
+
+        const isLocalFile = window.location.protocol === 'file:';
+        const issueTitle = `✏️ 修改观星地：${original.name}${original.id ? ' ('+original.id+')' : ''}`;
+        const issueBody = buildUpdateIssueBody(changes, original, updated);
+
+        if (isLocalFile) {
+            const issueUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=${encodeURIComponent('信息修改')}`;
+            statusEl.innerHTML = `🔗 本地环境无法直接提交<br>请点击 <a href="${issueUrl}" target="_blank" style="color: #3498db; text-decoration: underline; font-weight: bold;">此链接</a> 前往 GitHub 提交（需登录）`;
+            statusEl.classList.remove('loading');
+            statusEl.classList.add('warning');
+            if (submitBtn) submitBtn.disabled = false;
+            return;
+        }
+
+        // 在线环境，调用 API
+        const response = await fetch('/api/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: original.id || '',
+                original,
+                updated,
+                changes
+            })
+        });
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+            const fallbackUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=${encodeURIComponent('信息修改')}`;
+            statusEl.innerHTML = `⚠️ 自动提交失败（${result.message}）<br>请点击 <a href="${fallbackUrl}" target="_blank" style="color: #3498db; text-decoration: underline; font-weight: bold;">此链接</a> 前往 GitHub 手动提交`;
+            statusEl.classList.remove('loading');
+            statusEl.classList.add('warning');
+            if (submitBtn) submitBtn.disabled = false;
+            return;
+        }
+
+        statusEl.innerHTML = `✅ 修改提交成功！已创建 <a href="${result.issueUrl}" target="_blank" style="color: #27ae60; text-decoration: underline;">GitHub Issue #${result.issueNumber}</a>`;
+        statusEl.classList.remove('loading');
+        statusEl.classList.add('success');
+
+        // 可选：关闭编辑
+        setTimeout(() => { toggleEditMode(false); }, 4000);
+
+    } catch (err) {
+        console.error('修改提交失败:', err);
+        statusEl.textContent = `❌ 错误：${err.message}`;
+        statusEl.classList.remove('loading');
+        statusEl.classList.add('error');
+    } finally {
+        const submitBtn2 = document.querySelector('#edit-form .btn-submit');
+        if (submitBtn2) submitBtn2.disabled = false;
+    }
+}
 
 // 显示提交面板
 function showSubmitPanel() {

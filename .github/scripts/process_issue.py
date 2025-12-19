@@ -19,93 +19,95 @@ ISSUE_TITLE = os.getenv('ISSUE_TITLE', '')
 JSON_PATH = Path('public/data/observatories.json')
 
 def parse_issue_body(body):
-    """解析 Issue 正文，提取观星地数据"""
-    
+    """解析 Issue 正文，提取观星地数据（支持前端新增与前端更新JSON、模板两种格式）"""
+
     data = {}
-    
-    # 检测是前端自动提交还是模板提交
+
+    # 是否前端自动提交
     is_frontend_submit = '此 Issue 由前端自动提交系统生成' in body or '此 Issue 由自动提交系统生成' in body
-    
+
+    # 1) 优先：检测“更新后的完整条目（JSON）”块（用于前端编辑更新）
+    json_block = re.search(r'更新后的完整条目（JSON）[\s\S]*?```json\n([\s\S]*?)\n```', body)
+    if json_block:
+        try:
+            updated_obj = json.loads(json_block.group(1))
+            if isinstance(updated_obj, dict):
+                data.update(updated_obj)
+                is_update = True
+                is_add = False
+                return data, is_update, is_add
+        except Exception:
+            # JSON 解析失败则继续其它规则
+            pass
+
+    # 2) 前端新增（无JSON块，纯 Markdown 字段）
     if is_frontend_submit:
-        # 前端提交格式：Markdown 表格式
-        # **地点名称**: 宾县新甸镇
-        # **坐标**: 45.924283°N, 127.83026°E
-        
-        # 提取名称
         name_match = re.search(r'\*\*地点名称\*\*:\s*(.*?)(?:\n|$)', body)
         if name_match:
             data['name'] = name_match.group(1).strip()
-        
-        # 提取坐标 (格式: 45.924283°N, 127.83026°E)
+
         coord_match = re.search(r'\*\*坐标\*\*:\s*([\d.]+)°[NS],\s*([\d.]+)°[EW]', body)
         if coord_match:
             data['latitude'] = coord_match.group(1)
             data['longitude'] = coord_match.group(2)
-        
-        # 提取波特尔等级
+
         bortle_match = re.search(r'\*\*波特尔光害等级\*\*:\s*([\d]+)', body)
         if bortle_match:
             data['bortle'] = bortle_match.group(1)
-        
-        # 提取中国暗夜等级
+
         standard_match = re.search(r'\*\*中国暗夜环境等级\*\*:\s*([\d+]+)', body)
         if standard_match:
             data['standardLight'] = standard_match.group(1)
-        
-        # 提取 SQM 值
+
         sqm_match = re.search(r'\*\*SQM值\*\*:\s*([\d.]+)', body)
         if sqm_match:
             data['sqm'] = sqm_match.group(1)
-        
-        # 提取气候情况
+
         climate_match = re.search(r'### 气候情况\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
         if climate_match:
             data['climate'] = climate_match.group(1).strip()
-        
-        # 提取住宿情况
+
         accommodation_match = re.search(r'### 住宿情况\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
         if accommodation_match:
             data['accommodation'] = accommodation_match.group(1).strip()
-        
-        # 提取备注
+
         notes_match = re.search(r'### 备注\n(.*?)(?:\n###|\n---|\Z)', body, re.DOTALL)
         if notes_match:
             data['notes'] = notes_match.group(1).strip()
-        
-        # 提取图片
+
         image_match = re.search(r'### 附图\n!\[.*?\]\((.*?)\)', body)
         if image_match:
             data['image'] = image_match.group(1)
-        
-        # 前端提交默认是添加新观星地
+
+        # 前端新增
         is_update = False
         is_add = True
-    else:
-        # 原模板格式：YAML 式
-        patterns = {
-            'id': r'(?:id|ID):\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'name': r'name:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'latitude': r'latitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'longitude': r'longitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'bortle': r'bortle:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'standardLight': r'standardLight:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'sqm': r'sqm:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'climate': r'climate:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'accommodation': r'accommodation:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'notes': r'notes:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-            'image': r'image:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
-        }
-        
-        for field, pattern in patterns.items():
-            match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
-            if match:
-                value = match.group(1).strip()
-                data[field] = value
-        
-        # 检查是否是更新模式
-        is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
-        is_add = '添加新的观星地' in body or '- [x] 添加新的观星地' in body
-    
+        return data, is_update, is_add
+
+    # 3) 模板（YAML样式）
+    patterns = {
+        'id': r'(?:id|ID):\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'name': r'name:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'latitude': r'latitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'longitude': r'longitude:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'bortle': r'bortle:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'standardLight': r'standardLight:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'sqm': r'sqm:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'climate': r'climate:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'accommodation': r'accommodation:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'notes': r'notes:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+        'image': r'image:\s*(?:\n```\n)?(.*?)(?:\n```)?(?:\n|$)',
+    }
+
+    for field, pattern in patterns.items():
+        match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
+        if match:
+            value = match.group(1).strip()
+            data[field] = value
+
+    is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
+    is_add = '添加新的观星地' in body or '- [x] 添加新的观星地' in body
+
     return data, is_update, is_add
 
 
@@ -259,7 +261,10 @@ def main():
             '[观星地]' in ISSUE_TITLE or 
             'data-update' in ISSUE_TITLE.lower() or
             '提交新观星地' in ISSUE_TITLE or
-            '📍' in ISSUE_TITLE
+            '📍' in ISSUE_TITLE or
+            '修改观星地' in ISSUE_TITLE or
+            '✏️' in ISSUE_TITLE or
+            '此 Issue 由前端自动提交系统生成' in ISSUE_BODY
         )
         
         if not is_observatory_issue:

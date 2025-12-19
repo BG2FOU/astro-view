@@ -96,6 +96,9 @@
                 <div class="panel-header">
                     <h2 id="info-name"></h2>
                     <div class="header-actions">
+                        <button class="nav-btn" id="edit-btn" title="编辑并提交修改">
+                            ✏️
+                        </button>
                         <button class="nav-btn" id="amap-nav-btn" title="在高德地图中打开">
                             🗺️
                         <!--<img src="/public/assets/amap.svg" alt="高德地图">-->
@@ -163,6 +166,68 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- 编辑表单（默认隐藏） -->
+                    <div id="edit-container" class="info-section hidden" style="margin-top:10px;">
+                        <form id="edit-form" class="observatory-form">
+                            <div class="form-group">
+                                <label>地点名称 *</label>
+                                <input type="text" id="edit-name" name="name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>纬度*</label>
+                                    <input type="number" id="edit-latitude" name="latitude" step="0.000001" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>经度*</label>
+                                    <input type="number" id="edit-longitude" name="longitude" step="0.000001" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>波特尔等级(1-9)</label>
+                                    <input type="number" id="edit-bortle" name="bortle" min="1" max="9">
+                                </div>
+                                <div class="form-group">
+                                    <label>SQM值</label>
+                                    <input type="number" id="edit-sqm" name="sqm" step="0.01">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>中国暗夜等级</label>
+                                <select id="edit-standard" name="standard">
+                                    <option value="">-- 选择 --</option>
+                                    <option value="1">1级 (优秀)</option>
+                                    <option value="2">2级 (良好)</option>
+                                    <option value="3">3级 (一般)</option>
+                                    <option value="4">4级 (较差)</option>
+                                    <option value="5">5级 (严重)</option>
+                                    <option value="5+">5级+ (极度严重)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>气候情况</label>
+                                <textarea id="edit-climate" name="climate"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>住宿情况</label>
+                                <textarea id="edit-accommodation" name="accommodation"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>备注</label>
+                                <textarea id="edit-notes" name="notes"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>图片URL</label>
+                                <input type="url" id="edit-image" name="image">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-submit">💾 保存修改</button>
+                                <button type="button" id="edit-cancel" class="btn-reset">取消</button>
+                            </div>
+                            <div id="edit-status" class="submit-status"></div>
+                        </form>
                     </div>
                 </div>
             </div>
