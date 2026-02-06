@@ -345,7 +345,7 @@ function showObservatoryInfo(observatory) {
         
         // 添加点击打开查看器功能
         imageImg.onclick = function() {
-            openImageViewer(images, 0);
+            openImageViewer(images, 0, observatory.name);
         };
         
         // 如果有多张图片，显示提示
@@ -415,7 +415,7 @@ function navigateToObservatory(observatory) {
 // ===================== 使用 Viewer.js 的图片查看器集成 =====================
 let imageViewer = null; // 全局 Viewer 实例
 
-function openImageViewer(images, startIndex = 0) {
+function openImageViewer(images, startIndex = 0, observatoryName = '') {
     const container = document.getElementById('image-container');
     if (!container) return;
     
@@ -427,7 +427,8 @@ function openImageViewer(images, startIndex = 0) {
     imageArray.forEach((url, index) => {
         const img = document.createElement('img');
         img.src = url;
-        img.alt = `观星地关联图片 ${index + 1}`;
+        // 使用地点名称+附图+编号的格式
+        img.alt = observatoryName ? `${observatoryName}附图${index + 1}` : `附图${index + 1}`;
         img.style.display = index === 0 ? 'block' : 'none';
         img.dataset.index = index;
         container.appendChild(img);
@@ -561,12 +562,12 @@ function initImageViewer() {
 // 打开图片查看器（支持多张图片）- 已通过 openImageViewer 函数实现
 
 // 显示图片放大预览
-function showImageOverlay(imageSrc) {
+function showImageOverlay(imageSrc, observatoryName = '') {
     // 如果是数组，使用 viewerjs；否则使用单张图片
     if (Array.isArray(imageSrc)) {
-        openImageViewer(imageSrc, 0);
+        openImageViewer(imageSrc, 0, observatoryName);
     } else {
-        openImageViewer([imageSrc], 0);
+        openImageViewer([imageSrc], 0, observatoryName);
     }
 }
 
