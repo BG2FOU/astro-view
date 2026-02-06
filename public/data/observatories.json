@@ -153,6 +153,20 @@
       "coordinates": "132.584374°E,45.316021°N",
       "id": "HIT3A_16",
       "image": ""
+    },
+    {
+      "name": "1",
+      "latitude": 1e-06,
+      "longitude": 1e-06,
+      "bortle": "1",
+      "standardLight": "1",
+      "sqm": "0.01",
+      "climate": "1",
+      "accommodation": "1",
+      "notes": "1",
+      "coordinates": "1e-06°E,1e-06°N",
+      "id": "HIT3A_41",
+      "image": ""
     }
   ]
 }
