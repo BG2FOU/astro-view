@@ -8,8 +8,14 @@ export async function onRequestPost(context) {
 
     try {
         const data = await request.json();
-        const { original, updated, changes = [], id = '', submitterIP = 'unknown' } = data || {};
-        console.log('📥 update.js 收到请求，submitterIP:', submitterIP);
+        const { original, updated, changes = [], id = '' } = data || {};
+        
+        // 从Cloudflare请求头获取真实客户端IP（最可靠的方式）
+        const submitterIP = request.headers.get('CF-Connecting-IP') 
+                        || request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim()
+                        || request.headers.get('X-Real-IP')
+                        || 'unknown';
+        console.log('📥 update.js 收到请求，从请求头获取 IP:', submitterIP);
 
         if (!original || !updated) {
             return new Response(JSON.stringify({

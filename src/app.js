@@ -578,13 +578,31 @@ function imagesToSemicolonText(images) {
 }
 
 // ===================== IP地址获取函数 =====================
-// 获取用户IP地址（通过免费IP查询服务）
+// 获取用户IP地址（优先使用自建API，避免CORS问题）
 async function getUserIP() {
     try {
-        // 尝试多个IP查询服务（按优先级排列）
+        // 优先尝试自建的IP查询API（无CORS问题）
+        try {
+            console.log('🔍 尝试使用 /api/getip 获取IP...');
+            const response = await fetch('/api/getip', { 
+                method: 'GET',
+                cache: 'no-cache'
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.ip && data.ip !== 'unknown' && /^\d+\.\d+\.\d+\.\d+$/.test(data.ip)) {
+                    console.log('✓ 从 /api/getip 获取用户IP成功:', data.ip);
+                    return data.ip;
+                }
+            }
+        } catch (e) {
+            console.debug('自建API失败（可能在本地环境）:', e.message);
+        }
+
+        // 降级方案：尝试外部IP查询服务（可能因CORS失败）
         const services = [
             { url: 'https://api.ipify.org?format=json', parser: (r) => r.json().then(d => d.ip) },
-            { url: 'https://ifconfig.me', parser: (r) => r.text() },
+            { url: 'https://ifconfig.me/ip', parser: (r) => r.text() },
             { url: 'https://api.my-ip.io/ip', parser: (r) => r.text() }
         ];
 
