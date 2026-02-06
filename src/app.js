@@ -317,13 +317,22 @@ function showObservatoryInfo(observatory) {
     document.getElementById('info-notes').textContent = 
         observatory.notes || '暂无备注';
     
-    // 处理附图
+    // 处理附图（支持多张图片）
     const imageImg = document.getElementById('info-image');
     const imagePlaceholder = document.getElementById('info-image-placeholder');
     
-    if (observatory.image && observatory.image.trim()) {
-        // 有图片链接
-        imageImg.src = observatory.image;
+    // 将图片转换为数组格式（向后兼容单张图片格式）
+    let images = [];
+    if (observatory.images && Array.isArray(observatory.images)) {
+        images = observatory.images.filter(img => img && img.trim());
+    } else if (observatory.image && observatory.image.trim()) {
+        // 向后兼容旧数据格式
+        images = [observatory.image];
+    }
+    
+    if (images.length > 0) {
+        // 显示第一张图片
+        imageImg.src = images[0];
         imageImg.style.display = 'block';
         imagePlaceholder.style.display = 'none';
         
@@ -334,10 +343,24 @@ function showObservatoryInfo(observatory) {
             imagePlaceholder.textContent = '图片加载失败';
         };
         
-        // 添加点击放大功能
+        // 添加点击打开查看器功能
         imageImg.onclick = function() {
-            showImageOverlay(observatory.image);
+            openImageViewer(images, 0);
         };
+        
+        // 如果有多张图片，显示提示
+        if (images.length > 1) {
+            imagePlaceholder.textContent = `共 ${images.length} 张图片，点击查看`;
+            imagePlaceholder.style.display = 'block';
+            imagePlaceholder.style.position = 'absolute';
+            imagePlaceholder.style.bottom = '5px';
+            imagePlaceholder.style.right = '5px';
+            imagePlaceholder.style.background = 'rgba(0, 0, 0, 0.7)';
+            imagePlaceholder.style.color = 'white';
+            imagePlaceholder.style.padding = '5px 10px';
+            imagePlaceholder.style.borderRadius = '3px';
+            imagePlaceholder.style.fontSize = '12px';
+        }
     } else {
         // 无图片
         imageImg.style.display = 'none';
@@ -389,17 +412,170 @@ function navigateToObservatory(observatory) {
     }
 }
 
+// ===================== 使用 Viewer.js 的图片查看器集成 =====================
+let imageViewer = null; // 全局 Viewer 实例
+
+function openImageViewer(images, startIndex = 0) {
+    const container = document.getElementById('image-container');
+    if (!container) return;
+    
+    // 清空容器
+    container.innerHTML = '';
+    
+    // 创建图片元素
+    const imageArray = Array.isArray(images) ? images : [images];
+    imageArray.forEach((url, index) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = `观星地关联图片 ${index + 1}`;
+        img.style.display = index === 0 ? 'block' : 'none';
+        img.dataset.index = index;
+        container.appendChild(img);
+    });
+    
+    // 创建或更新 Viewer 实例
+    if (imageViewer) {
+        imageViewer.destroy();
+    }
+    
+    imageViewer = new Viewer(container, {
+        inline: false,
+        viewed: true,
+        navbar: true,
+        toolbar: {
+            zoomIn: true,
+            zoomOut: true,
+            oneToOne: true,
+            reset: true,
+            prev: true,
+            play: false,
+            next: true,
+            rotateLeft: true,
+            rotateRight: true,
+            flipHorizontal: true,
+            flipVertical: true,
+            fullscreen: true,
+            download: false
+        },
+        keyboard: {
+            37: 'prev', // 左箭头
+            39: 'next', // 右箭头
+            107: 'zoomIn', // +
+            109: 'zoomOut', // -
+            48: 'reset', // 0
+            49: 'oneToOne', // 1
+            82: 'rotateRight', // R
+            87: 'flipVertical', // W
+            72: 'flipHorizontal', // H
+            70: 'fullscreen', // F
+            27: 'exit' // Esc
+        },
+        title: true,
+        tooltip: true
+    });
+    
+    // 显示指定索引的图片
+    if (startIndex > 0 && startIndex < imageArray.length) {
+        imageViewer.view(startIndex);
+    } else {
+        imageViewer.view(0);
+    }
+}
+
+// ===================== 多图片表单处理函数 =====================
+
+// 更新图片预览
+function updateImagesPreview(textareaId, previewId) {
+    const textarea = document.getElementById(textareaId);
+    const preview = document.getElementById(previewId);
+    
+    if (!textarea || !preview) return;
+    
+    const urls = textarea.value
+        .split('\n')
+        .map(url => url.trim())
+        .filter(url => url.length > 0);
+    
+    preview.innerHTML = '';
+    
+    urls.forEach((url, index) => {
+        const item = document.createElement('div');
+        item.className = 'image-preview-item';
+        item.innerHTML = `
+            <img src="${url}" alt="Preview ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22monospace%22 font-size=%2212%22 fill=%22%23999%22%3E加载失败%3C/text%3E%3C/svg%3E'">
+            <button type="button" class="delete-btn" title="删除">×</button>
+        `;
+        
+        // 删除按钮事件
+        item.querySelector('.delete-btn').addEventListener('click', () => {
+            urls.splice(index, 1);
+            textarea.value = urls.join('\n');
+            updateImagesPreview(textareaId, previewId);
+        });
+        
+        preview.appendChild(item);
+    });
+}
+
+// 初始化多图片表单
+function initMultiImageForms() {
+    const formImagesTextarea = document.getElementById('form-images');
+    const editImagesTextarea = document.getElementById('edit-images');
+    
+    if (formImagesTextarea) {
+        formImagesTextarea.addEventListener('input', () => {
+            updateImagesPreview('form-images', 'form-images-preview');
+        });
+    }
+    
+    if (editImagesTextarea) {
+        editImagesTextarea.addEventListener('input', () => {
+            updateImagesPreview('edit-images', 'edit-images-preview');
+        });
+    }
+}
+
+// 从图片URL文本获取数组
+function parseImageUrls(text) {
+    return text
+        .split('\n')
+        .map(url => url.trim())
+        .filter(url => url.length > 0);
+}
+
+// 将图片数组转换为文本格式
+function imagesToText(images) {
+    if (Array.isArray(images)) {
+        return images.filter(img => img && img.trim()).join('\n');
+    } else if (images && images.trim()) {
+        return images;
+    }
+    return '';
+}
+
+// 初始化全局图片查看器
+function initImageViewer() {
+    imageViewerInstance = new ImageViewer();
+}
+
+// 打开图片查看器（支持多张图片）- 已通过 openImageViewer 函数实现
+
 // 显示图片放大预览
 function showImageOverlay(imageSrc) {
-    const overlay = document.getElementById('image-overlay');
-    const overlayImage = document.getElementById('overlay-image');
-    overlayImage.src = imageSrc;
-    overlay.classList.remove('hidden');
+    // 如果是数组，使用 viewerjs；否则使用单张图片
+    if (Array.isArray(imageSrc)) {
+        openImageViewer(imageSrc, 0);
+    } else {
+        openImageViewer([imageSrc], 0);
+    }
 }
 
 // 隐藏图片放大预览
 function hideImageOverlay() {
-    document.getElementById('image-overlay').classList.add('hidden');
+    if (imageViewer) {
+        imageViewer.destroy();
+        imageViewer = null;
+    }
 }
 
 // 初始化面板拖动和调整大小功能
@@ -514,6 +690,9 @@ function updateLastModifiedTime() {
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化路网复选框为禁用状态（因为默认是标准图层）
     document.getElementById('roadnet-toggle').disabled = true;
+    
+    // 初始化多图片表单
+    initMultiImageForms();
     
     // 关闭按钮
     document.getElementById('close-btn').addEventListener('click', hideObservatoryInfo);
@@ -650,7 +829,18 @@ function prefillEditForm(obs) {
     get('edit-climate').value = obs.climate || '';
     get('edit-accommodation').value = obs.accommodation || '';
     get('edit-notes').value = obs.notes || '';
-    const imgEl = get('edit-image'); if (imgEl) imgEl.value = obs.image || '';
+    
+    // 处理图片：优先显示 images 数组，否则显示单个 image
+    const imagesEl = get('edit-images');
+    if (imagesEl) {
+        const imageText = imagesToText(obs.images || obs.image || '');
+        imagesEl.value = imageText;
+        updateImagesPreview('edit-images', 'edit-images-preview');
+    }
+    
+    // 保留向后兼容
+    const imgEl = get('edit-image');
+    if (imgEl) imgEl.value = obs.image || '';
 }
 
 // 构建修改Issue内容（本地或失败时备用）
@@ -693,6 +883,15 @@ async function submitObservatoryUpdate(e) {
         const latitude = Math.round(lat * 1000000) / 1000000;
         const longitude = Math.round(lon * 1000000) / 1000000;
 
+        // 处理图片：优先使用新的 images 字段（多张），回退到 image 字段（单张）
+        let images = parseImageUrls(formData.get('images') || '');
+        if (images.length === 0) {
+            const oldImage = formData.get('image');
+            if (oldImage && oldImage.trim()) {
+                images = [oldImage];
+            }
+        }
+        
         const updated = {
             id: currentObservatory.id || '',
             name: formData.get('name'),
@@ -705,7 +904,8 @@ async function submitObservatoryUpdate(e) {
             climate: formData.get('climate') || '',
             accommodation: formData.get('accommodation') || '',
             notes: formData.get('notes') || '',
-            image: formData.get('image') || ''
+            images: images,
+            image: images.length > 0 ? images[0] : ''
         };
 
         // 基本验证
@@ -843,7 +1043,14 @@ function buildIssueBody(data) {
         body += `### 备注\n${data.notes}\n\n`;
     }
     
-    if (data.image) {
+    // 支持多张图片
+    if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+        body += `### 附图\n`;
+        data.images.forEach((imgUrl, index) => {
+            body += `![观星地图片${index + 1}](${imgUrl})\n`;
+        });
+        body += `\n`;
+    } else if (data.image) {
         body += `### 附图\n![观星地图片](${data.image})\n\n`;
     }
     
@@ -869,6 +1076,15 @@ async function submitObservatory(e) {
         const latitude = Math.round(lat * 1000000) / 1000000;
         const longitude = Math.round(lon * 1000000) / 1000000;
         
+        // 处理图片：优先使用新的 images 字段（多张），回退到 image 字段（单张）
+        let images = parseImageUrls(formData.get('images') || '');
+        if (images.length === 0) {
+            const oldImage = formData.get('image');
+            if (oldImage && oldImage.trim()) {
+                images = [oldImage];
+            }
+        }
+        
         const data = {
             name: formData.get('name'),
             latitude: latitude,
@@ -880,7 +1096,8 @@ async function submitObservatory(e) {
             climate: formData.get('climate') || '',
             accommodation: formData.get('accommodation') || '',
             notes: formData.get('notes') || '',
-            image: formData.get('image') || ''
+            images: images,
+            image: images.length > 0 ? images[0] : ''
         };
 
         // 基本验证
