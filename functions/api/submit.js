@@ -83,7 +83,7 @@ export async function onRequestPost(context) {
         
         issueBody += `---\n*此 Issue 由前端自动提交系统生成*\n`;
         if (submitterIP && submitterIP !== 'unknown') {
-            issueBody += `由 \`${submitterIP}\` 提交\n`;
+            issueBody += `*由 \`${submitterIP}\` 提交*\n`;
             console.log('✓ 已将IP添加到Issue正文:', submitterIP);
         } else {
             console.warn('✗ IP未添加（submitterIP为空或unknown）:', submitterIP);
