@@ -8,7 +8,8 @@ export async function onRequestPost(context) {
 
     try {
         const data = await request.json();
-        const { original, updated, changes = [], id = '' } = data || {};
+        const { original, updated, changes = [], id = '', submitterIP = 'unknown' } = data || {};
+        console.log('📥 update.js 收到请求，submitterIP:', submitterIP);
 
         if (!original || !updated) {
             return new Response(JSON.stringify({
@@ -64,8 +65,11 @@ export async function onRequestPost(context) {
         issueBody += '```json\n' + JSON.stringify(updated, null, 2) + '\n```\n\n';
 
         issueBody += `---\n*此 Issue 由前端自动提交系统生成*\n`;
-        if (data.submitterIP && data.submitterIP !== 'unknown') {
-            issueBody += `由 \`${data.submitterIP}\` 提交\n`;
+        if (submitterIP && submitterIP !== 'unknown') {
+            issueBody += `由 \`${submitterIP}\` 提交\n`;
+            console.log('✓ 已将IP添加到Issue正文:', submitterIP);
+        } else {
+            console.warn('✗ IP未添加（submitterIP为空或unknown）:', submitterIP);
         }
 
         const response = await fetch('https://api.github.com/repos/BG2FOU/astro-view/issues', {

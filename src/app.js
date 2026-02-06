@@ -590,6 +590,7 @@ async function getUserIP() {
 
         for (const service of services) {
             try {
+                console.log(`尝试使用 ${service.url} 获取IP...`);
                 const response = await fetch(service.url, { 
                     timeout: 3000,
                     mode: 'cors',
@@ -597,17 +598,20 @@ async function getUserIP() {
                 });
                 if (response.ok) {
                     const ip = await service.parser(response);
+                    console.log(`服务 ${service.url} 返回:`, ip);
                     if (ip && /^\d+\.\d+\.\d+\.\d+$/.test(ip.trim())) {
-                        console.log('获取用户IP成功:', ip.trim());
+                        console.log('✓ 获取用户IP成功:', ip.trim());
                         return ip.trim();
+                    } else {
+                        console.warn(`服务 ${service.url} 返回的不是有效IP:`, ip);
                     }
                 }
             } catch (e) {
-                console.debug(`IP查询服务 ${service.url} 失败:`, e.message);
+                console.warn(`IP查询服务 ${service.url} 失败:`, e.message);
                 continue;
             }
         }
-        console.warn('无法获取用户IP');
+        console.error('✗ 所有IP查询服务都失败，返回 unknown');
         return 'unknown';
     } catch (e) {
         console.error('获取IP过程出错:', e);
@@ -1014,6 +1018,7 @@ async function submitObservatoryUpdate(e) {
 
         // 获取用户IP地址
         const userIP = await getUserIP();
+        console.log('✏️ 准备提交修改，submitterIP:', userIP);
         
         // 显示加载状态
         statusEl.textContent = '📤 正在提交修改...';
@@ -1035,6 +1040,7 @@ async function submitObservatoryUpdate(e) {
         }
 
         // 在线环境，调用 API
+        console.log('🌐 调用 /api/update，submitterIP:', userIP);
         const response = await fetch('/api/update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1196,6 +1202,7 @@ async function submitObservatory(e) {
         // 获取用户IP地址
         const userIP = await getUserIP();
         data.submitterIP = userIP;
+        console.log('📍 准备提交新观星地，submitterIP:', userIP);
         
         // 检测是否在本地文件环境（file:// 协议）
         const isLocalFile = window.location.protocol === 'file:';
@@ -1214,6 +1221,7 @@ async function submitObservatory(e) {
         }
 
         // 在线环境：调用 Cloudflare Pages Function API
+        console.log('🌐 调用 /api/submit，data.submitterIP:', data.submitterIP);
         const response = await fetch('/api/submit', {
             method: 'POST',
             headers: {

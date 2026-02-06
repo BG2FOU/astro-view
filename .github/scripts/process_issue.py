@@ -129,6 +129,18 @@ def parse_issue_body(body):
         match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
         if match:
             value = match.group(1).strip()
+            # 对于image字段，提取Markdown图片格式中的URL
+            if field == 'image' and value:
+                # 处理 ![Image](url) 格式
+                markdown_urls = re.findall(r'!\[.*?\]\((.*?)\)', value)
+                if markdown_urls:
+                    value = ';'.join(markdown_urls)
+                # 处理直接的https链接
+                elif not value.startswith('http'):
+                    # 尝试从文本中提取URL
+                    direct_urls = re.findall(r'https://[\w\-\.]+/[\w\-/\.\?=&]+', value)
+                    if direct_urls:
+                        value = ';'.join(direct_urls)
             data[field] = value
 
     is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
@@ -291,6 +303,8 @@ def main():
     """主函数"""
     
     try:
+        print(f"开始处理 Issue #{ISSUE_NUMBER}: {ISSUE_TITLE}")
+        
         # 检查是否是观星地相关的 Issue
         # 支持前端提交格式：📍 提交新观星地：xxx
         # 也支持模板格式：[观星地] 或 data-update
@@ -305,28 +319,39 @@ def main():
         )
         
         if not is_observatory_issue:
+            print("这不是观星地更新 Issue，跳过处理")
             print("::set-output name=success::false")
             print("::set-output name=error::这不是观星地更新 Issue")
             return
         
+        print("开始解析 Issue 内容...")
         # 解析 Issue 内容
         data, is_update, is_add = parse_issue_body(ISSUE_BODY)
+        
+        print(f"解析结果: is_update={is_update}, is_add={is_add}")
+        print(f"解析到的数据: {data}")
         
         if not is_update and not is_add:
             # 如果解析不出来，可能是格式问题
             if not data:
                 raise ValueError("无法解析 Issue 内容，请确保格式正确")
         
+        print("开始验证数据...")
         # 验证数据
         is_valid, errors = validate_data(data, is_update)
         if not is_valid:
+            print(f"数据验证失败: {errors}")
             print("::set-output name=success::false")
             error_msg = '\n'.join(errors)
             print(f"::set-output name=error::{error_msg}")
             return
         
+        print("数据验证通过，开始处理...")
         # 处理数据
         message = process_observatory(data, is_update, is_add)
+
+        print("数据处理完成")
+        print(f"结果消息: {message}")
 
         # 输出给工作流使用
         action_label = "修改" if is_update else "添加"
@@ -336,8 +361,13 @@ def main():
         print(f"::set-output name=message::{message}")
         print(f"::set-output name=action::{action_label}")
         print(f"::set-output name=name::{obs_name}")
+        print(f"✅ 成功{action_label}观星地: {obs_name}")
         
     except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"❌ 处理失败: {str(e)}")
+        print(f"错误详情:\n{error_trace}")
         print("::set-output name=success::false")
         print(f"::set-output name=error::{str(e)}")
         sys.exit(1)
