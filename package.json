@@ -5,13 +5,10 @@
   "private": true,
   "scripts": {
     "build": "node build-config.js",
-    "start": "node build-config.js",
-    "sync": "node scripts/sync-observatories.js"
+    "start": "node build-config.js"
   },
   "keywords": ["astronomy", "stargazing", "map"],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "xlsx": "^0.18.5"
-  }
+  "dependencies": {}
 }

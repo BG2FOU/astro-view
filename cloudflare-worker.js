@@ -182,7 +182,15 @@ function buildIssueBody(data) {
         body += `### 备注\n${escapeMarkdown(data.notes)}\n\n`;
     }
     
-    if (data.image) {
+    // 支持多张图片
+    if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+        body += `### 附图\n`;
+        data.images.forEach((imgUrl, index) => {
+            body += `![观星地图片${index + 1}](${imgUrl})\n`;
+        });
+        body += `\n`;
+    } else if (data.image) {
+        // 向后兼容旧的单张图片格式
         body += `### 附图\n![观星地图片](${data.image})\n\n`;
     }
     

@@ -50,7 +50,16 @@ export async function onRequestPost(context) {
         if (data.notes) {
             issueBody += `### 备注\n${data.notes}\n\n`;
         }
-        if (data.image) {
+        
+        // 支持多张图片
+        if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+            issueBody += `### 附图\n`;
+            data.images.forEach((imgUrl, index) => {
+                issueBody += `![观星地图片${index + 1}](${imgUrl})\n`;
+            });
+            issueBody += `\n`;
+        } else if (data.image) {
+            // 向后兼容旧的单张图片格式
             issueBody += `### 附图\n![观星地图片](${data.image})\n\n`;
         }
         
