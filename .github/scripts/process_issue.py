@@ -146,6 +146,19 @@ def parse_issue_body(body):
     is_update = '更新现有观星地' in body or '- [x] 更新现有观星地' in body
     is_add = '添加新的观星地' in body or '- [x] 添加新的观星地' in body
 
+    # 清理ID字段：如果是空字符串、markdown代码块标记或其他无效值，设为空
+    if 'id' in data:
+        id_value = str(data['id']).strip()
+        # 清除markdown代码块标记和无效字符
+        if id_value in ['', '```', '`', 'null', 'None', 'undefined']:
+            data['id'] = ''
+        else:
+            data['id'] = id_value
+    
+    # 逻辑修正：如果勾选了"添加新的观星地"且ID为空，则强制设为添加模式
+    if is_add and not data.get('id'):
+        is_update = False
+
     return data, is_update, is_add
 
 
@@ -236,9 +249,13 @@ def process_observatory(data, is_update, is_add):
     if 'latitude' in data and 'longitude' in data:
         data['coordinates'] = f"{data['longitude']}°E,{data['latitude']}°N"
     
-    # 确保有 ID
-    if not data.get('id'):
+    # 确保有有效的ID
+    id_value = str(data.get('id', '')).strip()
+    if not id_value or id_value in ['```', '`', 'null', 'None', 'undefined']:
         data['id'] = generate_id(ISSUE_NUMBER)
+        print(f"自动生成ID: {data['id']}")
+    else:
+        data['id'] = id_value
     
     # 设置默认值
     if 'bortle' not in data or not data['bortle']:
