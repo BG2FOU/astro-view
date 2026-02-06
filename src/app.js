@@ -903,7 +903,7 @@ function prefillEditForm(obs) {
 }
 
 // 构建修改Issue内容（本地或失败时备用）
-function buildUpdateIssueBody(changes, original, updated) {
+function buildUpdateIssueBody(changes, original, updated, userIP = 'unknown') {
     let body = `### 目标观星地\n`;
     body += `- 名称: ${original.name}\n`;
     if (original.id) body += `- ID: ${original.id}\n`;
@@ -921,7 +921,10 @@ function buildUpdateIssueBody(changes, original, updated) {
 
     body += `### 更新后的完整条目（JSON）\n`;
     body += '```json\n' + JSON.stringify(updated, null, 2) + '\n```\n\n';
-    body += `---\n*此 Issue 由前端自动提交系统生成*`;
+    body += `---\n*此 Issue 由前端自动提交系统生成*\n`;
+    if (userIP && userIP !== 'unknown') {
+        body += `由 \`${userIP}\` 提交\n`;
+    }
     return body;
 }
 
@@ -1020,8 +1023,7 @@ async function submitObservatoryUpdate(e) {
 
         const isLocalFile = window.location.protocol === 'file:';
         const issueTitle = `✏️ 修改观星地：${original.name}${original.id ? ' ('+original.id+')' : ''}`;
-        let issueBody = buildUpdateIssueBody(changes, original, updated);
-        issueBody += `由 \`${userIP}\` 提交\n`;
+        const issueBody = buildUpdateIssueBody(changes, original, updated, userIP);
 
         if (isLocalFile) {
             const issueUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=${encodeURIComponent('信息修改')}`;
