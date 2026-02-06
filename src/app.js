@@ -317,9 +317,14 @@ function showObservatoryInfo(observatory) {
     document.getElementById('info-notes').textContent = 
         observatory.notes || '暂无备注';
     
-    // 处理附图（多张图片使用同一字段，按行或分号分隔）
+    // 处理附图（多张图片使用同一字段，按分号或换行分隔）
     const imageImg = document.getElementById('info-image');
     const imagePlaceholder = document.getElementById('info-image-placeholder');
+    const imageContainer = document.getElementById('info-image-container');
+    
+    // 清理之前可能存在的计数提示
+    const oldCounter = imageContainer.querySelector('.image-counter');
+    if (oldCounter) oldCounter.remove();
     
     // 统一解析图片列表（兼容旧数据中的 images 数组）
     let images = parseImageUrls(observatory.image || '');
@@ -335,7 +340,18 @@ function showObservatoryInfo(observatory) {
         // 显示第一张图片
         imageImg.src = images[0];
         imageImg.style.display = 'block';
+        
+        // 重置 placeholder 样式（清除之前可能的错误设置）
+        imagePlaceholder.style.position = '';
+        imagePlaceholder.style.bottom = '';
+        imagePlaceholder.style.right = '';
+        imagePlaceholder.style.background = '';
+        imagePlaceholder.style.color = '';
+        imagePlaceholder.style.padding = '';
+        imagePlaceholder.style.borderRadius = '';
+        imagePlaceholder.style.fontSize = '';
         imagePlaceholder.style.display = 'none';
+        imagePlaceholder.textContent = '暂无图片';
         
         // 处理图片加载错误
         imageImg.onerror = function() {
@@ -349,24 +365,32 @@ function showObservatoryInfo(observatory) {
             openImageViewer(images, 0, observatory.name);
         };
         
-        // 如果有多张图片，显示提示
+        // 如果有多张图片，显示友好的计数提示
         if (images.length > 1) {
-            imagePlaceholder.textContent = `共 ${images.length} 张图片，点击查看`;
-            imagePlaceholder.style.display = 'block';
-            imagePlaceholder.style.position = 'absolute';
-            imagePlaceholder.style.bottom = '5px';
-            imagePlaceholder.style.right = '5px';
-            imagePlaceholder.style.background = 'rgba(0, 0, 0, 0.7)';
-            imagePlaceholder.style.color = 'white';
-            imagePlaceholder.style.padding = '5px 10px';
-            imagePlaceholder.style.borderRadius = '3px';
-            imagePlaceholder.style.fontSize = '12px';
+            const counter = document.createElement('div');
+            counter.className = 'image-counter';
+            counter.textContent = `共 ${images.length} 张图片，点击查看`;
+            counter.style.cssText = 'position: absolute; bottom: 8px; right: 8px; background: rgba(0, 0, 0, 0.75); color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; cursor: pointer; user-select: none;';
+            counter.onclick = function() {
+                openImageViewer(images, 0, observatory.name);
+            };
+            imageContainer.appendChild(counter);
         }
     } else {
-        // 无图片
+        // 无图片 - 显示友好的占位提示
         imageImg.style.display = 'none';
         imagePlaceholder.style.display = 'flex';
         imagePlaceholder.textContent = '暂无图片';
+        
+        // 确保 placeholder 样式正确
+        imagePlaceholder.style.position = '';
+        imagePlaceholder.style.bottom = '';
+        imagePlaceholder.style.right = '';
+        imagePlaceholder.style.background = '';
+        imagePlaceholder.style.color = '';
+        imagePlaceholder.style.padding = '';
+        imagePlaceholder.style.borderRadius = '';
+        imagePlaceholder.style.fontSize = '';
     }
     
     // 显示信息面板
@@ -537,7 +561,7 @@ function initMultiImageForms() {
     }
 }
 
-// 从图片URL文本获取数组
+// 从图片URL文本获取数组（统一使用分号分隔，但兼容换行）
 function parseImageUrls(text) {
     return text
         .split(/[\n;]/)
@@ -545,14 +569,12 @@ function parseImageUrls(text) {
         .filter(url => url.length > 0);
 }
 
-// 将图片数组转换为文本格式
-function imagesToText(images) {
+// 将图片数组转换为分号分隔的文本格式
+function imagesToSemicolonText(images) {
     if (Array.isArray(images)) {
-        return images.filter(img => img && img.trim()).join('\n');
-    } else if (images && images.trim()) {
-        return images;
+        return images.filter(img => img && img.trim()).join(';');
     }
-    return '';
+    return images || '';
 }
 
 // 打开图片查看器（支持多张图片）- 已通过 openImageViewer 函数实现
@@ -827,10 +849,17 @@ function prefillEditForm(obs) {
     get('edit-accommodation').value = obs.accommodation || '';
     get('edit-notes').value = obs.notes || '';
     
-    // 处理图片：单字段支持多行/分号
+    // 处理图片：单字段支持多行/分号，显示时使用换行便于编辑
     const imgEl = get('edit-image');
     if (imgEl) {
-        imgEl.value = imagesToText(obs.images || obs.image || '');
+        // 从 obs.image 或 obs.images 解析，显示时用换行分隔便于编辑
+        let imageUrls = [];
+        if (obs.image) {
+            imageUrls = parseImageUrls(obs.image);
+        } else if (obs.images && Array.isArray(obs.images)) {
+            imageUrls = obs.images.filter(img => img && img.trim());
+        }
+        imgEl.value = imageUrls.join('\n');
         updateImagesPreview('edit-image', 'edit-image-preview');
     }
 }
