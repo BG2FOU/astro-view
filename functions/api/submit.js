@@ -8,6 +8,13 @@ export async function onRequestPost(context) {
 
     try {
         const data = await request.json();
+        
+        // 从Cloudflare请求头获取真实客户端IP（最可靠的方式）
+        const submitterIP = request.headers.get('CF-Connecting-IP') 
+                        || request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim()
+                        || request.headers.get('X-Real-IP')
+                        || 'unknown';
+        console.log('📥 submit.js 收到请求，从请求头获取 IP:', submitterIP);
 
         // 验证必填字段
         if (!data.name || data.latitude === undefined || data.longitude === undefined) {
@@ -75,8 +82,11 @@ export async function onRequestPost(context) {
         }
         
         issueBody += `---\n*此 Issue 由前端自动提交系统生成*\n`;
-        if (data.submitterIP && data.submitterIP !== 'unknown') {
-            issueBody += `由 \`${data.submitterIP}\` 提交\n`;
+        if (submitterIP && submitterIP !== 'unknown') {
+            issueBody += `*由 \`${submitterIP}\` 提交*\n`;
+            console.log('✓ 已将IP添加到Issue正文:', submitterIP);
+        } else {
+            console.warn('✗ IP未添加（submitterIP为空或unknown）:', submitterIP);
         }
 
         // 调用 GitHub API
