@@ -13,13 +13,13 @@ assignees: ''
 -->
 
 ## 操作类型
-<!-- 必须选择下面其中一个!另一个删掉 -->
+<!-- 必须选择下面其中一个!-->
 - [ ] 添加新的观星地
 - [ ] 更新现有观星地
 
 ## 基本信息
 
-**观星地 ID** (仅用于更新时，新增可留空)
+**观星地 ID** (仅用于更新时,新增可留空,将自动生成)
 ```
 id: 
 ```
@@ -69,7 +69,7 @@ accommodation:
 notes: 
 ```
 
-**图片 URL** (可选，用于展示观星地的图片)
+**图片 URL** (可选,用于展示观星地的图片,也可将图片直接粘贴到此处)
 ```
 image: 
 ```
@@ -83,22 +83,22 @@ image:
 - [ ] 如果提供了图片 URL，它是有效的 HTTPS 链接
 
 ## json示例
-如果直接修改json内容请按照此示例:
+如果直接修改json内容请按照此示例修改public/data/obserservatories.json向仓库提交commit:
 
 ```json
 {
   "id": "example-location",
   "name": "示例观星地",
-  "latitude": 45.31119,
-  "longitude": 127.588019,
-  "coordinates": "127.588019°E,45.311199°N",
+  "latitude": 45.000000,
+  "longitude": 127.000000,
+  "coordinates": "127.000000°E,45.000000°N",
   "bortle": "3",
   "standardLight": "1",
   "sqm": "21.70",
   "climate": "晴朗率较高，能见度优秀",
   "accommodation": "周边民宿众多",
   "notes": "绝佳的观星地",
-  "image": ""
+  "image": "https://example.com/image1.jpg"
 }
 ```
 

@@ -97,6 +97,11 @@ def parse_issue_body(body):
         image_section = re.search(r'### 附图\n([\s\S]*?)(?:\n---|\Z)', body)
         if image_section:
             urls = re.findall(r'!\[.*?\]\((.*?)\)', image_section.group(1))
+            # 处理Issue中粘贴的图片秘密也匹配（github上传的图片往往是直接的URL）
+            direct_urls = re.findall(r'https://[\w\-\.]+/[\w\-/\.\?=&]*(?:jpg|jpeg|png|gif|webp)', image_section.group(1), re.IGNORECASE)
+            for url in direct_urls:
+                if url not in urls:
+                    urls.append(url)
             if urls:
                 data['image'] = ';'.join(urls)
 

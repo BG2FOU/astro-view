@@ -75,6 +75,9 @@ export async function onRequestPost(context) {
         }
         
         issueBody += `---\n*此 Issue 由前端自动提交系统生成*\n`;
+        if (data.submitterIP && data.submitterIP !== 'unknown') {
+            issueBody += `由 \`${data.submitterIP}\` 提交\n`;
+        }
 
         // 调用 GitHub API
         const response = await fetch('https://api.github.com/repos/BG2FOU/astro-view/issues', {

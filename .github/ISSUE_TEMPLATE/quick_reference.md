@@ -1,6 +1,6 @@
 ---
 name: Issue 提交快速参考
-about: 快速查看 Issue 提交格式
+about: 快速查看 Issue 提交格式(注:这不是添加/更新观星地的Issue模板,仅用于规范填写内容)
 ---
 
 # Issue 提交快速参考
