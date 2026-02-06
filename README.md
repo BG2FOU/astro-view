@@ -161,4 +161,4 @@ git push origin main
 编辑 `public/data/observatories.json` 并保存，30 秒内会自动检测更新并刷新地图。如需立即刷新，点击"🔄 刷新数据"按钮；或是刷新网页缓存。
 
 ## 版权
-版权声明：本文为[[BG2FOU](https://github.com/BG2FOU)]()原创，依据 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可证[LICENSE](LICENSE)进行授权，转载请附上[出处链接](https://github.com/BG2FOU/astro-view)及本声明。
+版权声明：本文为[BG2FOU](https://github.com/BG2FOU)原创，依据 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可证[LICENSE](LICENSE)进行授权，转载请附上[出处链接](https://github.com/BG2FOU/astro-view)及本声明。
