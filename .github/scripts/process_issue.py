@@ -18,6 +18,13 @@ ISSUE_TITLE = os.getenv('ISSUE_TITLE', '')
 # JSON 文件路径
 JSON_PATH = Path('public/data/observatories.json')
 
+
+def split_image_text(text):
+    if not text:
+        return []
+    parts = re.split(r'[\n;]', str(text))
+    return [p.strip() for p in parts if p.strip()]
+
 def parse_issue_body(body):
     """解析 Issue 正文，提取观星地数据（支持前端新增与前端更新JSON、模板两种格式）"""
 
@@ -32,6 +39,18 @@ def parse_issue_body(body):
         try:
             updated_obj = json.loads(json_block.group(1))
             if isinstance(updated_obj, dict):
+                # 兼容旧的 images 数组，合并到 image 字段
+                images_list = updated_obj.get('images')
+                merged_images = []
+                if isinstance(images_list, list):
+                    for item in images_list:
+                        if item and str(item).strip():
+                            merged_images.append(str(item).strip())
+                merged_images.extend(split_image_text(updated_obj.get('image', '')))
+                if merged_images:
+                    updated_obj['image'] = '\n'.join(dict.fromkeys(merged_images))
+                updated_obj.pop('images', None)
+
                 data.update(updated_obj)
                 is_update = True
                 is_add = False
@@ -75,9 +94,11 @@ def parse_issue_body(body):
         if notes_match:
             data['notes'] = notes_match.group(1).strip()
 
-        image_match = re.search(r'### 附图\n!\[.*?\]\((.*?)\)', body)
-        if image_match:
-            data['image'] = image_match.group(1)
+        image_section = re.search(r'### 附图\n([\s\S]*?)(?:\n---|\Z)', body)
+        if image_section:
+            urls = re.findall(r'!\[.*?\]\((.*?)\)', image_section.group(1))
+            if urls:
+                data['image'] = '\n'.join(urls)
 
         # 前端新增
         is_update = False
@@ -217,6 +238,17 @@ def process_observatory(data, is_update, is_add):
         data['notes'] = ''
     if 'image' not in data:
         data['image'] = ''
+
+    # 兼容旧的 images 数组并清理
+    if 'images' in data:
+        merged_images = []
+        if isinstance(data.get('images'), list):
+            for item in data['images']:
+                if item and str(item).strip():
+                    merged_images.append(str(item).strip())
+        merged_images.extend(split_image_text(data.get('image', '')))
+        data['image'] = '\n'.join(dict.fromkeys(merged_images))
+        data.pop('images', None)
     
     # 检查是否已存在（用于更新）
     existing_index = -1

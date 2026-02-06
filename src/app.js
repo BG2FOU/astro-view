@@ -317,17 +317,18 @@ function showObservatoryInfo(observatory) {
     document.getElementById('info-notes').textContent = 
         observatory.notes || '暂无备注';
     
-    // 处理附图（支持多张图片）
+    // 处理附图（多张图片使用同一字段，按行或分号分隔）
     const imageImg = document.getElementById('info-image');
     const imagePlaceholder = document.getElementById('info-image-placeholder');
     
-    // 将图片转换为数组格式（向后兼容单张图片格式）
-    let images = [];
+    // 统一解析图片列表（兼容旧数据中的 images 数组）
+    let images = parseImageUrls(observatory.image || '');
     if (observatory.images && Array.isArray(observatory.images)) {
-        images = observatory.images.filter(img => img && img.trim());
-    } else if (observatory.image && observatory.image.trim()) {
-        // 向后兼容旧数据格式
-        images = [observatory.image];
+        observatory.images.forEach((img) => {
+            if (img && img.trim() && !images.includes(img.trim())) {
+                images.push(img.trim());
+            }
+        });
     }
     
     if (images.length > 0) {
@@ -520,18 +521,18 @@ function updateImagesPreview(textareaId, previewId) {
 
 // 初始化多图片表单
 function initMultiImageForms() {
-    const formImagesTextarea = document.getElementById('form-images');
-    const editImagesTextarea = document.getElementById('edit-images');
+    const formImageTextarea = document.getElementById('form-image');
+    const editImageTextarea = document.getElementById('edit-image');
     
-    if (formImagesTextarea) {
-        formImagesTextarea.addEventListener('input', () => {
-            updateImagesPreview('form-images', 'form-images-preview');
+    if (formImageTextarea) {
+        formImageTextarea.addEventListener('input', () => {
+            updateImagesPreview('form-image', 'form-image-preview');
         });
     }
     
-    if (editImagesTextarea) {
-        editImagesTextarea.addEventListener('input', () => {
-            updateImagesPreview('edit-images', 'edit-images-preview');
+    if (editImageTextarea) {
+        editImageTextarea.addEventListener('input', () => {
+            updateImagesPreview('edit-image', 'edit-image-preview');
         });
     }
 }
@@ -539,7 +540,7 @@ function initMultiImageForms() {
 // 从图片URL文本获取数组
 function parseImageUrls(text) {
     return text
-        .split('\n')
+        .split(/[\n;]/)
         .map(url => url.trim())
         .filter(url => url.length > 0);
 }
@@ -552,11 +553,6 @@ function imagesToText(images) {
         return images;
     }
     return '';
-}
-
-// 初始化全局图片查看器
-function initImageViewer() {
-    imageViewerInstance = new ImageViewer();
 }
 
 // 打开图片查看器（支持多张图片）- 已通过 openImageViewer 函数实现
@@ -831,17 +827,12 @@ function prefillEditForm(obs) {
     get('edit-accommodation').value = obs.accommodation || '';
     get('edit-notes').value = obs.notes || '';
     
-    // 处理图片：优先显示 images 数组，否则显示单个 image
-    const imagesEl = get('edit-images');
-    if (imagesEl) {
-        const imageText = imagesToText(obs.images || obs.image || '');
-        imagesEl.value = imageText;
-        updateImagesPreview('edit-images', 'edit-images-preview');
-    }
-    
-    // 保留向后兼容
+    // 处理图片：单字段支持多行/分号
     const imgEl = get('edit-image');
-    if (imgEl) imgEl.value = obs.image || '';
+    if (imgEl) {
+        imgEl.value = imagesToText(obs.images || obs.image || '');
+        updateImagesPreview('edit-image', 'edit-image-preview');
+    }
 }
 
 // 构建修改Issue内容（本地或失败时备用）
@@ -884,14 +875,10 @@ async function submitObservatoryUpdate(e) {
         const latitude = Math.round(lat * 1000000) / 1000000;
         const longitude = Math.round(lon * 1000000) / 1000000;
 
-        // 处理图片：优先使用新的 images 字段（多张），回退到 image 字段（单张）
-        let images = parseImageUrls(formData.get('images') || '');
-        if (images.length === 0) {
-            const oldImage = formData.get('image');
-            if (oldImage && oldImage.trim()) {
-                images = [oldImage];
-            }
-        }
+        // 处理图片：单字段支持多行/分号
+        const imageText = formData.get('image') || '';
+        const images = parseImageUrls(imageText);
+        const normalizedImageText = images.join('\n');
         
         const updated = {
             id: currentObservatory.id || '',
@@ -905,8 +892,7 @@ async function submitObservatoryUpdate(e) {
             climate: formData.get('climate') || '',
             accommodation: formData.get('accommodation') || '',
             notes: formData.get('notes') || '',
-            images: images,
-            image: images.length > 0 ? images[0] : ''
+            image: normalizedImageText
         };
 
         // 基本验证
@@ -935,20 +921,16 @@ async function submitObservatoryUpdate(e) {
             }
         });
         
-        // 单独比较图片字段：需要比较 images 数组（新格式）
-        const originalImages = (original.images && Array.isArray(original.images)) 
-            ? original.images 
-            : (original.image && original.image.trim() ? [original.image] : []);
-        const updatedImages = updated.images || [];
-        
-        // 检查图片数组是否有变化（比较序列化后的值）
-        const originalImagesStr = JSON.stringify(originalImages.sort());
-        const updatedImagesStr = JSON.stringify(updatedImages.sort());
+        // 单独比较图片字段：对 image 文本进行规范化后比较
+        const originalImages = parseImageUrls(original.image || '');
+        const updatedImages = parseImageUrls(updated.image || '');
+        const originalImagesStr = originalImages.join('\n');
+        const updatedImagesStr = updatedImages.join('\n');
         
         if (originalImagesStr !== updatedImagesStr) {
-            changes.push({ 
-                field: 'images', 
-                before: originalImages.length > 0 ? `${originalImages.length}张图片` : '无图片', 
+            changes.push({
+                field: 'image',
+                before: originalImages.length > 0 ? `${originalImages.length}张图片` : '无图片',
                 after: updatedImages.length > 0 ? `${updatedImages.length}张图片` : '无图片'
             });
         }
@@ -1064,15 +1046,14 @@ function buildIssueBody(data) {
         body += `### 备注\n${data.notes}\n\n`;
     }
     
-    // 支持多张图片
-    if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+    // 支持多张图片（同一字段，多行或分号分隔）
+    const imageList = parseImageUrls(data.image || '');
+    if (imageList.length > 0) {
         body += `### 附图\n`;
-        data.images.forEach((imgUrl, index) => {
+        imageList.forEach((imgUrl, index) => {
             body += `![观星地图片${index + 1}](${imgUrl})\n`;
         });
         body += `\n`;
-    } else if (data.image) {
-        body += `### 附图\n![观星地图片](${data.image})\n\n`;
     }
     
     body += `---\n`;
@@ -1097,14 +1078,10 @@ async function submitObservatory(e) {
         const latitude = Math.round(lat * 1000000) / 1000000;
         const longitude = Math.round(lon * 1000000) / 1000000;
         
-        // 处理图片：优先使用新的 images 字段（多张），回退到 image 字段（单张）
-        let images = parseImageUrls(formData.get('images') || '');
-        if (images.length === 0) {
-            const oldImage = formData.get('image');
-            if (oldImage && oldImage.trim()) {
-                images = [oldImage];
-            }
-        }
+        // 处理图片：单字段支持多行/分号
+        const imageText = formData.get('image') || '';
+        const images = parseImageUrls(imageText);
+        const normalizedImageText = images.join('\n');
         
         const data = {
             name: formData.get('name'),
@@ -1117,8 +1094,7 @@ async function submitObservatory(e) {
             climate: formData.get('climate') || '',
             accommodation: formData.get('accommodation') || '',
             notes: formData.get('notes') || '',
-            images: images,
-            image: images.length > 0 ? images[0] : ''
+            image: normalizedImageText
         };
 
         // 基本验证
