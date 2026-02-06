@@ -153,6 +153,20 @@
       "coordinates": "132.584374°E,45.316021°N",
       "id": "HIT3A_16",
       "image": ""
+    },
+    {
+      "id": "HIT3A_48",
+      "name": "乌拉盖水库",
+      "latitude": 45.885563,
+      "longitude": 119.480979,
+      "bortle": "3",
+      "standardLight": "1",
+      "sqm": "21.89",
+      "climate": "易雾",
+      "accommodation": "无",
+      "notes": "```",
+      "image": "https://github.com/user-attachments/assets/35739490-cb9d-40e9-a617-44a4bd16ae43",
+      "coordinates": "119.480979°E,45.885563°N"
     }
   ]
 }
