@@ -51,16 +51,27 @@ export async function onRequestPost(context) {
             issueBody += `### 备注\n${data.notes}\n\n`;
         }
         
-        // 支持多张图片
-        if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+        // 支持多张图片（同一字段，多行或分号分隔）
+        const imageList = [];
+        if (Array.isArray(data.images)) {
+            data.images.forEach((img) => {
+                if (img && String(img).trim()) imageList.push(String(img).trim());
+            });
+        }
+        if (data.image) {
+            String(data.image)
+                .split(/[\n;]/)
+                .map((url) => url.trim())
+                .filter((url) => url.length > 0)
+                .forEach((url) => imageList.push(url));
+        }
+        const uniqueImages = [...new Set(imageList)];
+        if (uniqueImages.length > 0) {
             issueBody += `### 附图\n`;
-            data.images.forEach((imgUrl, index) => {
+            uniqueImages.forEach((imgUrl, index) => {
                 issueBody += `![观星地图片${index + 1}](${imgUrl})\n`;
             });
             issueBody += `\n`;
-        } else if (data.image) {
-            // 向后兼容旧的单张图片格式
-            issueBody += `### 附图\n![观星地图片](${data.image})\n\n`;
         }
         
         issueBody += `---\n*此 Issue 由前端自动提交系统生成*\n`;
