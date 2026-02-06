@@ -918,9 +918,11 @@ async function submitObservatoryUpdate(e) {
         }
 
         // 计算变更
-        const fields = ['name','latitude','longitude','bortle','standardLight','sqm','climate','accommodation','notes','image'];
+        const fields = ['name','latitude','longitude','bortle','standardLight','sqm','climate','accommodation','notes'];
         const changes = [];
         const original = { ...currentObservatory };
+        
+        // 比较基础字段
         fields.forEach(f => {
             const before = original[f] ?? '';
             const after = updated[f] ?? '';
@@ -932,6 +934,24 @@ async function submitObservatoryUpdate(e) {
                 changes.push({ field: f, before, after });
             }
         });
+        
+        // 单独比较图片字段：需要比较 images 数组（新格式）
+        const originalImages = (original.images && Array.isArray(original.images)) 
+            ? original.images 
+            : (original.image && original.image.trim() ? [original.image] : []);
+        const updatedImages = updated.images || [];
+        
+        // 检查图片数组是否有变化（比较序列化后的值）
+        const originalImagesStr = JSON.stringify(originalImages.sort());
+        const updatedImagesStr = JSON.stringify(updatedImages.sort());
+        
+        if (originalImagesStr !== updatedImagesStr) {
+            changes.push({ 
+                field: 'images', 
+                before: originalImages.length > 0 ? `${originalImages.length}张图片` : '无图片', 
+                after: updatedImages.length > 0 ? `${updatedImages.length}张图片` : '无图片'
+            });
+        }
 
         if (changes.length === 0) {
             statusEl.textContent = 'ℹ️ 未检测到任何修改';
