@@ -62,7 +62,7 @@ app.js (fetch 加载)
 }
 ```
 
-坐标获取：https://lbs.amap.com/tools/picker
+坐标获取：[坐标拾取器 | 高德地图API](https://lbs.amap.com/tools/picker)
 
 ### 字段说明
 | 字段 | 类型 | 必需 | 说明 |
@@ -94,28 +94,20 @@ git push origin main
 ### 方式 2: GitHub Issue（推荐）⭐
 通过 GitHub Issue 自动提交数据，系统会自动处理。
 
-**优势：**
-- ✅ 不需要 git 知识
-- ✅ 自动验证数据格式
-- ✅ 自动提交更改并关闭 Issue
-- ✅ 有记录可查
-
 **步骤：**
-1. 进入 **Issues** → **New Issue**
-2. 选择 **"添加或更新观星地"** 模板
-3. 填写观星地信息
-4. 提交 Issue，系统自动处理
 
-📖 **相关文档：**
-- [Issue 自动更新完整指南](.github/ISSUE_AUTO_UPDATE.md)
-- [快速参考卡片](.github/ISSUE_TEMPLATE/quick_reference.md)
-- [GitHub Actions 部署设置](./docs/GITHUB_ACTIONS_SETUP.md)
+1. 进入 **Issues** → **New Issue**；
+2. 选择 **"添加或更新观星地"** 模板；
+4. 提交 Issue，系统自动处理。
 
----
+### 方式3: 直接在页面下方填写✨提交观星地表单（推荐）⭐
+
+直接在页面下方点击`✨提交观星地`，按要求填写表单即可。
 
 ### 光害等级说明
 **波特尔光害等级（bortle）**
 输入数字 1-9，会自动转换为完整标签：
+
 - `1` → 1级 / 极限星等 7.6~8.0
 - `2` → 2级 / 极限星等 7.1~7.5
 - `3` → 3级 / 极限星等 6.6~7.0
@@ -140,6 +132,7 @@ git push origin main
 - 图片会在信息面板底部显示，最大高度 200px
 - 如果图片加载失败会显示"图片加载失败"
 - 如果留空或不填会显示"暂无图片"
+- 点击图片可放大/切换
 
 ## 常见问题
 
@@ -160,41 +153,11 @@ git push origin main
 检查以下几点：
 - URL 是否正确（支持 HTTP 和 HTTPS）
 - 图片是否还在线
-- 图片文件是否过大（建议压缩至 1MB 以内）
-- 跨域问题（某些图片床可能有限制）
+- 图片文件是否过大（建议适当压缩）
+- 跨域问题（某些图床可能有限制）
 
 ### Q: 如何自动刷新地图？
-编辑 `public/data/observatories.json` 并保存，30 秒内会自动检测更新并刷新地图。如需立即刷新，点击"🔄 刷新数据"按钮。
+编辑 `public/data/observatories.json` 并保存，30 秒内会自动检测更新并刷新地图。如需立即刷新，点击"🔄 刷新数据"按钮；或是刷新网页缓存。
 
-## 📚 文档导航
-
-> **📚 [查看完整文档索引](./docs/INDEX.md)** | **快速导航**：[🚀 快速开始](./docs/GETTING_STARTED.md) | [☁️ Cloudflare 部署](./docs/CLOUDFLARE_DEPLOYMENT.md) | [⚡ 快速命令](./docs/QUICK_COMMANDS.md) | [📋 Issue 提交指南](.github/ISSUE_AUTO_UPDATE.md) | [⚙️ GitHub Actions 设置](./docs/GITHUB_ACTIONS_SETUP.md)./docs/
-
-### 🔧 部署相关（最重要）
-| 文档 | 说明 |
-|------|------|
-| [🚀 Cloudflare Pages 部署完整指南](docs/CLOUDFLARE_PAGES_DEPLOYMENT_GUIDE.md) | **最新**：完整的部署步骤、故障排除、工作原理详解 |
-| [🎨 Cloudflare Pages 可视化指南](docs/CLOUDFLARE_PAGES_VISUAL_GUIDE.md) | 带截图的部署配置指南，一步步操作 |
-| [✅ 快速修复清单](docs/QUICK_FIX_CHECKLIST.md) | 错误解决清单和常见问题排查 |
-| [⚙️ Cloudflare Pages 部署配置](docs/CLOUDFLARE_PAGES_SETUP.md) | 技术细节和配置说明 |
-
-### 📖 常规文档
-| 文档 | 说明 |
-|------|------|
-| [🎉 完成总结](./docs/COMPLETION_SUMMARY.md) | 项目完成情况、统计数据、亮点功能 |
-| [🎯 项目完成总结](./docs/PROJECT_COMPLETION_SUMMARY.md) | 功能清单、部署指南、后续计划 |
-| [☁️ Cloudflare Pages 部署](./docs/CLOUDFLARE_DEPLOYMENT.md) | Cloudflare Workers 代理方案、API 密钥安全处理 |
-| [📊 项目状态报告](./docs/PROJECT_STATUS_REPORT.md) | 完成度、技术栈、质量指标 |
-| [📦 文件清单](./docs/FILES_MANIFEST.md) | 所有文件和目录列表 |
-| [🚀 快速开始](./docs/GETTING_STARTED.md) | 5 分钟快速上手指南 |
-| [快速参考](.github/ISSUE_TEMPLATE/quick_reference.md) | Issue 提交格式速查表 |
-| [Issue 自动更新指南](.github/ISSUE_AUTO_UPDATE.md) | GitHub Issue 方式完整教程 |
-| [GitHub Actions 部署设置](./docs/GITHUB_ACTIONS_SETUP.md) | 自动化系统配置指南 |
-| [故障排查指南](.github/TROUBLESHOOTING.md) | 常见问题解决方案 |
-| [部署检查清单](./docs/DEPLOYMENT_CHECKLIST.md) | 上线前检查清单 |
-| [更新日志](./docs/CHANGELOG.md) | 版本历史和改进记录 |
-| [文档索引](./docs/INDEX.md) | 所有文档的导航索引 |
-| [⚡ 快速命令](./docs/QUICK_COMMANDS.md) | 常用命令和快速操作 |
-
-## 许可证
-MIT
+## 版权
+版权声明：本文为[[BG2FOU](https://github.com/BG2FOU)]()原创，依据 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可证[LICENSE](LICENSE)进行授权，转载请附上[出处链接](https://github.com/BG2FOU/astro-view)及本声明。
