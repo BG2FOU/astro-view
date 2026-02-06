@@ -577,6 +577,44 @@ function imagesToSemicolonText(images) {
     return images || '';
 }
 
+// ===================== IP地址获取函数 =====================
+// 获取用户IP地址（通过免费IP查询服务）
+async function getUserIP() {
+    try {
+        // 尝试多个IP查询服务（按优先级排列）
+        const services = [
+            { url: 'https://api.ipify.org?format=json', parser: (r) => r.json().then(d => d.ip) },
+            { url: 'https://ifconfig.me', parser: (r) => r.text() },
+            { url: 'https://api.my-ip.io/ip', parser: (r) => r.text() }
+        ];
+
+        for (const service of services) {
+            try {
+                const response = await fetch(service.url, { 
+                    timeout: 3000,
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+                if (response.ok) {
+                    const ip = await service.parser(response);
+                    if (ip && /^\d+\.\d+\.\d+\.\d+$/.test(ip.trim())) {
+                        console.log('获取用户IP成功:', ip.trim());
+                        return ip.trim();
+                    }
+                }
+            } catch (e) {
+                console.debug(`IP查询服务 ${service.url} 失败:`, e.message);
+                continue;
+            }
+        }
+        console.warn('无法获取用户IP');
+        return 'unknown';
+    } catch (e) {
+        console.error('获取IP过程出错:', e);
+        return 'unknown';
+    }
+}
+
 // 打开图片查看器（支持多张图片）- 已通过 openImageViewer 函数实现
 
 // 显示图片放大预览
@@ -971,6 +1009,9 @@ async function submitObservatoryUpdate(e) {
             return;
         }
 
+        // 获取用户IP地址
+        const userIP = await getUserIP();
+        
         // 显示加载状态
         statusEl.textContent = '📤 正在提交修改...';
         statusEl.classList.add('show', 'loading');
@@ -979,7 +1020,8 @@ async function submitObservatoryUpdate(e) {
 
         const isLocalFile = window.location.protocol === 'file:';
         const issueTitle = `✏️ 修改观星地：${original.name}${original.id ? ' ('+original.id+')' : ''}`;
-        const issueBody = buildUpdateIssueBody(changes, original, updated);
+        let issueBody = buildUpdateIssueBody(changes, original, updated);
+        issueBody += `由 \`${userIP}\` 提交\n`;
 
         if (isLocalFile) {
             const issueUrl = `https://github.com/BG2FOU/astro-view/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=${encodeURIComponent('信息修改')}`;
@@ -998,7 +1040,8 @@ async function submitObservatoryUpdate(e) {
                 id: original.id || '',
                 original,
                 updated,
-                changes
+                changes,
+                submitterIP: userIP
             })
         });
         const result = await response.json();
@@ -1087,6 +1130,9 @@ function buildIssueBody(data) {
     
     body += `---\n`;
     body += `*此 Issue 由前端自动提交系统生成*\n`;
+    if (data.submitterIP && data.submitterIP !== 'unknown') {
+        body += `由 \`${data.submitterIP}\` 提交\n`;
+    }
     
     return body;
 }
@@ -1145,6 +1191,10 @@ async function submitObservatory(e) {
         statusEl.classList.remove('success', 'error', 'warning');
         submitBtn.disabled = true;
 
+        // 获取用户IP地址
+        const userIP = await getUserIP();
+        data.submitterIP = userIP;
+        
         // 检测是否在本地文件环境（file:// 协议）
         const isLocalFile = window.location.protocol === 'file:';
         
