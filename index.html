@@ -81,7 +81,12 @@
                             <textarea id="form-notes" name="notes" placeholder="其他信息"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>图片URL</label>
+                            <label>图片URLs <span style="font-size: 12px; color: #666;">(每行一个链接，支持多张图片)</span></label>
+                            <textarea id="form-images" name="images" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg" style="min-height: 80px; font-family: monospace;"></textarea>
+                            <div id="form-images-preview" class="images-preview" style="margin-top: 8px;"></div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label>图片URL（旧格式）</label>
                             <input type="url" id="form-image" name="image" placeholder="">
                         </div>
                         <div class="form-actions">
@@ -219,7 +224,12 @@
                                 <textarea id="edit-notes" name="notes"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>图片URL</label>
+                                <label>图片URLs <span style="font-size: 12px; color: #666;">(每行一个链接，支持多张图片)</span></label>
+                                <textarea id="edit-images" name="images" style="min-height: 80px; font-family: monospace;"></textarea>
+                                <div id="edit-images-preview" class="images-preview" style="margin-top: 8px;"></div>
+                            </div>
+                            <div class="form-group hidden">
+                                <label>图片URL（旧格式）</label>
                                 <input type="url" id="edit-image" name="image">
                             </div>
                             <div class="form-actions">
@@ -261,10 +271,8 @@
         </div>
     </div>
 
-    <!-- 图片放大预览遮罩层 -->
-    <div id="image-overlay" class="image-overlay hidden">
-        <img id="overlay-image" alt="观星地附图">
-    </div>
+    <!-- 图片容器供 Viewer 使用 -->
+    <div id="image-container" style="display: none;"></div>
 
     <svg style="display:none;" width="0" height="0">
         <defs>
@@ -293,6 +301,10 @@
 
     <!-- 使用 AMapLoader 加载 SDK（官方推荐方式） -->
     <script src="https://webapi.amap.com/loader.js"></script>
+    
+    <!-- Viewer.js 库（图片查看器） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
 
     <!--<script>
     window._AMapSecurityConfig = {
