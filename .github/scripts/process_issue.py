@@ -39,7 +39,7 @@ def parse_issue_body(body):
         try:
             updated_obj = json.loads(json_block.group(1))
             if isinstance(updated_obj, dict):
-                # 兼容旧的 images 数组，合并到 image 字段
+                # 兼容旧的 images 数组，合并到 image 字段，统一使用分号分隔
                 images_list = updated_obj.get('images')
                 merged_images = []
                 if isinstance(images_list, list):
@@ -48,7 +48,7 @@ def parse_issue_body(body):
                             merged_images.append(str(item).strip())
                 merged_images.extend(split_image_text(updated_obj.get('image', '')))
                 if merged_images:
-                    updated_obj['image'] = '\n'.join(dict.fromkeys(merged_images))
+                    updated_obj['image'] = ';'.join(dict.fromkeys(merged_images))
                 updated_obj.pop('images', None)
 
                 data.update(updated_obj)
@@ -98,7 +98,7 @@ def parse_issue_body(body):
         if image_section:
             urls = re.findall(r'!\[.*?\]\((.*?)\)', image_section.group(1))
             if urls:
-                data['image'] = '\n'.join(urls)
+                data['image'] = ';'.join(urls)
 
         # 前端新增
         is_update = False
@@ -239,7 +239,7 @@ def process_observatory(data, is_update, is_add):
     if 'image' not in data:
         data['image'] = ''
 
-    # 兼容旧的 images 数组并清理
+    # 兼容旧的 images 数组并清理，统一使用分号分隔
     if 'images' in data:
         merged_images = []
         if isinstance(data.get('images'), list):
@@ -247,7 +247,7 @@ def process_observatory(data, is_update, is_add):
                 if item and str(item).strip():
                     merged_images.append(str(item).strip())
         merged_images.extend(split_image_text(data.get('image', '')))
-        data['image'] = '\n'.join(dict.fromkeys(merged_images))
+        data['image'] = ';'.join(dict.fromkeys(merged_images))
         data.pop('images', None)
     
     # 检查是否已存在（用于更新）
